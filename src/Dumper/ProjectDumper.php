@@ -17,7 +17,7 @@ class ProjectDumper
     {
         @mkdir($projectDir, 0777, true);
         foreach ($project->apps() as $app) {
-            $appDir = $projectDir.DIRECTORY_SEPARATOR.$app->name().'.yaml';
+            $appDir = $projectDir.DIRECTORY_SEPARATOR.$app->name();
             $this->appDumper->dump($app, $appDir);
         }
     }
