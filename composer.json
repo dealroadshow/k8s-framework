@@ -1,0 +1,26 @@
+{
+    "name": "dealroadshow/k8s-framework",
+    "description": "Define Kubernetes manifests in PHP",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Petr Buchin",
+            "email": "petrbuchyn@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": "^7.4",
+        "ext-json": "*",
+        "symfony/yaml": "^5.1",
+        "dealroadshow/k8s-resources": "^1.16 || ^1.17 || ^1.18 || ^1.19",
+        "symfony/polyfill-php80": "^1.18"
+    },
+    "autoload": {
+        "psr-4": {
+            "Dealroadshow\\K8S\\Framework\\": "src/"
+        }
+    }
+}
