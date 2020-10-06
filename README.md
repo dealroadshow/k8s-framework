@@ -35,3 +35,6 @@ After that, you may install the latest version of K8S Framework:
 ```bash
 composer require dealroadshow/k8s-framework
 ```
+
+If you want to see usage examples, please refer to 
+[dealroadshow/k8s-bundle](https://github.com/tequila/k8s-bundle).
