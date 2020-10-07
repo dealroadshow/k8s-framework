@@ -24,6 +24,7 @@ class VolumeMountsConfigurator
             throw new \InvalidArgumentException(
                 sprintf(
                     'Volume "%s" is not defined. Available volumes: %s',
+                    $volumeName,
                     implode(', ', $this->volumes->names())
                 )
             );
