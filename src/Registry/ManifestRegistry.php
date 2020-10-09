@@ -23,25 +23,27 @@ class ManifestRegistry
     /**
      * @param AppInterface $app
      *
+     * @param string|null $className
      * @return iterable|ManifestInterface[]
      */
-    public function byApp(AppInterface $app): iterable
+    public function byApp(AppInterface $app, string $className = null): iterable
     {
         $reflection = new \ReflectionObject($app);
 
-        return $this->byNamespacePrefix($reflection->getNamespaceName());
+        return $this->byNamespacePrefix($reflection->getNamespaceName(), $className);
     }
 
     /**
      * @param string $namespacePrefix
      *
+     * @param string|null $className
      * @return iterable|ManifestInterface[]
      */
-    public function byNamespacePrefix(string $namespacePrefix): iterable
+    public function byNamespacePrefix(string $namespacePrefix, string $className = null): iterable
     {
         foreach ($this->manifests as $manifest) {
             $class = get_class($manifest);
-            if (str_starts_with($class, $namespacePrefix)) {
+            if (str_starts_with($class, $namespacePrefix) && (null === $className || $manifest instanceof $className)) {
                 yield $manifest;
             }
         }
