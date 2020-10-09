@@ -51,6 +51,11 @@ class ProjectRegistry
 
     public function get(string $projectName): ProjectInterface
     {
+        if(!$this->has($projectName)) {
+            throw new \InvalidArgumentException(
+                sprintf('Project "%s" does not exist', $projectName)
+            );
+        }
         return $this->projects[$projectName];
     }
 }

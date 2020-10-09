@@ -47,6 +47,11 @@ class AppRegistry
 
     public function get(string $appName): AppInterface
     {
+        if(!$this->has($appName)) {
+            throw new \InvalidArgumentException(
+                sprintf('App "%s" does not exist', $appName)
+            );
+        }
         return $this->apps[$appName];
     }
 }
