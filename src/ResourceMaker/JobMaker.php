@@ -5,6 +5,7 @@ namespace Dealroadshow\K8S\Framework\ResourceMaker;
 use Dealroadshow\K8S\API\Batch\Job;
 use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\Job\JobInterface;
+use Dealroadshow\K8S\Framework\Core\LabelSelector\LabelSelectorConfigurator;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 use Dealroadshow\K8S\Framework\Core\Pod\PodTemplateSpecProcessor;
 
@@ -26,6 +27,9 @@ class JobMaker extends AbstractResourceMaker
     protected function makeResource(ManifestInterface $manifest, AppInterface $app): Job
     {
         $job = new Job();
+
+        $labelSelector = new LabelSelectorConfigurator($job->spec()->selector());
+        $manifest->labelSelector($labelSelector);
 
         $app->metadataHelper()->configureMeta($manifest, $job);
         $this->specProcessor->process($manifest, $job->spec()->template(), $app);

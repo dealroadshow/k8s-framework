@@ -5,6 +5,7 @@ namespace Dealroadshow\K8S\Framework\Core\Job;
 use Dealroadshow\K8S\API\Batch\Job;
 use Dealroadshow\K8S\Data\Collection\StringMap;
 use Dealroadshow\K8S\Data\PodSpec;
+use Dealroadshow\K8S\Framework\Core\LabelSelector\LabelSelectorConfigurator;
 use Dealroadshow\K8S\Framework\Core\MetadataConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\Affinity\AffinityConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\Containers\PodContainers;
@@ -14,6 +15,10 @@ use Dealroadshow\K8S\Framework\Core\Pod\Volume\VolumesConfigurator;
 
 abstract class AbstractJob implements JobInterface
 {
+    public function labelSelector(LabelSelectorConfigurator $selector): void
+    {
+    }
+
     public function backoffLimit(): ?int
     {
         return null;
