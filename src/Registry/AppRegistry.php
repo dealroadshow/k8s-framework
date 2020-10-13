@@ -54,4 +54,12 @@ class AppRegistry
         }
         return $this->apps[$appName];
     }
+
+    /**
+     * @return array|string[]
+     */
+    public function names(): array
+    {
+        return array_keys($this->apps);
+    }
 }
