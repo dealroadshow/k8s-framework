@@ -4,6 +4,7 @@ namespace Dealroadshow\K8S\Framework\Registry;
 
 use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
+use Dealroadshow\K8S\Framework\Registry\Query\ManifestsQuery;
 
 class ManifestRegistry
 {
@@ -21,31 +22,25 @@ class ManifestRegistry
     }
 
     /**
-     * @param AppInterface $app
-     *
-     * @param string|null $className
      * @return iterable|ManifestInterface[]
      */
-    public function byApp(AppInterface $app, string $className = null): iterable
+    public function all(): iterable
     {
-        $reflection = new \ReflectionObject($app);
-
-        return $this->byNamespacePrefix($reflection->getNamespaceName(), $className);
+        return $this->manifests;
     }
 
     /**
-     * @param string $namespacePrefix
+     * @param AppInterface $app
      *
-     * @param string|null $className
      * @return iterable|ManifestInterface[]
      */
-    public function byNamespacePrefix(string $namespacePrefix, string $className = null): iterable
+    public function byApp(AppInterface $app): iterable
     {
-        foreach ($this->manifests as $manifest) {
-            $class = get_class($manifest);
-            if (str_starts_with($class, $namespacePrefix) && (null === $className || $manifest instanceof $className)) {
-                yield $manifest;
-            }
-        }
+        return $this->query()->app($app)->execute();
+    }
+
+    public function query(): ManifestsQuery
+    {
+        return new ManifestsQuery($this);
     }
 }

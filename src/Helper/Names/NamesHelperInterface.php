@@ -12,4 +12,5 @@ interface NamesHelperInterface extends HelperInterface
 
     public function byConfigMapClass(string $configMapClass): string;
     public function bySecretClass(string $configMapClass): string;
+    public function byServiceClass(string $serviceClass): string;
 }

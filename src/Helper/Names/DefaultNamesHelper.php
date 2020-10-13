@@ -5,6 +5,7 @@ namespace Dealroadshow\K8S\Framework\Helper\Names;
 use Dealroadshow\K8S\Framework\Core\ConfigMap\ConfigMapInterface;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 use Dealroadshow\K8S\Framework\Core\Secret\SecretInterface;
+use Dealroadshow\K8S\Framework\Core\Service\ServiceInterface;
 use Dealroadshow\K8S\Framework\Helper\HelperTrait;
 
 class DefaultNamesHelper implements NamesHelperInterface
@@ -56,6 +57,15 @@ class DefaultNamesHelper implements NamesHelperInterface
         return $this->byExpectedClassName(
             $configMapClass,
             SecretInterface::class,
+            __METHOD__
+        );
+    }
+
+    public function byServiceClass(string $serviceClass): string
+    {
+        return $this->byExpectedClassName(
+            $serviceClass,
+            ServiceInterface::class,
             __METHOD__
         );
     }
