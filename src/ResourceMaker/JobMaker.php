@@ -5,17 +5,18 @@ namespace Dealroadshow\K8S\Framework\ResourceMaker;
 use Dealroadshow\K8S\API\Batch\Job;
 use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\Job\JobInterface;
+use Dealroadshow\K8S\Framework\Core\Job\JobSpecProcessor;
 use Dealroadshow\K8S\Framework\Core\LabelSelector\LabelSelectorConfigurator;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 use Dealroadshow\K8S\Framework\Core\Pod\PodTemplateSpecProcessor;
 
 class JobMaker extends AbstractResourceMaker
 {
-    private PodTemplateSpecProcessor $specProcessor;
+    private JobSpecProcessor $jobSpecProcessor;
 
-    public function __construct(PodTemplateSpecProcessor $specProcessor)
+    public function __construct(JobSpecProcessor $jobSpecProcessor)
     {
-        $this->specProcessor = $specProcessor;
+        $this->jobSpecProcessor = $jobSpecProcessor;
     }
 
     /**
@@ -27,43 +28,16 @@ class JobMaker extends AbstractResourceMaker
     protected function makeResource(ManifestInterface $manifest, AppInterface $app): Job
     {
         $job = new Job();
+        $spec = $job->spec();
 
-        $labelSelector = new LabelSelectorConfigurator($job->spec()->selector());
-        $manifest->labelSelector($labelSelector);
+        $manifest->labelSelector(new LabelSelectorConfigurator($spec->selector()));
 
         $app->metadataHelper()->configureMeta($manifest, $job);
-        $this->specProcessor->process($manifest, $job->spec()->template(), $app);
-
-        $spec = $job->spec();
+        $this->jobSpecProcessor->process($manifest, $spec, $app);
         foreach ($spec->selector()->matchLabels()->all() as $name => $value) {
             $job->metadata()->labels()->add($name, $value);
-            $job->spec()->template()->metadata()->labels()->add($name, $value);
         }
 
-        $backoffLimit = $manifest->backoffLimit();
-        $activeDeadlineSeconds = $manifest->activeDeadlineSeconds();
-        $ttlSecondsAfterFinished = $manifest->ttlSecondsAfterFinished();
-        $completions = $manifest->completions();
-        $manualSelector = $manifest->manualSelector();
-        $parallelism = $manifest->parallelism();
-        if (null !== $backoffLimit) {
-            $spec->setBackoffLimit($backoffLimit);
-        }
-        if (null !== $activeDeadlineSeconds) {
-            $spec->setActiveDeadlineSeconds($activeDeadlineSeconds);
-        }
-        if (null !== $ttlSecondsAfterFinished) {
-            $spec->setTtlSecondsAfterFinished($ttlSecondsAfterFinished);
-        }
-        if (null !== $completions) {
-            $spec->setCompletions($completions);
-        }
-        if (null !== $manualSelector) {
-            $spec->setManualSelector($manualSelector);
-        }
-        if (null !== $parallelism) {
-            $spec->setParallelism($parallelism);
-        }
         $manifest->configureJob($job);
 
         return $job;

@@ -3,6 +3,7 @@
 namespace Dealroadshow\K8S\Framework\Core\Deployment;
 
 use Dealroadshow\K8S\API\Apps\Deployment;
+use Dealroadshow\K8S\API\Batch\CronJob;
 use Dealroadshow\K8S\Data\Collection\StringMap;
 use Dealroadshow\K8S\Data\PodSpec;
 use Dealroadshow\K8S\Framework\Core\MetadataConfigurator;
@@ -64,5 +65,10 @@ abstract class AbstractDeployment implements DeploymentInterface
 
     public function configureDeployment(Deployment $deployment): void
     {
+    }
+
+    public function configureCronJob(CronJob  $cronJob): void
+    {
+
     }
 }
