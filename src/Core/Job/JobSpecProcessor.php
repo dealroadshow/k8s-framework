@@ -4,7 +4,6 @@ namespace Dealroadshow\K8S\Framework\Core\Job;
 
 use Dealroadshow\K8S\Data\JobSpec;
 use Dealroadshow\K8S\Framework\App\AppInterface;
-use Dealroadshow\K8S\Framework\Core\LabelSelector\LabelSelectorConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\PodTemplateSpecProcessor;
 
 class JobSpecProcessor
