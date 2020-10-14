@@ -7,6 +7,10 @@
         {
             "name": "Petr Buchin",
             "email": "petrbuchyn@gmail.com"
+        },
+        {
+            "name": "Bogdan Pasichnyk",
+            "email": "pasechnikbs@gmail.com"
         }
     ],
     "minimum-stability": "dev",
