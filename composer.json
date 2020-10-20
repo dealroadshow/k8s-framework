@@ -1,5 +1,5 @@
 {
-    "name": "dealroadshow/k8s-framework-dev",
+    "name": "dealroadshow/k8s-framework",
     "description": "Define Kubernetes manifests in PHP",
     "type": "library",
     "license": "MIT",
