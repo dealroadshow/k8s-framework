@@ -60,7 +60,7 @@ class ContainerMaker
         $builder->probes($probes);
 
         $image = $builder->image();
-        $this->applyMiddlewares($image);
+        $this->applyMiddlewares($image, $app);
         $container->setImage($image->fullName());
         $pullPolicy = $builder->imagePullPolicy();
         if (null !== $pullPolicy) {
@@ -80,10 +80,10 @@ class ContainerMaker
         return $container;
     }
 
-    private function applyMiddlewares(Image $image)
+    private function applyMiddlewares(Image $image, AppInterface $app)
     {
         foreach ($this->middlewares as $middleware) {
-            $middleware->apply($image);
+            $middleware->apply($image, $app);
         }
     }
 
