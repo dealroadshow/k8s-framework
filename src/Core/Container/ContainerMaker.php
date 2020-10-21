@@ -27,7 +27,7 @@ class ContainerMaker
      */
     public function __construct(iterable $middlewares)
     {
-        $this->middlewares = $this->sortByPriority($middlewares);
+        $this->middlewares = $middlewares;
     }
 
     public function make(ContainerInterface $builder, VolumeList $volumes, AppInterface $app): Container
@@ -85,18 +85,5 @@ class ContainerMaker
         foreach ($this->middlewares as $middleware) {
             $middleware->apply($image, $app);
         }
-    }
-
-    /**
-     * @param ContainerImageMiddlewareInterface[] $middlewares
-     * @return ContainerImageMiddlewareInterface[]
-     */
-    private function sortByPriority(iterable $middlewares): iterable
-    {
-        if($middlewares instanceof \Traversable) {
-            $middlewares = iterator_to_array($middlewares);
-        }
-        usort($middlewares, fn($a, $b) => $a->priority() <=> $b->priority());
-        return array_values($middlewares);
     }
 }
