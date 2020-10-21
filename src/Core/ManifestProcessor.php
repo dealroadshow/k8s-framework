@@ -13,7 +13,7 @@ class ManifestProcessor
     private iterable $makers;
 
     /**
-     * @param ResourceMakerInterface[]|iterable
+     * @param ResourceMakerInterface[] $makers
      */
     public function __construct(iterable $makers)
     {
