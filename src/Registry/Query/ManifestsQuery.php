@@ -34,6 +34,13 @@ class ManifestsQuery
         return $this->namespacePrefix($reflection->getNamespaceName());
     }
 
+    public function tag(string $tag): self
+    {
+        return $this->addClosure(
+            fn (ManifestInterface $manifest): bool => in_array($tag, $manifest->tags())
+        );
+    }
+
     public function namespacePrefix(string $prefix): self
     {
         return $this->addClosure(

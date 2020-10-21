@@ -13,10 +13,10 @@ class ProjectProcessor
         $this->appProcessor = $appProcessor;
     }
 
-    public function process(ProjectInterface $project): void
+    public function process(ProjectInterface $project, string $tag = null): void
     {
         foreach ($project->apps() as $app) {
-            $this->appProcessor->process($app);
+            $this->appProcessor->process($app, $tag);
         }
     }
 }
