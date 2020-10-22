@@ -17,14 +17,11 @@ class AppProcessor
         $this->manifestProcessor = $manifestProcessor;
     }
 
-    public function process(AppInterface $app, string $tag = null): void
+    public function process(AppInterface $app): void
     {
         $query = $this->manifestRegistry
             ->query()
             ->app($app);
-        if(null !== $tag) {
-            $query->tag($tag);
-        }
         foreach ($query->execute() as $manifest) {
             $this->manifestProcessor->process($manifest, $app);
         }
