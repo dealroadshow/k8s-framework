@@ -34,6 +34,20 @@ class ManifestsQuery
         return $this->namespacePrefix($reflection->getNamespaceName());
     }
 
+    public function includeTags(array $tags): self
+    {
+        return $this->addClosure(
+            fn (ManifestInterface $manifest): bool => count(array_intersect($tags, $manifest->tags())) > 0
+        );
+    }
+
+    public function excludeTags(array $tags): self
+    {
+        return $this->addClosure(
+            fn (ManifestInterface $manifest): bool => count(array_intersect($tags, $manifest->tags())) === 0
+        );
+    }
+
     public function namespacePrefix(string $prefix): self
     {
         return $this->addClosure(
