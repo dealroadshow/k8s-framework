@@ -8,5 +8,5 @@ use Dealroadshow\K8S\Framework\Core\Container\Image\Image;
 interface ContainerImageMiddlewareInterface
 {
     public function apply(Image $image, AppInterface $app): void;
-    public function priority(): int;
+    public static function priority(): int;
 }
