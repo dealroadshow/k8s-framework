@@ -14,6 +14,8 @@ use Dealroadshow\K8S\Framework\Core\Pod\Volume\VolumesConfigurator;
 
 abstract class AbstractDeployment implements DeploymentInterface
 {
+    protected int $replicas = 1;
+
     public function affinity(AffinityConfigurator $affinity): void
     {
     }
@@ -49,7 +51,7 @@ abstract class AbstractDeployment implements DeploymentInterface
 
     public function replicas(): int
     {
-        return 1;
+        return $this->replicas;
     }
 
     public function minReadySeconds(): ?int
