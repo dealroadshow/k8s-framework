@@ -19,9 +19,8 @@ class AppProcessor
 
     public function process(AppInterface $app): void
     {
-        $query = $this->manifestRegistry
-            ->query()
-            ->app($app);
+        $query = $this->manifestRegistry->query();
+        $query->app($app);
         foreach ($query->execute() as $manifest) {
             $this->manifestProcessor->process($manifest, $app);
         }
