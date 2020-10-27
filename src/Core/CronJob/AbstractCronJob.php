@@ -3,12 +3,9 @@
 namespace Dealroadshow\K8S\Framework\Core\CronJob;
 
 use Dealroadshow\K8S\API\Batch\CronJob;
-use Dealroadshow\K8S\Framework\Core\ConfigureTagsTrait;
 
 abstract class AbstractCronJob implements CronJobInterface
 {
-    use ConfigureTagsTrait;
-
     public function concurrencyPolicy(): ?string
     {
         return null;
