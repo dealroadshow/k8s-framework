@@ -1,6 +1,6 @@
 <?php
 
-namespace Dealroadshow\K8S\Framework\Annotation;
+namespace Dealroadshow\K8S\Framework\Attribute;
 
 use Attribute;
 
@@ -20,7 +20,7 @@ class Tags
     /**
      * @return string[]
      */
-    public function getTags(): array
+    public function get(): array
     {
         return $this->tags;
     }

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Dealroadshow\K8S\Framework\Annotation;
+namespace Dealroadshow\K8S\Framework\Attribute;
 
 use ReflectionClass;
 
@@ -20,9 +20,10 @@ class TagsScanner
         foreach($attributes as $attribute) {
             /** @var Tags $tagsAttribute */
             $tagsAttribute = $attribute->newInstance();
-            $tags = array_merge($tags, $tagsAttribute->getTags());
+            $tags = array_merge($tags, $tagsAttribute->get());
         }
         $tags = array_unique($tags);
+
         return array_values($tags);
     }
 }
