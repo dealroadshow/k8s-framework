@@ -1,8 +1,8 @@
 <?php
 
+namespace Dealroadshow\K8S\Framework\Attribute\Scanner;
 
-namespace Dealroadshow\K8S\Framework\Attribute;
-
+use Dealroadshow\K8S\Framework\Attribute\Tags;
 use ReflectionClass;
 
 class TagsScanner
@@ -12,7 +12,7 @@ class TagsScanner
      * @return string[]
      * @throws \ReflectionException
      */
-    public static function tags(object $object): array
+    public static function scan(object $object): array
     {
         $reflectionClass = new ReflectionClass($object::class);
         $attributes = $reflectionClass->getAttributes(Tags::class);

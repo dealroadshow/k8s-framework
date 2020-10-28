@@ -3,7 +3,7 @@
 namespace Dealroadshow\K8S\Framework\Registry\Query;
 
 use Dealroadshow\K8S\Framework\App\AppInterface;
-use Dealroadshow\K8S\Framework\Attribute\TagsScanner;
+use Dealroadshow\K8S\Framework\Attribute\Scanner\TagsScanner;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 use Dealroadshow\K8S\Framework\Registry\ManifestRegistry;
 
@@ -39,7 +39,7 @@ class ManifestsQuery
     {
         return $this->addClosure(
             function (ManifestInterface $manifest) use ($tags): bool {
-                $manifestTags = TagsScanner::tags($manifest);
+                $manifestTags = TagsScanner::scan($manifest);
                 return count(array_intersect($tags, $manifestTags)) > 0;
             }
         );
@@ -49,7 +49,7 @@ class ManifestsQuery
     {
         return $this->addClosure(
             function (ManifestInterface $manifest) use ($tags): bool {
-                $manifestTags = TagsScanner::tags($manifest);
+                $manifestTags = TagsScanner::scan($manifest);
                 return count(array_intersect($tags, $manifestTags)) === 0;
             }
         );

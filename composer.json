@@ -16,7 +16,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": "^7.4",
+        "php": ">=8.0",
         "ext-json": "*",
         "symfony/yaml": "^5.1",
         "dealroadshow/k8s-resources": "^1.16 || ^1.17 || ^1.18 || ^1.19",
