@@ -5,6 +5,7 @@ namespace Dealroadshow\K8S\Framework\Core\Deployment;
 use Dealroadshow\K8S\API\Apps\Deployment;
 use Dealroadshow\K8S\Data\Collection\StringMap;
 use Dealroadshow\K8S\Data\PodSpec;
+use Dealroadshow\K8S\Framework\Core\AppAwareTrait;
 use Dealroadshow\K8S\Framework\Core\MetadataConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\Affinity\AffinityConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\Containers\PodContainers;
@@ -14,6 +15,8 @@ use Dealroadshow\K8S\Framework\Core\Pod\Volume\VolumesConfigurator;
 
 abstract class AbstractDeployment implements DeploymentInterface
 {
+    use AppAwareTrait;
+
     protected int $replicas = 1;
 
     public function affinity(AffinityConfigurator $affinity): void

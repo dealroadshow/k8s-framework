@@ -51,7 +51,7 @@ class ServiceMaker extends AbstractResourceMaker
                     throw new \LogicException(
                         sprintf(
                             'Multiple ports specified for service "%s", therefore all ports must have name',
-                            $app->namesHelper()->byManifest($manifest)
+                            $app->namesHelper()->format($manifest)
                         )
                     );
                 }

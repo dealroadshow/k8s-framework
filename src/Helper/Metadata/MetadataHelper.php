@@ -20,7 +20,7 @@ class MetadataHelper implements MetadataHelperInterface
         $metadataAware->configureMeta($metaConfigurator);
 
         if ($metadataAware instanceof ManifestInterface) {
-            $name = $this->app->namesHelper()->byManifest($metadataAware);
+            $name = $this->app->namesHelper()->format($metadataAware);
             $meta->setName($name);
         }
 

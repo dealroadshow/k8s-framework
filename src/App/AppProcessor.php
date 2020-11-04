@@ -3,6 +3,7 @@
 
 namespace Dealroadshow\K8S\Framework\App;
 
+use Dealroadshow\K8S\Framework\Core\AppAwareInterface;
 use Dealroadshow\K8S\Framework\Core\ManifestProcessor;
 use Dealroadshow\K8S\Framework\Dumper\Context\ContextInterface;
 use Dealroadshow\K8S\Framework\Registry\ManifestRegistry;
@@ -34,6 +35,9 @@ class AppProcessor
             $query->excludeTags($tags);
         }
         foreach ($query->execute() as $manifest) {
+            if($manifest instanceof AppAwareInterface) {
+                $manifest->setApp($app);
+            }
             $this->manifestProcessor->process($manifest, $app);
         }
     }

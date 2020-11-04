@@ -3,9 +3,12 @@
 namespace Dealroadshow\K8S\Framework\Core\CronJob;
 
 use Dealroadshow\K8S\API\Batch\CronJob;
+use Dealroadshow\K8S\Framework\Core\AppAwareTrait;
 
 abstract class AbstractCronJob implements CronJobInterface
 {
+    use AppAwareTrait;
+
     public function concurrencyPolicy(): ?string
     {
         return null;
