@@ -16,8 +16,7 @@ class ProjectProcessor
     public function process(ProjectInterface $project): void
     {
         foreach ($project->apps() as $app) {
-            $app->setProject($project);
-            $this->appProcessor->process($app);
+            $this->appProcessor->process($app, $project);
         }
     }
 }
