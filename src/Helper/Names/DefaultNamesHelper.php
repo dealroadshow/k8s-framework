@@ -13,13 +13,13 @@ class DefaultNamesHelper implements NamesHelperInterface
 {
     use HelperTrait;
 
-    public function format(ManifestInterface $manifest): string
+    public function format(string $name): string
     {
         return sprintf(
             '%s-%s-%s',
             $this->app->env(),
             $this->app->name(),
-            $manifest->name()
+            $name()
         );
     }
 
@@ -43,7 +43,7 @@ class DefaultNamesHelper implements NamesHelperInterface
 
         $manifest = $this->makeManifest($manifestClass);
 
-        return $this->format($manifest);
+        return $this->format($manifest->name());
     }
 
     public function byConfigMapClass(string $configMapClass): string
