@@ -19,7 +19,7 @@ class DefaultNamesHelper implements NamesHelperInterface
             '%s-%s-%s',
             $this->app->env(),
             $this->app->name(),
-            $name()
+            $name
         );
     }
 
