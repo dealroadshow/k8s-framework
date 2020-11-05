@@ -15,8 +15,9 @@ class DefaultNamesHelper implements NamesHelperInterface
     public function fullName(string $shortName): string
     {
         return  sprintf(
-            '%s-%s-%s',
+            '%s-%s-%s-%s',
             $this->app->env(),
+            $this->app->project()->name(),
             $this->app->name(),
            $shortName,
         );
