@@ -72,7 +72,7 @@ class ManifestsQuery
     public function name(string $name): self
     {
         return $this->addClosure(
-            fn (ManifestInterface $manifest): bool => $manifest->name() === $name
+            fn (ManifestInterface $manifest): bool => $manifest::name() === $name
         );
     }
 

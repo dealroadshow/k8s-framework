@@ -2,7 +2,6 @@
 
 namespace Dealroadshow\K8S\Framework\Helper\Names;
 
-use Dealroadshow\K8S\Framework\Core\AppAwareInterface;
 use Dealroadshow\K8S\Framework\Core\ConfigMap\ConfigMapInterface;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 use Dealroadshow\K8S\Framework\Core\Secret\SecretInterface;
@@ -12,16 +11,6 @@ use Dealroadshow\K8S\Framework\Helper\HelperTrait;
 class DefaultNamesHelper implements NamesHelperInterface
 {
     use HelperTrait;
-
-    public function format(string $name): string
-    {
-        return sprintf(
-            '%s-%s-%s',
-            $this->app->env(),
-            $this->app->name(),
-            $name
-        );
-    }
 
     public function byManifestClass(string $manifestClass): string
     {
@@ -41,9 +30,17 @@ class DefaultNamesHelper implements NamesHelperInterface
             );
         }
 
-        $manifest = $this->makeManifest($manifestClass);
+        return sprintf(
+            '%s-%s-%s',
+            $this->app->env(),
+            $this->app->name(),
+            $manifestClass::name()
+        );
+    }
 
-        return $this->format($manifest->name());
+    public function byManifest(ManifestInterface $manifest): string
+    {
+        return $this->byManifestClass(get_class($manifest));
     }
 
     public function byConfigMapClass(string $configMapClass): string
@@ -93,15 +90,5 @@ class DefaultNamesHelper implements NamesHelperInterface
         }
 
         return $this->byManifestClass($actualClass);
-    }
-
-    private function makeManifest(string $manifestClass): ManifestInterface
-    {
-        $manifest = new $manifestClass;
-        if($manifest instanceof AppAwareInterface) {
-            $manifest->setApp($this->app);
-        }
-
-        return $manifest;
     }
 }
