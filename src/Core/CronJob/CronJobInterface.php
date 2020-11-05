@@ -3,10 +3,11 @@
 namespace Dealroadshow\K8S\Framework\Core\CronJob;
 
 use Dealroadshow\K8S\API\Batch\CronJob;
+use Dealroadshow\K8S\Framework\Core\AppAwareInterface;
 use Dealroadshow\K8S\Framework\Core\Job\JobInterface;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 
-interface CronJobInterface extends ManifestInterface
+interface CronJobInterface extends ManifestInterface, AppAwareInterface
 {
     public function concurrencyPolicy(): ?string;
     public function failedJobsHistoryLimit(): ?int;

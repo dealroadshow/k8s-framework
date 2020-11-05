@@ -12,6 +12,17 @@ class DefaultNamesHelper implements NamesHelperInterface
 {
     use HelperTrait;
 
+    public function fullName(string $shortName): string
+    {
+        return  sprintf(
+            '%s-%s-%s-%s',
+            $this->app->env(),
+            $this->app->project()->name(),
+            $this->app->name(),
+           $shortName,
+        );
+    }
+
     public function byManifestClass(string $manifestClass): string
     {
         if (!class_exists($manifestClass)) {
@@ -30,17 +41,7 @@ class DefaultNamesHelper implements NamesHelperInterface
             );
         }
 
-        return sprintf(
-            '%s-%s-%s',
-            $this->app->env(),
-            $this->app->name(),
-            $manifestClass::name()
-        );
-    }
-
-    public function byManifest(ManifestInterface $manifest): string
-    {
-        return $this->byManifestClass(get_class($manifest));
+        return $this->fullName($manifestClass::shortName());
     }
 
     public function byConfigMapClass(string $configMapClass): string

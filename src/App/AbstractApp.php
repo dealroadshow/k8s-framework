@@ -6,6 +6,7 @@ use Dealroadshow\K8S\APIResourceInterface;
 use Dealroadshow\K8S\Framework\Core\ManifestFile;
 use Dealroadshow\K8S\Framework\Helper\Metadata\MetadataHelperInterface;
 use Dealroadshow\K8S\Framework\Helper\Names\NamesHelperInterface;
+use Dealroadshow\K8S\Framework\Project\ProjectInterface;
 
 abstract class AbstractApp implements AppInterface
 {
@@ -13,6 +14,7 @@ abstract class AbstractApp implements AppInterface
     protected MetadataHelperInterface $metadataHelper;
     protected NamesHelperInterface $namesHelper;
     protected array $files = [];
+    protected ?ProjectInterface $project;
 
     public function __construct(MetadataHelperInterface $metadataHelper, NamesHelperInterface $namesHelper)
     {
@@ -61,5 +63,15 @@ abstract class AbstractApp implements AppInterface
     public function setEnv(string $env): void
     {
         $this->appEnv = $env;
+    }
+
+    public function setProject(ProjectInterface $project): void
+    {
+        $this->project = $project;
+    }
+
+    public function project(): ProjectInterface
+    {
+        return $this->project;
     }
 }
