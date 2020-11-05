@@ -69,7 +69,7 @@ class ManifestsQuery
         );
     }
 
-    public function name(string $name): self
+    public function shortName(string $name): self
     {
         return $this->addClosure(
             fn (ManifestInterface $manifest): bool => $manifest::shortName() === $name
