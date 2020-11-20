@@ -3,14 +3,10 @@
 namespace Dealroadshow\K8S\Framework\Core\ConfigMap;
 
 use Dealroadshow\K8S\Data\Collection\StringMap;
-use Dealroadshow\K8S\Framework\Core\AppAwareTrait;
-use Dealroadshow\K8S\Framework\Core\ConfigureMetaTrait;
+use Dealroadshow\K8S\Framework\Core\AbstractManifest;
 
-abstract class AbstractConfigMap implements ConfigMapInterface
+abstract class AbstractConfigMap extends AbstractManifest implements ConfigMapInterface
 {
-    use ConfigureMetaTrait;
-    use AppAwareTrait;
-
     public function data(StringMap $data): void
     {
     }

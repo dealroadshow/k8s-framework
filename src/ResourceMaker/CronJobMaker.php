@@ -9,7 +9,7 @@ use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\CronJob\CronJobInterface;
 use Dealroadshow\K8S\Framework\Core\Job\JobInterface;
 use Dealroadshow\K8S\Framework\Core\Job\JobSpecProcessor;
-use Dealroadshow\K8S\Framework\Core\LabelSelector\LabelSelectorConfigurator;
+use Dealroadshow\K8S\Framework\Core\LabelSelector\SelectorConfigurator;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 
 class CronJobMaker extends AbstractResourceMaker
@@ -64,7 +64,7 @@ class CronJobMaker extends AbstractResourceMaker
     private function configureJobTemplate(JobTemplateSpec $templateSpec, JobInterface $manifest, AppInterface $app)
     {
         $jobSpec = $templateSpec->spec();
-        $manifest->labelSelector(new LabelSelectorConfigurator($jobSpec->selector()));
+        $manifest->labelSelector(new SelectorConfigurator($jobSpec->selector()));
         $this->jobSpecProcessor->process($manifest, $jobSpec, $app);
         foreach ($jobSpec->selector()->matchLabels()->all() as $name => $value) {
             $templateSpec->metadata()->labels()->add($name, $value);

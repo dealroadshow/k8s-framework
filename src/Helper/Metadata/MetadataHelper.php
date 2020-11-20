@@ -17,7 +17,7 @@ class MetadataHelper implements MetadataHelperInterface
     {
         $meta = $apiObject->metadata();
         $metaConfigurator = new MetadataConfigurator($meta->labels(), $meta->annotations());
-        $metadataAware->configureMeta($metaConfigurator);
+        $metadataAware->metadata($metaConfigurator);
 
         if ($metadataAware instanceof ManifestInterface) {
             $name = $this->app->namesHelper()->fullName($metadataAware::shortName());

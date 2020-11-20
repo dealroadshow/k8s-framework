@@ -19,7 +19,7 @@ class PodTemplateSpecProcessor
     {
         $meta = $templateSpec->metadata();
         $metaConfigurator = new MetadataConfigurator($meta->labels(), $meta->annotations());
-        $builder->configureMeta($metaConfigurator);
+        $builder->metadata($metaConfigurator);
 
         $this->specProcessor->process($builder, $templateSpec->spec(), $app);
     }

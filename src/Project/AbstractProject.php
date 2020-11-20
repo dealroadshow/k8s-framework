@@ -2,12 +2,14 @@
 
 namespace Dealroadshow\K8S\Framework\Project;
 
+use Dealroadshow\K8S\Framework\Config\ConfigAwareTrait;
+
 abstract class AbstractProject implements ProjectInterface
 {
-    protected string $env;
+    use ConfigAwareTrait;
 
-    public function setEnv(string $env): void
+    public function config(): array
     {
-        $this->env = $env;
+        return $this->config;
     }
 }

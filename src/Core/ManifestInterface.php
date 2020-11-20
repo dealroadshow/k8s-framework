@@ -2,7 +2,9 @@
 
 namespace Dealroadshow\K8S\Framework\Core;
 
-interface ManifestInterface extends MetadataAwareInterface
+use Dealroadshow\K8S\Framework\Config\ConfigAwareInterface;
+
+interface ManifestInterface extends AppAwareInterface, ConfigAwareInterface, MetadataAwareInterface
 {
     public static function shortName(): string;
     public function fileNameWithoutExtension(): string;

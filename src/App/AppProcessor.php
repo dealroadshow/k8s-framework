@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Dealroadshow\K8S\Framework\App;
 
 use Dealroadshow\K8S\Framework\Core\ManifestProcessor;

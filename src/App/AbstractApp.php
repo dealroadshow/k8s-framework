@@ -3,6 +3,7 @@
 namespace Dealroadshow\K8S\Framework\App;
 
 use Dealroadshow\K8S\APIResourceInterface;
+use Dealroadshow\K8S\Framework\Config\ConfigAwareTrait;
 use Dealroadshow\K8S\Framework\Core\ManifestFile;
 use Dealroadshow\K8S\Framework\Helper\Metadata\MetadataHelperInterface;
 use Dealroadshow\K8S\Framework\Helper\Names\NamesHelperInterface;
@@ -10,7 +11,8 @@ use Dealroadshow\K8S\Framework\Project\ProjectInterface;
 
 abstract class AbstractApp implements AppInterface
 {
-    protected string $appEnv;
+    use ConfigAwareTrait;
+
     protected MetadataHelperInterface $metadataHelper;
     protected NamesHelperInterface $namesHelper;
     protected array $files = [];
@@ -40,11 +42,6 @@ abstract class AbstractApp implements AppInterface
         $this->files[$fileNameWithoutExtension] = new ManifestFile($fileNameWithoutExtension, $resource);
     }
 
-    public function env(): string
-    {
-        return $this->appEnv;
-    }
-
     public function manifestFiles(): iterable
     {
         return $this->files;
@@ -58,11 +55,6 @@ abstract class AbstractApp implements AppInterface
     public function namesHelper(): NamesHelperInterface
     {
         return $this->namesHelper;
-    }
-
-    public function setEnv(string $env): void
-    {
-        $this->appEnv = $env;
     }
 
     public function setProject(ProjectInterface $project): void

@@ -4,19 +4,12 @@ namespace Dealroadshow\K8S\Framework\Core\Service;
 
 use Dealroadshow\K8S\API\Service;
 use Dealroadshow\K8S\Data\Collection\StringMap;
-use Dealroadshow\K8S\Framework\Core\AppAwareTrait;
-use Dealroadshow\K8S\Framework\Core\MetadataConfigurator;
+use Dealroadshow\K8S\Framework\Core\AbstractManifest;
 use Dealroadshow\K8S\Framework\Core\Service\Configurator\ServicePortsConfigurator;
 use Dealroadshow\K8S\Framework\Core\Service\Configurator\ServiceTypeConfigurator;
 
-abstract class AbstractService implements ServiceInterface
+abstract class AbstractService extends AbstractManifest implements ServiceInterface
 {
-    use AppAwareTrait;
-
-    public function configureMeta(MetadataConfigurator $meta): void
-    {
-    }
-
     public function ports(ServicePortsConfigurator $ports): void
     {
     }
