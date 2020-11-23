@@ -18,13 +18,7 @@ class ServiceMaker extends AbstractResourceMaker
         return ServiceInterface::class;
     }
 
-    /**
-     * @param ManifestInterface|ServiceInterface $manifest
-     * @param AppInterface                       $app
-     *
-     * @return APIResourceInterface|Service
-     */
-    protected function makeResource(ManifestInterface $manifest, AppInterface $app): APIResourceInterface
+    protected function makeResource(ManifestInterface|ServiceInterface $manifest, AppInterface $app): APIResourceInterface
     {
         $service = new Service();
         $app->metadataHelper()->configureMeta($manifest, $service);

@@ -19,16 +19,13 @@ class AppRegistry
     {
         $this->apps = [];
         foreach ($apps as $app) {
-            $appName = $app->name();
+            $appName = $app::name();
             if (!$this->has($appName)) {
-                $this->apps[$app->name()] = $app;
+                $this->apps[$appName] = $app;
 
                 continue;
             }
-            if ($this->get($appName) === $app) {
-                // Few projects may depend on the same app
-                continue;
-            }
+
             throw new LogicException(
                 sprintf(
                     'App name must be unique, but "%s" and "%s" share the same name "%s"',

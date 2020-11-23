@@ -3,26 +3,21 @@
 namespace Dealroadshow\K8S\Framework\App;
 
 use Dealroadshow\K8S\APIResourceInterface;
+use Dealroadshow\K8S\Framework\Config\ConfigAwareTrait;
 use Dealroadshow\K8S\Framework\Core\ManifestFile;
 use Dealroadshow\K8S\Framework\Helper\Metadata\MetadataHelperInterface;
 use Dealroadshow\K8S\Framework\Helper\Names\NamesHelperInterface;
-use Dealroadshow\K8S\Framework\Project\ProjectInterface;
 
 abstract class AbstractApp implements AppInterface
 {
-    protected string $appEnv;
-    protected MetadataHelperInterface $metadataHelper;
-    protected NamesHelperInterface $namesHelper;
+    use ConfigAwareTrait;
+
     protected array $files = [];
-    protected ?ProjectInterface $project;
 
-    public function __construct(MetadataHelperInterface $metadataHelper, NamesHelperInterface $namesHelper)
-    {
-        $metadataHelper->setApp($this);
-        $namesHelper->setApp($this);
-
-        $this->metadataHelper = $metadataHelper;
-        $this->namesHelper = $namesHelper;
+    public function __construct(
+        protected MetadataHelperInterface $metadataHelper,
+        protected NamesHelperInterface $namesHelper
+    ) {
     }
 
     public function addManifestFile(string $fileNameWithoutExtension, APIResourceInterface $resource): void
@@ -32,7 +27,7 @@ abstract class AbstractApp implements AppInterface
                 sprintf(
                     'Filename "%s" for app "%s" is already reserved by "%s" instance',
                     $fileNameWithoutExtension,
-                    $this->name(),
+                    static::name(),
                     get_class($this->files[$fileNameWithoutExtension])
                 )
             );
@@ -40,9 +35,9 @@ abstract class AbstractApp implements AppInterface
         $this->files[$fileNameWithoutExtension] = new ManifestFile($fileNameWithoutExtension, $resource);
     }
 
-    public function env(): string
+    public function manifestNamePrefix(): string
     {
-        return $this->appEnv;
+        return static::name();
     }
 
     public function manifestFiles(): iterable
@@ -52,26 +47,20 @@ abstract class AbstractApp implements AppInterface
 
     public function metadataHelper(): MetadataHelperInterface
     {
+        $this->metadataHelper->setApp($this);
+
         return $this->metadataHelper;
     }
 
     public function namesHelper(): NamesHelperInterface
     {
+        $this->namesHelper->setApp($this);
+
         return $this->namesHelper;
     }
 
-    public function setEnv(string $env): void
+    public function config(): array
     {
-        $this->appEnv = $env;
-    }
-
-    public function setProject(ProjectInterface $project): void
-    {
-        $this->project = $project;
-    }
-
-    public function project(): ProjectInterface
-    {
-        return $this->project;
+        return $this->config;
     }
 }

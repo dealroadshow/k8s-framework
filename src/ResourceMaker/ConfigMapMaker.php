@@ -9,13 +9,7 @@ use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 
 class ConfigMapMaker extends AbstractResourceMaker
 {
-    /**
-     * @param ManifestInterface|ConfigMapInterface $manifest
-     * @param AppInterface                         $app
-     *
-     * @return ConfigMap
-     */
-    public function makeResource(ManifestInterface $manifest, AppInterface $app): ConfigMap
+    public function makeResource(ManifestInterface|ConfigMapInterface $manifest, AppInterface $app): ConfigMap
     {
         $configMap = new ConfigMap();
 

@@ -9,13 +9,7 @@ use Dealroadshow\K8S\Framework\Core\Secret\SecretInterface;
 
 class SecretMaker extends AbstractResourceMaker
 {
-    /**
-     * @param ManifestInterface|SecretInterface $manifest
-     * @param AppInterface      $app
-     *
-     * @return Secret
-     */
-    public function makeResource(ManifestInterface $manifest, AppInterface $app): Secret
+    public function makeResource(ManifestInterface|SecretInterface $manifest, AppInterface $app): Secret
     {
         $secret = new Secret();
 

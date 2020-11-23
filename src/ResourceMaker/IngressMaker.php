@@ -12,13 +12,7 @@ use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 
 class IngressMaker extends AbstractResourceMaker
 {
-    /**
-     * @param ManifestInterface|IngressInterface $manifest
-     * @param AppInterface                       $app
-     *
-     * @return APIResourceInterface
-     */
-    protected function makeResource(ManifestInterface $manifest, AppInterface $app): APIResourceInterface
+    protected function makeResource(ManifestInterface|IngressInterface $manifest, AppInterface $app): APIResourceInterface
     {
         $ingress = new Ingress();
         $app->metadataHelper()->configureMeta($manifest, $ingress);

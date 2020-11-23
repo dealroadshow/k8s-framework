@@ -22,9 +22,8 @@ class ManifestProcessor
 
     public function process(ManifestInterface $manifest, AppInterface $app): void
     {
-        if($manifest instanceof AppAwareInterface) {
-            $manifest->setApp($app);
-        }
+        $manifest->setApp($app);
+        $manifest->setConfig($app->manifestConfig($manifest::shortName()));
         foreach ($this->makers as $maker) {
             if ($maker->supports($manifest, $app)) {
                 $resource = $maker->make($manifest, $app);

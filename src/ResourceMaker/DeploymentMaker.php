@@ -5,7 +5,7 @@ namespace Dealroadshow\K8S\Framework\ResourceMaker;
 use Dealroadshow\K8S\API\Apps\Deployment;
 use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\Deployment\DeploymentInterface;
-use Dealroadshow\K8S\Framework\Core\LabelSelector\LabelSelectorConfigurator;
+use Dealroadshow\K8S\Framework\Core\LabelSelector\SelectorConfigurator;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 use Dealroadshow\K8S\Framework\Core\Pod\PodTemplateSpecProcessor;
 
@@ -18,18 +18,12 @@ class DeploymentMaker extends AbstractResourceMaker
         $this->specProcessor = $specProcessor;
     }
 
-    /**
-     * @param ManifestInterface|DeploymentInterface $manifest
-     * @param AppInterface                          $app
-     *
-     * @return Deployment
-     */
-    public function makeResource(ManifestInterface $manifest, AppInterface $app): Deployment
+    public function makeResource(ManifestInterface|DeploymentInterface $manifest, AppInterface $app): Deployment
     {
         $deployment = new Deployment();
 
-        $labelSelector = new LabelSelectorConfigurator($deployment->spec()->selector());
-        $manifest->labelSelector($labelSelector);
+        $labelSelector = new SelectorConfigurator($deployment->spec()->selector());
+        $manifest->selector($labelSelector);
 
         $app->metadataHelper()->configureMeta($manifest, $deployment);
         $this->specProcessor->process($manifest, $deployment->spec()->template(), $app);

@@ -4,7 +4,7 @@ namespace Dealroadshow\K8S\Framework\Core\LabelSelector;
 
 use Dealroadshow\K8S\Data\LabelSelector;
 
-class LabelSelectorConfigurator
+class SelectorConfigurator
 {
     private LabelSelector $labelSelector;
 
