@@ -10,14 +10,14 @@ use Dealroadshow\K8S\Framework\Helper\Names\NamesHelperInterface;
 
 interface AppInterface extends ConfigurableInterface
 {
+    public static function name(): string;
     public function addManifestFile(string $fileNameWithoutExtension, APIResourceInterface $resource): void;
     public function metadataHelper(): MetadataHelperInterface;
-    public function name(): string;
     public function namesHelper(): NamesHelperInterface;
     public function manifestNamePrefix(): string;
 
     /**
-     * @return ManifestFile[]|iterable
+     * @return ManifestFile[]
      */
     public function manifestFiles(): iterable;
 }

@@ -19,9 +19,9 @@ class AppRegistry
     {
         $this->apps = [];
         foreach ($apps as $app) {
-            $appName = $app->name();
+            $appName = $app::name();
             if (!$this->has($appName)) {
-                $this->apps[$app->name()] = $app;
+                $this->apps[$appName] = $app;
 
                 continue;
             }
