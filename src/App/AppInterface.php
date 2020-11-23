@@ -15,6 +15,7 @@ interface AppInterface extends ConfigurableInterface
     public function metadataHelper(): MetadataHelperInterface;
     public function namesHelper(): NamesHelperInterface;
     public function manifestNamePrefix(): string;
+    public function manifestConfig(string $shortName): array;
 
     /**
      * @return ManifestFile[]
