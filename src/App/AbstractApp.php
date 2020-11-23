@@ -12,17 +12,12 @@ abstract class AbstractApp implements AppInterface
 {
     use ConfigAwareTrait;
 
-    protected MetadataHelperInterface $metadataHelper;
-    protected NamesHelperInterface $namesHelper;
     protected array $files = [];
 
-    public function __construct(MetadataHelperInterface $metadataHelper, NamesHelperInterface $namesHelper)
-    {
-        $metadataHelper->setApp($this);
-        $namesHelper->setApp($this);
-
-        $this->metadataHelper = $metadataHelper;
-        $this->namesHelper = $namesHelper;
+    public function __construct(
+        protected MetadataHelperInterface $metadataHelper,
+        protected NamesHelperInterface $namesHelper
+    ) {
     }
 
     public function addManifestFile(string $fileNameWithoutExtension, APIResourceInterface $resource): void
@@ -52,11 +47,15 @@ abstract class AbstractApp implements AppInterface
 
     public function metadataHelper(): MetadataHelperInterface
     {
+        $this->metadataHelper->setApp($this);
+
         return $this->metadataHelper;
     }
 
     public function namesHelper(): NamesHelperInterface
     {
+        $this->namesHelper->setApp($this);
+
         return $this->namesHelper;
     }
 
