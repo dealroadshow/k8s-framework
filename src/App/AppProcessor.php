@@ -8,18 +8,11 @@ use Dealroadshow\K8S\Framework\Registry\ManifestRegistry;
 
 class AppProcessor
 {
-    private ManifestRegistry $manifestRegistry;
-    private ManifestProcessor $manifestProcessor;
-    /**
-     * @var ContextInterface
-     */
-    private ContextInterface $context;
-
-    public function __construct(ManifestRegistry $manifestRegistry, ManifestProcessor $manifestProcessor, ContextInterface $context)
-    {
-        $this->manifestRegistry = $manifestRegistry;
-        $this->manifestProcessor = $manifestProcessor;
-        $this->context = $context;
+    public function __construct(
+        private ManifestRegistry $manifestRegistry,
+        private ManifestProcessor $manifestProcessor,
+        private ContextInterface $context
+    ) {
     }
 
     public function process(AppInterface $app): void

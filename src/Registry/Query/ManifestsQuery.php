@@ -2,6 +2,7 @@
 
 namespace Dealroadshow\K8S\Framework\Registry\Query;
 
+use Closure;
 use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Attribute\Scanner\TagsScanner;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
@@ -12,12 +13,12 @@ class ManifestsQuery
     private ManifestRegistry $registry;
 
     /**
-     * @var ManifestInterface[]|iterable
+     * @var ManifestInterface[]
      */
     private iterable $result;
 
     /**
-     * @var array|\Closure[]
+     * @var Closure[]
      */
     private array $closures;
 
@@ -77,7 +78,7 @@ class ManifestsQuery
     }
 
     /**
-     * @return iterable|ManifestInterface[]
+     * @return ManifestInterface[]
      */
     public function execute(): iterable
     {
@@ -100,7 +101,7 @@ class ManifestsQuery
         return null;
     }
 
-    private function addClosure(\Closure $closure): self
+    private function addClosure(Closure $closure): self
     {
         $this->closures[] = $closure;
 
