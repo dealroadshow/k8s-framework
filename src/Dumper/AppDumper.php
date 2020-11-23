@@ -14,6 +14,19 @@ class AppDumper
         $this->renderer = $renderer;
     }
 
+    /**
+     * @param string         $dir
+     * @param AppInterface[] $apps
+     */
+    public function dumpAll(string $dir, iterable $apps): void
+    {
+        @mkdir($dir, 0777, true);
+        foreach ($apps as $app) {
+            $appDir = $dir.DIRECTORY_SEPARATOR.$app::name();
+            $this->dump($app, $appDir);
+        }
+    }
+
     public function dump(AppInterface $app, string $appDir): void
     {
         @mkdir($appDir, 0777, true);

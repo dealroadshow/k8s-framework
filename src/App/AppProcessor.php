@@ -15,6 +15,13 @@ class AppProcessor
     ) {
     }
 
+    public function processAll(AppInterface ...$apps): void
+    {
+        foreach ($apps as $app) {
+            $this->process($app);
+        }
+    }
+
     public function process(AppInterface $app): void
     {
         $query = $this->manifestRegistry->query();
