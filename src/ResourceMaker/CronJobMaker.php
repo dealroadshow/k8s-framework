@@ -21,13 +21,7 @@ class CronJobMaker extends AbstractResourceMaker
         $this->jobSpecProcessor = $jobSpecProcessor;
     }
 
-    /**
-     * @param ManifestInterface|CronJobInterface $manifest
-     * @param AppInterface                       $app
-     *
-     * @return CronJob
-     */
-    protected function makeResource(ManifestInterface $manifest, AppInterface $app): CronJob
+    protected function makeResource(ManifestInterface|CronJobInterface $manifest, AppInterface $app): CronJob
     {
         $spec = new CronJobSpec($manifest->schedule());
         $cronJob = new CronJob($spec);

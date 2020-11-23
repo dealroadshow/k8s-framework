@@ -25,10 +25,7 @@ class AppRegistry
 
                 continue;
             }
-            if ($this->get($appName) === $app) {
-                // Few projects may depend on the same app
-                continue;
-            }
+
             throw new LogicException(
                 sprintf(
                     'App name must be unique, but "%s" and "%s" share the same name "%s"',

@@ -7,7 +7,6 @@ use Dealroadshow\K8S\Framework\Config\ConfigAwareTrait;
 use Dealroadshow\K8S\Framework\Core\ManifestFile;
 use Dealroadshow\K8S\Framework\Helper\Metadata\MetadataHelperInterface;
 use Dealroadshow\K8S\Framework\Helper\Names\NamesHelperInterface;
-use Dealroadshow\K8S\Framework\Project\ProjectInterface;
 
 abstract class AbstractApp implements AppInterface
 {
@@ -16,7 +15,6 @@ abstract class AbstractApp implements AppInterface
     protected MetadataHelperInterface $metadataHelper;
     protected NamesHelperInterface $namesHelper;
     protected array $files = [];
-    protected ?ProjectInterface $project;
 
     public function __construct(MetadataHelperInterface $metadataHelper, NamesHelperInterface $namesHelper)
     {
@@ -42,6 +40,11 @@ abstract class AbstractApp implements AppInterface
         $this->files[$fileNameWithoutExtension] = new ManifestFile($fileNameWithoutExtension, $resource);
     }
 
+    public function manifestNamePrefix(): string
+    {
+        return $this->name();
+    }
+
     public function manifestFiles(): iterable
     {
         return $this->files;
@@ -57,13 +60,8 @@ abstract class AbstractApp implements AppInterface
         return $this->namesHelper;
     }
 
-    public function setProject(ProjectInterface $project): void
+    public function config(): array
     {
-        $this->project = $project;
-    }
-
-    public function project(): ProjectInterface
-    {
-        return $this->project;
+        return $this->config;
     }
 }

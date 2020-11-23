@@ -7,7 +7,6 @@ use Dealroadshow\K8S\Framework\Config\ConfigurableInterface;
 use Dealroadshow\K8S\Framework\Core\ManifestFile;
 use Dealroadshow\K8S\Framework\Helper\Metadata\MetadataHelperInterface;
 use Dealroadshow\K8S\Framework\Helper\Names\NamesHelperInterface;
-use Dealroadshow\K8S\Framework\Project\ProjectInterface;
 
 interface AppInterface extends ConfigurableInterface
 {
@@ -15,8 +14,7 @@ interface AppInterface extends ConfigurableInterface
     public function metadataHelper(): MetadataHelperInterface;
     public function name(): string;
     public function namesHelper(): NamesHelperInterface;
-    public function setProject(ProjectInterface $project): void;
-    public function project(): ProjectInterface;
+    public function manifestNamePrefix(): string;
 
     /**
      * @return ManifestFile[]|iterable

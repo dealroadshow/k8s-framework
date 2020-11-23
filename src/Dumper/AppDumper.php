@@ -16,10 +16,10 @@ class AppDumper
 
     public function dump(AppInterface $app, string $appDir): void
     {
+        @mkdir($appDir, 0777, true);
         foreach ($app->manifestFiles() as $file) {
             $yaml = $this->renderer->render($file->resource());
             $filePath = $appDir.DIRECTORY_SEPARATOR.$file->fileNameWithoutExtension().'.yaml';
-            @mkdir($appDir, 0777, true);
             file_put_contents($filePath, $yaml);
         }
     }

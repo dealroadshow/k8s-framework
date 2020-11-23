@@ -18,13 +18,7 @@ class DeploymentMaker extends AbstractResourceMaker
         $this->specProcessor = $specProcessor;
     }
 
-    /**
-     * @param ManifestInterface|DeploymentInterface $manifest
-     * @param AppInterface                          $app
-     *
-     * @return Deployment
-     */
-    public function makeResource(ManifestInterface $manifest, AppInterface $app): Deployment
+    public function makeResource(ManifestInterface|DeploymentInterface $manifest, AppInterface $app): Deployment
     {
         $deployment = new Deployment();
 

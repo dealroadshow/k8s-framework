@@ -8,7 +8,6 @@ use Dealroadshow\K8S\Framework\Core\Job\JobInterface;
 use Dealroadshow\K8S\Framework\Core\Job\JobSpecProcessor;
 use Dealroadshow\K8S\Framework\Core\LabelSelector\SelectorConfigurator;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
-use Dealroadshow\K8S\Framework\Core\Pod\PodTemplateSpecProcessor;
 
 class JobMaker extends AbstractResourceMaker
 {
@@ -19,13 +18,7 @@ class JobMaker extends AbstractResourceMaker
         $this->jobSpecProcessor = $jobSpecProcessor;
     }
 
-    /**
-     * @param ManifestInterface|JobInterface $manifest
-     * @param AppInterface                   $app
-     *
-     * @return Job
-     */
-    protected function makeResource(ManifestInterface $manifest, AppInterface $app): Job
+    protected function makeResource(ManifestInterface|JobInterface $manifest, AppInterface $app): Job
     {
         $job = new Job();
         $spec = $job->spec();

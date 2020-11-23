@@ -3,11 +3,13 @@
 namespace Dealroadshow\K8S\Framework\Core;
 
 use Dealroadshow\K8S\Framework\App\AppInterface;
+use Dealroadshow\K8S\Framework\Config\ConfigAwareTrait;
 
 abstract class AbstractManifest implements ManifestInterface
 {
+    use ConfigAwareTrait;
+
     protected AppInterface $app;
-    protected array $config = [];
 
     public function metadata(MetadataConfigurator $meta): void
     {
@@ -16,10 +18,5 @@ abstract class AbstractManifest implements ManifestInterface
     public function setApp(AppInterface $app): void
     {
         $this->app = $app;
-    }
-
-    public function setConfig(array $config): void
-    {
-        $this->config = $config;
     }
 }
