@@ -85,4 +85,15 @@ class Image
     {
         return new self($name, null, null);
     }
+
+    public static function fromString(string $string)
+    {
+        if(preg_match('#(.+)/(.+):(.+)#', $string, $matches)) {
+            return new self($matches[2], $matches[1], $matches[3]);
+        }
+        if(preg_match('#(.+):(.+)#', $string, $matches)) {
+            return new self($matches[1], null, $matches[2]);
+        }
+        return new self($string, null, null);
+    }
 }
