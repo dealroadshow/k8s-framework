@@ -5,7 +5,6 @@ namespace Dealroadshow\K8S\Framework\Core\Pod\Volume\Builder;
 use Dealroadshow\K8S\Data\EmptyDirVolumeSource;
 use Dealroadshow\K8S\Data\Volume;
 use Dealroadshow\K8S\Framework\Core\Container\Resources\Memory;
-use Dealroadshow\K8S\ValueObject\Quantity;
 
 class EmptyDirVolumeBuilder extends AbstractVolumeBuilder
 {
@@ -32,8 +31,7 @@ class EmptyDirVolumeBuilder extends AbstractVolumeBuilder
 
     public function setSizeLimit(Memory $memory): self
     {
-        $limit = Quantity::fromString($memory->toString());
-        $this->source->setSizeLimit($limit);
+        $this->source->setSizeLimit($memory->toString());
 
         return $this;
     }

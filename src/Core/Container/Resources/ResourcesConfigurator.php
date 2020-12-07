@@ -2,9 +2,8 @@
 
 namespace Dealroadshow\K8S\Framework\Core\Container\Resources;
 
-use Dealroadshow\K8S\Data\Collection\QuantityMap;
+use Dealroadshow\K8S\Data\Collection\StringOrFloatMap;
 use Dealroadshow\K8S\Data\ResourceRequirements;
-use Dealroadshow\K8S\ValueObject\Quantity;
 
 class ResourcesConfigurator
 {
@@ -49,18 +48,16 @@ class ResourcesConfigurator
         return $this->setMemory(self::EPHEMERAL_STORAGE, $memory, $this->resources->limits());
     }
 
-    private function setCPU(CPU $cpu, QuantityMap $map): self
+    private function setCPU(CPU $cpu, StringOrFloatMap $map): self
     {
-        $quantity = Quantity::fromString($cpu->toString());
-        $map->add(self::CPU, $quantity);
+        $map->add(self::CPU, $cpu->toString());
 
         return $this;
     }
 
-    private function setMemory(string $key, Memory $memory, QuantityMap $map): self
+    private function setMemory(string $key, Memory $memory, StringOrFloatMap $map): self
     {
-        $quantity = Quantity::fromString($memory->toString());
-        $map->add(self::MEMORY, $quantity);
+        $map->add($key, $memory->toString());
 
         return $this;
     }

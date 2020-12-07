@@ -4,7 +4,6 @@ namespace Dealroadshow\K8S\Framework\Core\Ingress\Configurator;
 
 use Dealroadshow\K8S\Data\IngressBackend;
 use Dealroadshow\K8S\Framework\App\AppInterface;
-use Dealroadshow\K8S\ValueObject\IntOrString;
 
 class IngressBackendFactory
 {
@@ -15,15 +14,8 @@ class IngressBackendFactory
         $this->app = $app;
     }
 
-    /**
-     * @param string     $serviceName
-     * @param int|string $servicePort
-     *
-     * @return IngressBackend
-     */
-    public function fromServiceNameAndPort(string $serviceName, $servicePort): IngressBackend
+    public function fromServiceNameAndPort(string $serviceName, int|string $servicePort): IngressBackend
     {
-        $servicePort = $this->getPort($servicePort);
         $backend = new IngressBackend($serviceName, $servicePort);
         $backend
             ->setServiceName($serviceName)
@@ -32,30 +24,10 @@ class IngressBackendFactory
         return $backend;
     }
 
-    /**
-     * @param string     $serviceClass
-     * @param int|string $servicePort
-     *
-     * @return IngressBackend
-     */
-    public function fromServiceClassAndPort(string $serviceClass, $servicePort): IngressBackend
+    public function fromServiceClassAndPort(string $serviceClass, int|string $servicePort): IngressBackend
     {
         $serviceName = $this->app->namesHelper()->byServiceClass($serviceClass);
 
         return $this->fromServiceNameAndPort($serviceName, $servicePort);
-    }
-
-    private function getPort($servicePort): IntOrString
-    {
-        // TODO change this to int|string typehint when PHP 8.0 is released
-        if (is_int($servicePort)) {
-            $servicePort = IntOrString::fromInt($servicePort);
-        } elseif (is_string($servicePort)) {
-            $servicePort = IntOrString::fromString($servicePort);
-        } else {
-            throw new \TypeError('$servicePort must be an int or a string');
-        }
-
-        return $servicePort;
     }
 }

@@ -4,25 +4,25 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cd13d018c1a28cb02bcfaab9ef913af9",
+    "content-hash": "f6c1048fd754d4d2e1b78c1eeb84bb11",
     "packages": [
         {
             "name": "dealroadshow/k8s-resources",
-            "version": "v1.16.0",
+            "version": "v1.16.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dealroadshow/k8s-resources.git",
-                "reference": "787e9d8300654dd9443489a67f57d4f4b168de19"
+                "reference": "3b80b4d36414f95f533495debed61733de997415"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dealroadshow/k8s-resources/zipball/787e9d8300654dd9443489a67f57d4f4b168de19",
-                "reference": "787e9d8300654dd9443489a67f57d4f4b168de19",
+                "url": "https://api.github.com/repos/dealroadshow/k8s-resources/zipball/3b80b4d36414f95f533495debed61733de997415",
+                "reference": "3b80b4d36414f95f533495debed61733de997415",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "php": "^7.4"
+                "php": "^8.0"
             },
             "type": "library",
             "autoload": {
@@ -41,7 +41,11 @@
                 }
             ],
             "description": "PHP definitions of Kubernetes API resources",
-            "time": "2020-10-06T19:36:45+00:00"
+            "support": {
+                "issues": "https://github.com/dealroadshow/k8s-resources/issues",
+                "source": "https://github.com/dealroadshow/k8s-resources/tree/v1.16.1"
+            },
+            "time": "2020-12-07T20:33:31+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
@@ -91,6 +95,9 @@
             ],
             "description": "A generic function and convention to trigger deprecation notices",
             "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/deprecation-contracts/tree/master"
+            },
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -167,6 +174,9 @@
                 "polyfill",
                 "portable"
             ],
+            "support": {
+                "source": "https://github.com/symfony/polyfill-ctype/tree/v1.20.0"
+            },
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -247,6 +257,9 @@
                 "portable",
                 "shim"
             ],
+            "support": {
+                "source": "https://github.com/symfony/polyfill-php80/tree/v1.20.0"
+            },
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -265,16 +278,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v5.1.8",
+            "version": "v5.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "f284e032c3cefefb9943792132251b79a6127ca6"
+                "reference": "bb73619b2ae5121bbbcd9f191dfd53ded17ae598"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/f284e032c3cefefb9943792132251b79a6127ca6",
-                "reference": "f284e032c3cefefb9943792132251b79a6127ca6",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/bb73619b2ae5121bbbcd9f191dfd53ded17ae598",
+                "reference": "bb73619b2ae5121bbbcd9f191dfd53ded17ae598",
                 "shasum": ""
             },
             "require": {
@@ -319,6 +332,9 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/yaml/tree/v5.2.0"
+            },
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -333,7 +349,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-10-24T12:03:25+00:00"
+            "time": "2020-11-28T10:57:20+00:00"
         }
     ],
     "packages-dev": [],
@@ -343,9 +359,9 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=8.0",
+        "php": "^8.0",
         "ext-json": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.0.0"
 }

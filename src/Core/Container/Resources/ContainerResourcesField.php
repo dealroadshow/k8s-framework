@@ -3,7 +3,6 @@
 namespace Dealroadshow\K8S\Framework\Core\Container\Resources;
 
 use Dealroadshow\K8S\Data\ResourceFieldSelector;
-use Dealroadshow\K8S\ValueObject\Quantity;
 
 class ContainerResourcesField
 {
@@ -26,7 +25,7 @@ class ContainerResourcesField
         return $this->selector;
     }
 
-    public function setContainerName(?string $containerName): self
+    public function setContainerName(string|null $containerName): self
     {
         $this->selector->setContainerName($containerName);
 
@@ -35,7 +34,7 @@ class ContainerResourcesField
 
     public function setDivisor(string $divisor): self
     {
-        $this->selector->setDivisor(Quantity::fromString($divisor));
+        $this->selector->setDivisor($divisor);
 
         return $this;
     }
