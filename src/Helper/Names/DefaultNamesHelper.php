@@ -16,12 +16,14 @@ class DefaultNamesHelper implements NamesHelperInterface
 
     public function fullName(string $shortName): string
     {
-        return sprintf(
-            '%s-%s-%s',
-            $this->env,
-            $this->app->manifestNamePrefix(),
-            $shortName,
-        );
+        $name = $this->env;
+        $prefix = $this->app->manifestNamePrefix();
+        if ($prefix) {
+            $name .= '-'.$prefix;
+        }
+        $name .= '-'.$shortName;
+
+        return $name;
     }
 
     public function byManifestClass(string $manifestClass): string
