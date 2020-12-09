@@ -22,8 +22,8 @@ class DeploymentMaker extends AbstractResourceMaker
     {
         $deployment = new Deployment();
 
-        $labelSelector = new SelectorConfigurator($deployment->spec()->selector());
-        $manifest->selector($labelSelector);
+        $selector = new SelectorConfigurator($deployment->spec()->selector());
+        $manifest->selector($selector);
 
         $app->metadataHelper()->configureMeta($manifest, $deployment);
         $this->specProcessor->process($manifest, $deployment->spec()->template(), $app);
