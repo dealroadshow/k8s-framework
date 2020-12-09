@@ -7,6 +7,7 @@ use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Attribute\Scanner\TagsScanner;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 use Dealroadshow\K8S\Framework\Registry\ManifestRegistry;
+use ProxyManager\Proxy\AccessInterceptorInterface;
 
 class ManifestsQuery
 {
@@ -58,9 +59,17 @@ class ManifestsQuery
 
     public function namespacePrefix(string $prefix): self
     {
-        return $this->addClosure(
-            fn (ManifestInterface $manifest): bool => str_starts_with(get_class($manifest), $prefix)
-        );
+        $closure = function (ManifestInterface $manifest) use ($prefix): bool {
+            $class = new \ReflectionObject($manifest);
+
+            if ($class->implementsInterface(AccessInterceptorInterface::class)) {
+                $class = $class->getParentClass();
+            }
+
+            return str_starts_with($class->getName(), $prefix);
+        };
+
+        return $this->addClosure($closure);
     }
 
     public function instancesOf(string $className): self

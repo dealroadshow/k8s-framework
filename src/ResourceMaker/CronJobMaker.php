@@ -58,7 +58,7 @@ class CronJobMaker extends AbstractResourceMaker
     private function configureJobTemplate(JobTemplateSpec $templateSpec, JobInterface $manifest, AppInterface $app)
     {
         $jobSpec = $templateSpec->spec();
-        $manifest->labelSelector(new SelectorConfigurator($jobSpec->selector()));
+        $manifest->selector(new SelectorConfigurator($jobSpec->selector()));
         $this->jobSpecProcessor->process($manifest, $jobSpec, $app);
         foreach ($jobSpec->selector()->matchLabels()->all() as $name => $value) {
             $templateSpec->metadata()->labels()->add($name, $value);

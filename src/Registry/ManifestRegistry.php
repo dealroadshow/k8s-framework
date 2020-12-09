@@ -4,25 +4,29 @@ namespace Dealroadshow\K8S\Framework\Registry;
 
 use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
+use Dealroadshow\K8S\Framework\Proxy\ManifestProxyFactory;
 use Dealroadshow\K8S\Framework\Registry\Query\ManifestsQuery;
 
 class ManifestRegistry
 {
     /**
-     * @var iterable|ManifestInterface[]
+     * @var ManifestInterface[]
      */
-    private iterable $manifests;
+    private array $manifests = [];
 
     /**
-     * @param iterable|ManifestInterface[] $manifests
+     * @param ManifestInterface[]  $manifests
+     * @param ManifestProxyFactory $proxyFactory
      */
-    public function __construct(iterable $manifests)
+    public function __construct(iterable $manifests, ManifestProxyFactory $proxyFactory)
     {
-        $this->manifests = $manifests;
+        foreach ($manifests as $key => $manifest) {
+            $this->manifests[$key] = $proxyFactory->makeProxy($manifest);
+        }
     }
 
     /**
-     * @return iterable|ManifestInterface[]
+     * @return ManifestInterface[]
      */
     public function all(): iterable
     {
@@ -32,7 +36,7 @@ class ManifestRegistry
     /**
      * @param AppInterface $app
      *
-     * @return iterable|ManifestInterface[]
+     * @return ManifestInterface[]
      */
     public function byApp(AppInterface $app): iterable
     {
