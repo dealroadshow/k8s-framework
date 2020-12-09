@@ -20,6 +20,15 @@ class ManifestProxyFactory
             $this->middlewareService->beforeMethodCall($wrapped, $method, $params);
         };
 
-        return $factory->createProxy($manifest, [$closure]);
+        $closures = [];
+        $class = new \ReflectionClass($manifest);
+        foreach ($class->getMethods() as $method) {
+            if ($method->isFinal() || $method->isPrivate() || $method->isConstructor() || $method->isDestructor()) {
+                continue;
+            }
+            $closures[$method->getName()] = $closure;
+        }
+
+        return $factory->createProxy($manifest, $closures);
     }
 }
