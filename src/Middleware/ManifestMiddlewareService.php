@@ -13,12 +13,17 @@ class ManifestMiddlewareService
     {
     }
 
-    public function beforeMethodCall(ManifestInterface $manifest, string $methodName, array $params)
+    public function beforeMethodCall(ManifestInterface $manifest, string $methodName, array $params): mixed
     {
         foreach ($this->middlewares as $middleware) {
             if ($middleware->supports($manifest, $methodName, $params)) {
-                $middleware->beforeMethodCall($manifest, $methodName, $params);
+                $middleware->beforeMethodCall($manifest, $methodName, $params, $returnValue);
+                if (ManifestMethodMiddlewareInterface::NO_RETURN_VALUE !== $returnValue) {
+                    return $returnValue;
+                }
             }
         }
+
+        return ManifestMethodMiddlewareInterface::NO_RETURN_VALUE;
     }
 }
