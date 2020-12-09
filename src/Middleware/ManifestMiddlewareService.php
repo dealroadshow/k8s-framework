@@ -17,6 +17,7 @@ class ManifestMiddlewareService
     {
         foreach ($this->middlewares as $middleware) {
             if ($middleware->supports($manifest, $methodName, $params)) {
+                $returnValue = ManifestMethodMiddlewareInterface::NO_RETURN_VALUE;
                 $middleware->beforeMethodCall($manifest, $methodName, $params, $returnValue);
                 if (ManifestMethodMiddlewareInterface::NO_RETURN_VALUE !== $returnValue) {
                     return $returnValue;
