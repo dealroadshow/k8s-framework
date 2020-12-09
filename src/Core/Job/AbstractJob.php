@@ -15,7 +15,7 @@ use Dealroadshow\K8S\Framework\Core\Pod\Volume\VolumesConfigurator;
 
 abstract class AbstractJob extends AbstractManifest implements JobInterface
 {
-    public function labelSelector(SelectorConfigurator $selector): void
+    public function selector(SelectorConfigurator $selector): void
     {
     }
 

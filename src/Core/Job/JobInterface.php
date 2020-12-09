@@ -9,7 +9,7 @@ use Dealroadshow\K8S\Framework\Core\Pod\PodTemplateSpecInterface;
 
 interface JobInterface extends PodTemplateSpecInterface, ManifestInterface
 {
-    public function labelSelector(SelectorConfigurator $selector): void;
+    public function selector(SelectorConfigurator $selector): void;
     public function backoffLimit(): ?int;
     public function activeDeadlineSeconds(): ?int;
     public function ttlSecondsAfterFinished(): ?int;

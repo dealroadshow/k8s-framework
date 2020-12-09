@@ -23,7 +23,7 @@ class JobMaker extends AbstractResourceMaker
         $job = new Job();
         $spec = $job->spec();
 
-        $manifest->labelSelector(new SelectorConfigurator($spec->selector()));
+        $manifest->selector(new SelectorConfigurator($spec->selector()));
 
         $app->metadataHelper()->configureMeta($manifest, $job);
         $this->jobSpecProcessor->process($manifest, $spec, $app);
