@@ -25,4 +25,9 @@ abstract class AbstractService extends AbstractManifest implements ServiceInterf
     public function configureService(Service $service): void
     {
     }
+
+    public static function kind(): string
+    {
+        return Service::KIND;
+    }
 }

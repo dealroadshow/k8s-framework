@@ -27,4 +27,19 @@ class ManifestMiddlewareService
 
         return ManifestMethodMiddlewareInterface::NO_RETURN_VALUE;
     }
+
+    public function afterMethodCall(ManifestInterface $manifest, string $methodName, array $params, mixed $returnedValue): mixed
+    {
+        foreach ($this->middlewares as $middleware) {
+            if ($middleware->supports($manifest, $methodName, $params)) {
+                $returnValue = ManifestMethodMiddlewareInterface::NO_RETURN_VALUE;
+                $middleware->afterMethodCall($manifest, $methodName, $params, $returnedValue, $returnValue);
+                if (ManifestMethodMiddlewareInterface::NO_RETURN_VALUE !== $returnValue) {
+                    return $returnValue;
+                }
+            }
+        }
+
+        return ManifestMethodMiddlewareInterface::NO_RETURN_VALUE;
+    }
 }

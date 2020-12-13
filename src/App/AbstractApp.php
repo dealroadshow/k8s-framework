@@ -63,4 +63,18 @@ abstract class AbstractApp implements AppInterface
     {
         return $this->config;
     }
+
+    public function readFile(string $filePath): string
+    {
+        $appClass = new \ReflectionObject($this);
+        $appDir = dirname($appClass->getFileName());
+        $path = $appDir.'/Resources/'.ltrim($filePath, '/');
+        if (!file_exists($path)) {
+            throw new \InvalidArgumentException(
+                sprintf('File "%s" does not exist', $path)
+            );
+        }
+
+        return file_get_contents($path);
+    }
 }

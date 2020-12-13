@@ -17,4 +17,9 @@ abstract class AbstractIngress extends AbstractManifest implements IngressInterf
     public function configureIngress(Ingress $ingress): void
     {
     }
+
+    public static function kind(): string
+    {
+        return Ingress::KIND;
+    }
 }

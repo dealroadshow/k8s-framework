@@ -17,7 +17,7 @@ class ManifestProxyFactory
     {
         $factory = new ProxyFactory();
 
-        $closure = function(
+        $prefixClosure = function(
             ManifestInterface $proxy,
             ManifestInterface $wrapped,
             string $method,
@@ -32,15 +32,33 @@ class ManifestProxyFactory
             return $result;
         };
 
-        $closures = [];
+        $suffixClosure = function(
+            ManifestInterface $proxy,
+            ManifestInterface $wrapped,
+            string $method,
+            array $params,
+            mixed $returnedValue,
+            bool &$returnEarly
+        ) {
+            $result = $this->middlewareService->afterMethodCall($wrapped, $method, $params, $returnedValue);
+            if (ManifestMethodMiddlewareInterface::NO_RETURN_VALUE !== $result) {
+                $returnEarly = true;
+            }
+
+            return $result;
+        };
+
+        $prefixClosures = [];
+        $suffixClosures = [];
         $class = new \ReflectionClass($manifest);
         foreach ($class->getMethods() as $method) {
             if ($method->isFinal() || $method->isPrivate() || $method->isConstructor() || $method->isDestructor()) {
                 continue;
             }
-            $closures[$method->getName()] = $closure;
+            $prefixClosures[$method->getName()] = $prefixClosure;
+            $suffixClosures[$method->getName()] = $suffixClosure;
         }
 
-        return $factory->createProxy($manifest, $closures);
+        return $factory->createProxy($manifest, $prefixClosures, $suffixClosures);
     }
 }

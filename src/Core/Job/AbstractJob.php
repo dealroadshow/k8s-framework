@@ -81,4 +81,9 @@ abstract class AbstractJob extends AbstractManifest implements JobInterface
     public function configureJob(Job $job): void
     {
     }
+
+    public static function kind(): string
+    {
+        return Job::KIND;
+    }
 }

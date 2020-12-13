@@ -2,6 +2,7 @@
 
 namespace Dealroadshow\K8S\Framework\Core\Secret;
 
+use Dealroadshow\K8S\API\Secret;
 use Dealroadshow\K8S\Data\Collection\StringMap;
 use Dealroadshow\K8S\Framework\Core\AbstractManifest;
 
@@ -13,5 +14,10 @@ abstract class AbstractSecret extends AbstractManifest implements SecretInterfac
 
     public function stringData(StringMap $stringData): void
     {
+    }
+
+    public static function kind(): string
+    {
+        return Secret::KIND;
     }
 }

@@ -6,6 +6,7 @@ use Dealroadshow\K8S\Framework\Config\ConfigAwareInterface;
 
 interface ManifestInterface extends AppAwareInterface, ConfigAwareInterface, MetadataAwareInterface
 {
+    public static function kind(): string;
     public static function shortName(): string;
     public function fileNameWithoutExtension(): string;
 }

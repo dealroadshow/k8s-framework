@@ -2,6 +2,7 @@
 
 namespace Dealroadshow\K8S\Framework\Core\ConfigMap;
 
+use Dealroadshow\K8S\API\ConfigMap;
 use Dealroadshow\K8S\Data\Collection\StringMap;
 use Dealroadshow\K8S\Framework\Core\AbstractManifest;
 
@@ -13,5 +14,10 @@ abstract class AbstractConfigMap extends AbstractManifest implements ConfigMapIn
 
     public function binaryData(StringMap $binaryData): void
     {
+    }
+
+    public static function kind(): string
+    {
+        return ConfigMap::KIND;
     }
 }
