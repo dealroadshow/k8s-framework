@@ -10,31 +10,17 @@ class AppRegistry
     /**
      * @var array<string, AppInterface>|AppInterface[]
      */
-    private array $apps;
+    private array $apps = [];
 
-    /**
-     * @param array<string, AppInterface>|AppInterface[] $apps
-     */
-    public function __construct(iterable $apps)
+    public function add(string $alias, AppInterface $app)
     {
-        $this->apps = [];
-        foreach ($apps as $app) {
-            $appName = $app::name();
-            if (!$this->has($appName)) {
-                $this->apps[$appName] = $app;
-
-                continue;
-            }
-
-            throw new LogicException(
-                sprintf(
-                    'App name must be unique, but "%s" and "%s" share the same name "%s"',
-                    get_class($this->apps[$appName]),
-                    get_class($app),
-                    $appName
-                )
+        if ($this->has($alias)) {
+            throw new \InvalidArgumentException(
+                sprintf('App with alias "%s" already exists', $alias)
             );
         }
+
+        $this->apps[$alias] = $app;
     }
 
     public function has(string $appName): bool
@@ -53,7 +39,7 @@ class AppRegistry
     }
 
     /**
-     * @return array|string[]
+     * @return string[]
      */
     public function names(): array
     {
