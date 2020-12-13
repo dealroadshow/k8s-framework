@@ -2,7 +2,6 @@
 
 namespace Dealroadshow\K8S\Framework\Registry;
 
-use LogicException;
 use Dealroadshow\K8S\Framework\App\AppInterface;
 
 class AppRegistry
