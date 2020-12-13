@@ -28,7 +28,7 @@ class EnvConfigurator
         $this->app = $app;
     }
 
-    public function addFrom(string $className, bool $mustExist, string $varNamesPrefix = null): static
+    public function addFrom(string $className, bool $mustExist = true, string $varNamesPrefix = null): static
     {
         try {
             $class = new \ReflectionClass($className);
