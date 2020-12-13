@@ -82,7 +82,7 @@ abstract class AbstractJob extends AbstractManifest implements JobInterface
     {
     }
 
-    public static function kind(): string
+    final public static function kind(): string
     {
         return Job::KIND;
     }

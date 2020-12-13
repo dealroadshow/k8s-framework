@@ -15,10 +15,10 @@ use Dealroadshow\K8S\Framework\Core\Container\Security\SecurityContextConfigurat
 use Dealroadshow\K8S\Framework\Core\Container\VolumeMount\VolumeMountsConfigurator;
 use Dealroadshow\K8S\Framework\Middleware\ContainerImageMiddlewareInterface;
 
-class ContainerMaker
+class ContainerMaker implements ContainerMakerInterface
 {
     /**
-     * @var ContainerImageMiddlewareInterface[]|iterable
+     * @var ContainerImageMiddlewareInterface[]
      */
     private iterable $middlewares;
 

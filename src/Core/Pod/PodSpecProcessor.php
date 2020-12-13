@@ -4,7 +4,7 @@ namespace Dealroadshow\K8S\Framework\Core\Pod;
 
 use Dealroadshow\K8S\Data\PodSpec;
 use Dealroadshow\K8S\Framework\App\AppInterface;
-use Dealroadshow\K8S\Framework\Core\Container\ContainerMaker;
+use Dealroadshow\K8S\Framework\Core\Container\ContainerMakerInterface;
 use Dealroadshow\K8S\Framework\Core\Pod\Affinity\AffinityConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\Containers\PodContainers;
 use Dealroadshow\K8S\Framework\Core\Pod\ImagePullSecrets\ImagePullSecretsConfigurator;
@@ -12,9 +12,9 @@ use Dealroadshow\K8S\Framework\Core\Pod\Volume\VolumesConfigurator;
 
 class PodSpecProcessor
 {
-    private ContainerMaker $containerMaker;
+    private ContainerMakerInterface $containerMaker;
 
-    public function __construct(ContainerMaker $containerMaker)
+    public function __construct(ContainerMakerInterface $containerMaker)
     {
         $this->containerMaker = $containerMaker;
     }

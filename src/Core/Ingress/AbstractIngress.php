@@ -18,7 +18,7 @@ abstract class AbstractIngress extends AbstractManifest implements IngressInterf
     {
     }
 
-    public static function kind(): string
+    final public static function kind(): string
     {
         return Ingress::KIND;
     }

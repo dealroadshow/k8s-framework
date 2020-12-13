@@ -26,7 +26,7 @@ abstract class AbstractService extends AbstractManifest implements ServiceInterf
     {
     }
 
-    public static function kind(): string
+    final public static function kind(): string
     {
         return Service::KIND;
     }

@@ -36,7 +36,7 @@ abstract class AbstractCronJob extends AbstractManifest implements CronJobInterf
     {
     }
 
-    public static function kind(): string
+    final public static function kind(): string
     {
         return CronJob::KIND;
     }

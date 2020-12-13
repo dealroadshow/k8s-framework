@@ -26,11 +26,6 @@ abstract class AbstractDeployment extends AbstractManifest implements Deployment
     {
     }
 
-    public static function kind(): string
-    {
-        return Deployment::KIND;
-    }
-
     public function nodeSelector(StringMap $nodeSelector): void
     {
     }
@@ -65,5 +60,10 @@ abstract class AbstractDeployment extends AbstractManifest implements Deployment
 
     public function configureDeployment(Deployment $deployment): void
     {
+    }
+
+    final public static function kind(): string
+    {
+        return Deployment::KIND;
     }
 }
