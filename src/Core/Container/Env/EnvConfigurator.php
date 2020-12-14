@@ -48,7 +48,7 @@ class EnvConfigurator
                 );
             }
 
-            $this->addSecret($className, $mustExist);
+            return $this->addSecret($className, $mustExist);
         }
 
         throw new \InvalidArgumentException(
