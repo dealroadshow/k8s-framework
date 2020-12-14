@@ -18,8 +18,16 @@ class ManifestRegistry
     {
     }
 
+    /**
+     * @param string            $appAlias
+     * @param ManifestInterface $manifest
+     *
+     * @throws \ReflectionException
+     */
     public function add(string $appAlias, ManifestInterface $manifest): void
     {
+        $this->manifests[$appAlias] ??= [];
+
         $key = sprintf('%s_%s', $manifest::shortName(), $manifest::kind());
         if (array_key_exists($key, $this->manifests[$appAlias])) {
             $existingManifestClass = new \ReflectionClass($this->manifests[$appAlias][$key]);
