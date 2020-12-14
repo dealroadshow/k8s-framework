@@ -22,25 +22,25 @@ class AppRegistry
         $this->apps[$alias] = $app;
     }
 
-    public function has(string $appName): bool
+    public function has(string $alias): bool
     {
-        return array_key_exists($appName, $this->apps);
+        return array_key_exists($alias, $this->apps);
     }
 
-    public function get(string $appName): AppInterface
+    public function get(string $alias): AppInterface
     {
-        if(!$this->has($appName)) {
+        if(!$this->has($alias)) {
             throw new \InvalidArgumentException(
-                sprintf('App "%s" does not exist', $appName)
+                sprintf('App "%s" does not exist', $alias)
             );
         }
-        return $this->apps[$appName];
+        return $this->apps[$alias];
     }
 
     /**
      * @return string[]
      */
-    public function names(): array
+    public function aliases(): array
     {
         return array_keys($this->apps);
     }
