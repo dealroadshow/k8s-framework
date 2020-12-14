@@ -2,34 +2,32 @@
 
 namespace Dealroadshow\K8S\Framework\Dumper;
 
-use Dealroadshow\K8S\Framework\App\AppInterface;
+use Dealroadshow\K8S\Framework\Registry\AppRegistry;
 use Dealroadshow\K8S\Framework\Renderer\YamlRenderer;
 
 class AppDumper
 {
-    private YamlRenderer $renderer;
-
-    public function __construct(YamlRenderer $renderer)
+    public function __construct(private YamlRenderer $renderer, private AppRegistry $appRegistry)
     {
-        $this->renderer = $renderer;
     }
 
     /**
      * @param string         $dir
-     * @param AppInterface[] $apps
+     * @param string[]       $appsAliases
      */
-    public function dumpAll(string $dir, iterable $apps): void
+    public function dumpAll(string $dir, iterable $appsAliases): void
     {
         @mkdir($dir, 0777, true);
-        foreach ($apps as $app) {
-            $appDir = $dir.DIRECTORY_SEPARATOR.$app::name();
-            $this->dump($app, $appDir);
+        foreach ($appsAliases as $alias) {
+            $appDir = $dir.DIRECTORY_SEPARATOR.$alias;
+            $this->dump($alias, $appDir);
         }
     }
 
-    public function dump(AppInterface $app, string $appDir): void
+    public function dump(string $appAlias, string $appDir): void
     {
         @mkdir($appDir, 0777, true);
+        $app = $this->appRegistry->get($appAlias);
         foreach ($app->manifestFiles() as $file) {
             $yaml = $this->renderer->render($file->resource());
             $filePath = $appDir.DIRECTORY_SEPARATOR.$file->fileNameWithoutExtension().'.yaml';
