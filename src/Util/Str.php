@@ -52,10 +52,8 @@ class Str
 
     public static function asDNSSubdomain(string $str): string
     {
-        $camel2dash = strtolower(
-            preg_replace('/([a-zA-Z])(?=[A-Z])/', '$1-', $str)
-        );
-        $valid = preg_replace('/([^\w\-]|[_])+/', '', $camel2dash);
+        $dashed = self::camelCasedToSeparatedWords($str, '-');
+        $valid = preg_replace('/([^\w\-]|[_])+/', '', $dashed);
 
         if (0 === strlen($valid)) {
             throw new \InvalidArgumentException(
@@ -74,8 +72,20 @@ class Str
         return $valid;
     }
 
+    public static function underscored(string $str): string
+    {
+        return self::camelCasedToSeparatedWords($str, '_');
+    }
+
     public static function isValidDNSSubdomain(string $str): bool
     {
         return 253 > strlen($str) && 0 !== preg_match('/^[a-z0-9]+[a-z0-9\-.]+[a-z0-9]$/', $str);
+    }
+
+    private static function camelCasedToSeparatedWords(string $camelCased, string $separator): string
+    {
+        return strtolower(
+            preg_replace('/([a-zA-Z])(?=[A-Z])/', '$1'.$separator, $camelCased)
+        );
     }
 }
