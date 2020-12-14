@@ -4,28 +4,30 @@ namespace Dealroadshow\K8S\Framework\App;
 
 use Dealroadshow\K8S\Framework\Core\ManifestProcessor;
 use Dealroadshow\K8S\Framework\Dumper\Context\ContextInterface;
+use Dealroadshow\K8S\Framework\Registry\AppRegistry;
 use Dealroadshow\K8S\Framework\Registry\ManifestRegistry;
 
 class AppProcessor
 {
     public function __construct(
+        private AppRegistry $appRegistry,
         private ManifestRegistry $manifestRegistry,
         private ManifestProcessor $manifestProcessor,
         private ContextInterface $context
     ) {
     }
 
-    public function processAll(AppInterface ...$apps): void
+    public function processAll(string ...$appAliases): void
     {
-        foreach ($apps as $app) {
-            $this->process($app);
+        foreach ($appAliases as $alias) {
+            $this->process($alias);
         }
     }
 
-    public function process(AppInterface $app): void
+    public function process(string $appAlias): void
     {
-        $query = $this->manifestRegistry->query();
-        $query->app($app);
+        $app = $this->appRegistry->get($appAlias);
+        $query = $this->manifestRegistry->query($appAlias);
         if ($tags = $this->context->includeTags()) {
             $query->includeTags($tags);
         }
