@@ -11,7 +11,7 @@ class AppRegistry
      */
     private array $apps = [];
 
-    public function add(string $alias, AppInterface $app)
+    public function add(string $alias, AppInterface $app): void
     {
         if ($this->has($alias)) {
             throw new \InvalidArgumentException(

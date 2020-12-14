@@ -2,7 +2,6 @@
 
 namespace Dealroadshow\K8S\Framework\Registry;
 
-use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 use Dealroadshow\K8S\Framework\Proxy\ManifestProxyFactory;
 use Dealroadshow\K8S\Framework\Registry\Query\ManifestsQuery;
@@ -10,41 +9,38 @@ use Dealroadshow\K8S\Framework\Registry\Query\ManifestsQuery;
 class ManifestRegistry
 {
     /**
-     * @var ManifestInterface[]
+     * @var ManifestInterface[][]
      */
     private array $manifests = [];
 
-    /**
-     * @param ManifestInterface[]  $manifests
-     * @param ManifestProxyFactory $proxyFactory
-     */
-    public function __construct(iterable $manifests, ManifestProxyFactory $proxyFactory)
+    public function __construct(private ManifestProxyFactory $proxyFactory)
     {
-        foreach ($manifests as $key => $manifest) {
-            $this->manifests[$key] = $proxyFactory->makeProxy($manifest);
-        }
+    }
+
+    public function add(string $appAlias, ManifestInterface $manifest): void
+    {
+        $this->manifests[$appAlias][] = $this->proxyFactory->makeProxy($manifest);
     }
 
     /**
-     * @return ManifestInterface[]
-     */
-    public function all(): iterable
-    {
-        return $this->manifests;
-    }
-
-    /**
-     * @param AppInterface $app
+     * @param string $appAlias
      *
      * @return ManifestInterface[]
      */
-    public function byApp(AppInterface $app): iterable
+    public function forApp(string $appAlias): iterable
     {
-        return $this->query()->app($app)->execute();
+        return $this->query($appAlias)->execute();
     }
 
-    public function query(): ManifestsQuery
+    public function query(string $appAlias): ManifestsQuery
     {
-        return new ManifestsQuery($this);
+        if (!array_key_exists($appAlias, $this->manifests)) {
+            throw new \InvalidArgumentException(
+                sprintf('There is no manifests for app "%s"', $appAlias)
+            );
+        }
+        $manifests = $this->manifests[$appAlias];
+
+        return new ManifestsQuery($manifests);
     }
 }
