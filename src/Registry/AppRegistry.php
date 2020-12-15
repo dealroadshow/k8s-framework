@@ -59,9 +59,9 @@ class AppRegistry
      */
     public function allAppsByClass(string $appClass): iterable
     {
-        foreach ($this->apps as $app) {
+        foreach ($this->apps as $alias => $app) {
             if ($app instanceof $appClass) {
-                yield $app;
+                yield $alias => $app;
             }
         }
     }
