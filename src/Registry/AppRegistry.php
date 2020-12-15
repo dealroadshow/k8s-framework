@@ -51,4 +51,18 @@ class AppRegistry
         }
         return $this->apps[$alias];
     }
+
+    /**
+     * @param string $appClass
+     *
+     * @return AppInterface[]
+     */
+    public function allAppsByClass(string $appClass): iterable
+    {
+        foreach ($this->apps as $app) {
+            if ($app instanceof $appClass) {
+                yield $app;
+            }
+        }
+    }
 }
