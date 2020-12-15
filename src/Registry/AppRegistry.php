@@ -22,6 +22,21 @@ class AppRegistry
         $this->apps[$alias] = $app;
     }
 
+    /**
+     * @return string[]
+     */
+    public function aliases(): array
+    {
+        return array_keys($this->apps);
+    }
+
+    public function classes(): array
+    {
+        $classes = array_map(fn (AppInterface $app) => get_class($app), $this->apps);
+
+        return array_unique($classes);
+    }
+
     public function has(string $alias): bool
     {
         return array_key_exists($alias, $this->apps);
@@ -35,13 +50,5 @@ class AppRegistry
             );
         }
         return $this->apps[$alias];
-    }
-
-    /**
-     * @return string[]
-     */
-    public function aliases(): array
-    {
-        return array_keys($this->apps);
     }
 }
