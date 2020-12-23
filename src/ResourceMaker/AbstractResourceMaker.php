@@ -5,6 +5,7 @@ namespace Dealroadshow\K8S\Framework\ResourceMaker;
 use Dealroadshow\K8S\APIResourceInterface;
 use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
+use Dealroadshow\K8S\Framework\Util\ClassName;
 
 abstract class AbstractResourceMaker implements ResourceMakerInterface
 {
@@ -34,7 +35,7 @@ abstract class AbstractResourceMaker implements ResourceMakerInterface
                     '%s::process() only supports instances of %s, instance of %s was given',
                     get_class($this),
                     $supportedClass,
-                    get_class($manifest)
+                    ClassName::real($manifest)
                 )
             );
         }

@@ -59,7 +59,7 @@ class LabelSelectorExpression
         return $this;
     }
 
-    public static function withKey(string $key)
+    public static function withKey(string $key): static
     {
         return new self($key);
     }
@@ -86,7 +86,7 @@ class LabelSelectorExpression
         }
         throw new \LogicException(
             sprintf(
-                'Repeated attempt to set operator on %s instance. Rule must be sent only once.',
+                'Repeated attempt to set operator on %s instance. Rule must be set only once.',
                 get_class($this)
             )
         );
