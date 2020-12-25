@@ -28,6 +28,22 @@ class EnvConfigurator
         $this->app = $app;
     }
 
+    public function addFromClasses(string ...$classes): static
+    {
+        foreach ($classes as $class) {
+            $this->addFrom($class);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string      $className class name of a ConfigMap or a Secret
+     * @param bool        $mustExist
+     * @param string|null $varNamesPrefix allowed only for configmaps
+     *
+     * @return $this
+     */
     public function addFrom(string $className, bool $mustExist = true, string $varNamesPrefix = null): static
     {
         try {
