@@ -22,6 +22,22 @@ class AppRegistry
         $this->apps[$alias] = $app;
     }
 
+    public function appAlias(AppInterface $app): string
+    {
+        foreach ($this->allAppsByClass(get_class($app)) as $alias => $registeredApp) {
+            if ($app === $registeredApp) {
+                return $alias;
+            }
+        }
+
+        throw new \InvalidArgumentException(
+            sprintf(
+                'App instance with class "%s" is not contained in this AppRegistry',
+                get_class($app)
+            )
+        );
+    }
+
     /**
      * @return string[]
      */
@@ -30,11 +46,28 @@ class AppRegistry
         return array_keys($this->apps);
     }
 
+    /**
+     * @param string $appClass
+     *
+     * @return AppInterface[]
+     */
+    public function allAppsByClass(string $appClass): iterable
+    {
+        foreach ($this->apps as $alias => $app) {
+            if ($app instanceof $appClass) {
+                yield $alias => $app;
+            }
+        }
+    }
+
+    /**
+     * @return string[]
+     */
     public function classes(): array
     {
         $classes = array_map(fn (AppInterface $app) => get_class($app), $this->apps);
 
-        return array_unique($classes);
+        return array_values(array_unique($classes));
     }
 
     public function has(string $alias): bool
@@ -50,19 +83,5 @@ class AppRegistry
             );
         }
         return $this->apps[$alias];
-    }
-
-    /**
-     * @param string $appClass
-     *
-     * @return AppInterface[]
-     */
-    public function allAppsByClass(string $appClass): iterable
-    {
-        foreach ($this->apps as $alias => $app) {
-            if ($app instanceof $appClass) {
-                yield $alias => $app;
-            }
-        }
     }
 }

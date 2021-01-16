@@ -14,18 +14,18 @@ use Dealroadshow\K8S\Framework\Core\ConfigMap\ConfigMapInterface;
 use Dealroadshow\K8S\Framework\Core\Container\Resources\ContainerResourcesField;
 use Dealroadshow\K8S\Framework\Core\Pod\PodField;
 use Dealroadshow\K8S\Framework\Core\Secret\SecretInterface;
+use Dealroadshow\K8S\Framework\Registry\AppRegistry;
+use Dealroadshow\K8S\Framework\Registry\ManifestRegistry;
 
 class EnvConfigurator
 {
-    private EnvVarList $vars;
-    private EnvFromSourceList $sources;
-    private AppInterface $app;
-
-    public function __construct(EnvVarList $vars, EnvFromSourceList $sources, AppInterface $app)
-    {
-        $this->vars = $vars;
-        $this->sources = $sources;
-        $this->app = $app;
+    public function __construct(
+        private EnvVarList $vars,
+        private EnvFromSourceList $sources,
+        private AppInterface $app,
+        private AppRegistry $appRegistry,
+        private ManifestRegistry $manifestRegistry
+    ) {
     }
 
     public function addFromClasses(string ...$classes): static
@@ -38,22 +38,19 @@ class EnvConfigurator
     }
 
     /**
-     * @param string      $className class name of a ConfigMap or a Secret
+     * @param string      $className      class name of a ConfigMap or a Secret
      * @param bool        $mustExist
      * @param string|null $varNamesPrefix allowed only for configmaps
+     * @param string|null $appAlias App alias, if you want to add ConfigMap / Secret from an external app
      *
      * @return $this
      */
-    public function addFrom(string $className, bool $mustExist = true, string $varNamesPrefix = null): static
+    public function addFrom(string $className, bool $mustExist = true, string $varNamesPrefix = null, string $appAlias = null): static
     {
-        try {
-            $class = new \ReflectionClass($className);
-        } catch (\ReflectionException) {
-            throw new \InvalidArgumentException(sprintf('Class "%s" does not exist', $className));
-        }
+        $class = new \ReflectionClass($className);
 
         if ($class->implementsInterface(ConfigMapInterface::class)) {
-            return $this->addConfigMap($className, $mustExist, $varNamesPrefix);
+            return $this->addConfigMap($className, $mustExist, $varNamesPrefix, $appAlias);
         } elseif ($class->implementsInterface(SecretInterface::class)) {
             if (null !== $varNamesPrefix) {
                 throw new \LogicException(
@@ -64,7 +61,7 @@ class EnvConfigurator
                 );
             }
 
-            return $this->addSecret($className, $mustExist);
+            return $this->addSecret($className, $mustExist, $appAlias);
         }
 
         throw new \InvalidArgumentException(
@@ -76,9 +73,18 @@ class EnvConfigurator
         );
     }
 
-    public function addConfigMap(string $configMapClass, bool $mustExist = true, string $varNamesPrefix = null): static
+    /**
+     * @param string      $configMapClass
+     * @param bool        $mustExist
+     * @param string|null $varNamesPrefix
+     * @param string|null $appAlias App alias, if you want to add ConfigMap from an external app
+     *
+     * @return $this
+     */
+    public function addConfigMap(string $configMapClass, bool $mustExist = true, string $varNamesPrefix = null, string $appAlias = null): static
     {
-        $cmName = $this->app->namesHelper()->byConfigMapClass($configMapClass);
+        $app = $this->appByManifestClass($configMapClass, $appAlias);
+        $cmName = $app->namesHelper()->byConfigMapClass($configMapClass);
 
         $source = new ConfigMapEnvSource();
         $source
@@ -97,9 +103,17 @@ class EnvConfigurator
         return $this;
     }
 
-    public function addSecret(string $secretClass, bool $mustExist = true): static
+    /**
+     * @param string      $secretClass
+     * @param bool        $mustExist
+     * @param string|null $appAlias App alias, if you want to add Secret from an external app
+     *
+     * @return $this
+     */
+    public function addSecret(string $secretClass, bool $mustExist = true, string $appAlias = null): static
     {
-        $secretName = $this->app->namesHelper()->bySecretClass($secretClass);
+        $app = $this->appByManifestClass($secretClass, $appAlias);
+        $secretName = $app->namesHelper()->bySecretClass($secretClass);
         $envFromSource = new EnvFromSource();
         $envFromSource->secretRef()
             ->setName($secretName)
@@ -120,9 +134,19 @@ class EnvConfigurator
         return $this;
     }
 
-    public function varFromConfigMap(string $varName, string $configMapClass, string $configMapKey, bool $optional = false): static
+    /**
+     * @param string      $varName
+     * @param string      $configMapClass
+     * @param string      $configMapKey
+     * @param bool        $optional
+     * @param string|null $appAlias App alias, if you want to add variable from external ConfigMap (from another app)
+     *
+     * @return $this
+     */
+    public function varFromConfigMap(string $varName, string $configMapClass, string $configMapKey, bool $optional = false, string $appAlias = null): static
     {
-        $cmName = $this->app->namesHelper()->byConfigMapClass($configMapClass);
+        $app = $this->appByManifestClass($configMapClass, $appAlias);
+        $cmName = $app->namesHelper()->byConfigMapClass($configMapClass);
         $keySelector = new ConfigMapKeySelector($configMapKey);
         $keySelector
             ->setName($cmName)
@@ -135,9 +159,19 @@ class EnvConfigurator
         return $this;
     }
 
-    public function varFromSecret(string $varName, string $secretClass, string $secretKey, bool $optional = false): static
+    /**
+     * @param string      $varName
+     * @param string      $secretClass
+     * @param string      $secretKey
+     * @param bool        $optional
+     * @param string|null $appAlias App alias, if you want to add variable from external Secret (from another app)
+     *
+     * @return $this
+     */
+    public function varFromSecret(string $varName, string $secretClass, string $secretKey, bool $optional = false, string $appAlias = null): static
     {
-        $secretName = $this->app->namesHelper()->bySecretClass($secretClass);
+        $app = $this->appByManifestClass($secretClass, $appAlias);
+        $secretName = $app->namesHelper()->bySecretClass($secretClass);
         $keySelector = new SecretKeySelector($secretKey);
         $keySelector
             ->setName($secretName)
@@ -170,5 +204,83 @@ class EnvConfigurator
         $this->vars->add($var);
 
         return $this;
+    }
+
+    private function appByManifestClass(string $manifestClassName, string|null $appAlias): AppInterface
+    {
+        $manifestClass = new \ReflectionClass($manifestClassName);
+        $manifestKind = $manifestClass->getMethod('kind')->invoke(null);
+        $appClass = new \ReflectionObject($this->app);
+        if (str_starts_with($manifestClassName, $appClass->getNamespaceName())) {
+            // ConfigMap/Secret class is used by manifest in a same app
+            return $this->app;
+        }
+
+
+        if (null !== $appAlias) {
+            if (!$this->appRegistry->has($appAlias)) {
+                throw new \InvalidArgumentException(
+                    sprintf(
+                        'App "%s" for "%s" class "%s" does not exist',
+                        $appAlias,
+                        $manifestKind,
+                        $manifestClassName
+                    )
+                );
+            }
+
+            return $this->appRegistry->get($appAlias);
+        }
+
+        $manifestOwningAppClass = null;
+        foreach ($this->appRegistry->classes() as $appClassName) {
+            $appClass = new \ReflectionClass($appClassName);
+            if (str_starts_with($manifestClassName, $appClass->getNamespaceName())) {
+                $manifestOwningAppClass = $appClass;
+            }
+        }
+
+        if (null === $manifestOwningAppClass) {
+            throw new \LogicException(
+                sprintf(
+                    'Cannot determine, which app owns %s class "%s". You should provide app alias as an argument',
+                    $manifestKind,
+                    $manifestClassName
+                )
+            );
+        }
+
+        $possibleManifestOwners = $this->appRegistry->allAppsByClass($manifestOwningAppClass->getName());
+        if ($possibleManifestOwners instanceof \Traversable) {
+            $possibleManifestOwners = iterator_to_array($possibleManifestOwners);
+        }
+        $possibleOwnersNumber = count($possibleManifestOwners);
+        if (0 === $possibleOwnersNumber) {
+            throw new \LogicException(
+                sprintf(
+                    '%s class "%s" is determined to be owned by app class "%s", but there are no such apps registered',
+                    $manifestKind,
+                    $manifestClassName,
+                    $manifestOwningAppClass->getName()
+                )
+            );
+        } elseif (1 < $possibleOwnersNumber) {
+            $errMessage = <<<'ERR'
+            %s class "%s" is determined to be owned by app class "%s", but there are more than one such app registered.
+            In order to resolve this ambiguity, please provide an app alias as an argument.
+            ERR;
+
+
+            throw new \LogicException(
+                sprintf(
+                    str_replace(PHP_EOL, ' ', $errMessage),
+                    $manifestKind,
+                    $manifestClassName,
+                    $manifestOwningAppClass->getName()
+                )
+            );
+        }
+
+        return $possibleOwnersNumber[0];
     }
 }
