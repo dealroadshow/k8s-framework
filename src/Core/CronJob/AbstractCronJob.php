@@ -3,10 +3,16 @@
 namespace Dealroadshow\K8S\Framework\Core\CronJob;
 
 use Dealroadshow\K8S\API\Batch\CronJob;
-use Dealroadshow\K8S\Framework\Core\AbstractManifest;
+use Dealroadshow\K8S\Framework\Core\Job\AbstractJob;
+use Dealroadshow\K8S\Framework\Core\Job\JobInterface;
 
-abstract class AbstractCronJob extends AbstractManifest implements CronJobInterface
+abstract class AbstractCronJob extends AbstractJob implements CronJobInterface
 {
+    public function job(): JobInterface
+    {
+        return $this;
+    }
+
     public function concurrencyPolicy(): ?string
     {
         return null;
