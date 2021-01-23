@@ -7,7 +7,7 @@ use Dealroadshow\K8S\Framework\Core\Job\JobInterface;
 
 interface CronJobInterface extends JobInterface
 {
-    public function concurrencyPolicy(): ?string;
+    public function concurrencyPolicy(): ConcurrencyPolicy;
     public function failedJobsHistoryLimit(): ?int;
     public function job(): JobInterface;
     public function schedule(): string;

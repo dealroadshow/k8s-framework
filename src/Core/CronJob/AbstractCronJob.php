@@ -13,9 +13,9 @@ abstract class AbstractCronJob extends AbstractJob implements CronJobInterface
         return $this;
     }
 
-    public function concurrencyPolicy(): ?string
+    public function concurrencyPolicy(): ConcurrencyPolicy
     {
-        return null;
+        return ConcurrencyPolicy::allow();
     }
 
     public function failedJobsHistoryLimit(): ?int

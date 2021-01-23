@@ -36,7 +36,7 @@ class CronJobMaker extends AbstractResourceMaker
         $successfulJobsHistoryLimit = $manifest->successfulJobsHistoryLimit();
         $suspend = $manifest->suspend();
         if (null !== $concurrencyPolicy) {
-            $spec->setConcurrencyPolicy($concurrencyPolicy);
+            $spec->setConcurrencyPolicy($concurrencyPolicy->toString());
         }
         if (null !== $failedJobsHistoryLimit) {
             $spec->setFailedJobsHistoryLimit($failedJobsHistoryLimit);

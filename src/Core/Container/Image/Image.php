@@ -26,12 +26,12 @@ class Image
         return $this->name;
     }
 
-    public function registryUrl(): ?string
+    public function registryUrl(): string|null
     {
         return $this->registryUrl;
     }
 
-    public function tag(): ?string
+    public function tag(): string|null
     {
         return $this->tag;
     }
@@ -81,12 +81,12 @@ class Image
         return $this;
     }
 
-    public static function fromName(string $name)
+    public static function fromName(string $name): static
     {
-        return new self($name, null, null);
+        return new static($name, null, null);
     }
 
-    public static function fromString(string $string)
+    public static function fromString(string $string): static
     {
         if(preg_match('#(.+)/(.+):(.+)#', $string, $matches)) {
             return new self($matches[2], $matches[1], $matches[3]);
@@ -94,6 +94,6 @@ class Image
         if(preg_match('#(.+):(.+)#', $string, $matches)) {
             return new self($matches[1], null, $matches[2]);
         }
-        return new self($string, null, null);
+        return new static($string, null, null);
     }
 }
