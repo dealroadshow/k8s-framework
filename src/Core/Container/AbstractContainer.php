@@ -10,11 +10,14 @@ use Dealroadshow\K8S\Framework\Core\Container\Lifecycle\LifecycleConfigurator;
 use Dealroadshow\K8S\Framework\Core\Container\Lifecycle\Probes\ProbesConfigurator;
 use Dealroadshow\K8S\Framework\Core\Container\Ports\PortsConfigurator;
 use Dealroadshow\K8S\Framework\Core\Container\Resources\ResourcesConfigurator;
+use Dealroadshow\K8S\Framework\Core\Container\Resources\ResourcesForEnvTrait;
 use Dealroadshow\K8S\Framework\Core\Container\Security\SecurityContextConfigurator;
 use Dealroadshow\K8S\Framework\Core\Container\VolumeMount\VolumeMountsConfigurator;
 
-abstract class AbstractContainer implements ContainerInterface
+abstract class AbstractContainer implements EnvAwareContainerInterface
 {
+    use ResourcesForEnvTrait;
+
     public function args(StringList $args): void
     {
     }
