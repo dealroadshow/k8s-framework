@@ -8,7 +8,7 @@ class ConcurrencyPolicy
     private const FORBID = 'Forbid';
     private const REPLACE = 'Replace';
 
-    public function __construct(private string $value)
+    private function __construct(private string $value)
     {
     }
 
