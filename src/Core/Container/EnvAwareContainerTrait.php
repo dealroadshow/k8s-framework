@@ -11,32 +11,6 @@ trait EnvAwareContainerTrait
      */
     private array $resourcesForEnv = [];
 
-    /**
-     * @var int[]
-     */
-    private array $replicasForEnv = [];
-
-    public function replicasForEnv(string $env): int|null
-    {
-        return $this->replicasForEnv[$env] ?? null;
-    }
-
-    public function setReplicasForEnv(string $env, int $replicas): static
-    {
-        if (isset($this->replicasForEnv[$env])) {
-            throw new \LogicException(
-                sprintf(
-                    'Replicas for env "%s" for class "%s" already set',
-                    $env,
-                    get_class($this)
-                )
-            );
-        }
-        $this->replicasForEnv[$env] = $replicas;
-
-        return $this;
-    }
-
     public function resourcesForEnv(string $env): ContainerResourcesCallback|null
     {
         return $this->resourcesForEnv[$env] ?? null;
