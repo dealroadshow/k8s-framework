@@ -9,4 +9,5 @@ interface ConfigMapInterface extends ManifestInterface
 {
     public function data(StringMap $data): void;
     public function binaryData(StringMap $binaryData): void;
+    public function keysPrefix(): string;
 }

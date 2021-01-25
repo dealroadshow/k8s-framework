@@ -9,4 +9,5 @@ interface SecretInterface extends ManifestInterface
 {
     public function data(StringMap $data): void;
     public function stringData(StringMap $stringData): void;
+    public function keysPrefix(): string;
 }

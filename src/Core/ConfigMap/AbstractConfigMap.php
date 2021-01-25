@@ -16,6 +16,11 @@ abstract class AbstractConfigMap extends AbstractManifest implements ConfigMapIn
     {
     }
 
+    public function keysPrefix(): string
+    {
+        return '';
+    }
+
     final public static function kind(): string
     {
         return ConfigMap::KIND;
