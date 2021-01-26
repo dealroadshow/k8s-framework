@@ -27,6 +27,10 @@ class SecretMaker extends AbstractResourceMaker
             $this->prefixMapKeys($prefix, $stringData);
         }
 
+        foreach ($data->all() as $key => $value) {
+            $data->add($key, base64_encode($value));
+        }
+
         return $secret;
     }
 
