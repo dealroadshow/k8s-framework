@@ -206,7 +206,7 @@ class EnvConfigurator
         ERR;
 
         throw new \InvalidArgumentException(
-            sprintf($msg, $alias,EnvConfigurator::class)
+            sprintf($msg, $alias, $className, EnvConfigurator::class)
         );
     }
 }

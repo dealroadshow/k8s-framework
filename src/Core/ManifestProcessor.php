@@ -28,6 +28,8 @@ class ManifestProcessor
             if ($maker->supports($manifest, $app)) {
                 $resource = $maker->make($manifest, $app);
                 $app->addManifestFile($manifest->fileNameWithoutExtension(), $resource);
+
+                return;
             }
         }
     }
