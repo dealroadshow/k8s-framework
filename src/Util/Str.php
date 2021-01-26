@@ -79,7 +79,11 @@ class Str
 
     public static function isValidDNSSubdomain(string $str): bool
     {
-        return 253 > strlen($str) && 0 !== preg_match('/^[a-z0-9]+[a-z0-9\-.]+[a-z0-9]$/', $str);
+        if (false === filter_var($str, FILTER_VALIDATE_DOMAIN, FILTER_FLAG_HOSTNAME)) {
+            return false;
+        }
+
+        return !str_contains($str, '.');
     }
 
     private static function camelCasedToSeparatedWords(string $camelCased, string $separator): string
