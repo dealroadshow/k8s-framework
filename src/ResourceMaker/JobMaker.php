@@ -4,6 +4,7 @@ namespace Dealroadshow\K8S\Framework\ResourceMaker;
 
 use Dealroadshow\K8S\API\Batch\Job;
 use Dealroadshow\K8S\Framework\App\AppInterface;
+use Dealroadshow\K8S\Framework\Core\CronJob\CronJobInterface;
 use Dealroadshow\K8S\Framework\Core\Job\JobInterface;
 use Dealroadshow\K8S\Framework\Core\Job\JobSpecProcessor;
 use Dealroadshow\K8S\Framework\Core\LabelSelector\SelectorConfigurator;
@@ -16,6 +17,11 @@ class JobMaker extends AbstractResourceMaker
     public function __construct(JobSpecProcessor $jobSpecProcessor)
     {
         $this->jobSpecProcessor = $jobSpecProcessor;
+    }
+
+    public function supports(ManifestInterface $manifest, AppInterface $app): bool
+    {
+        return $manifest instanceof JobInterface && !($manifest instanceof CronJobInterface);
     }
 
     protected function makeResource(ManifestInterface|JobInterface $manifest, AppInterface $app): Job
