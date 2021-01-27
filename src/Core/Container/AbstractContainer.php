@@ -53,12 +53,12 @@ abstract class AbstractContainer implements EnvAwareContainerInterface
     {
     }
 
-    public function imagePullPolicy(): ?ImagePullPolicy
+    public function imagePullPolicy(): ImagePullPolicy
     {
-        return null;
+        return ImagePullPolicy::ifNotPresent();
     }
 
-    public function workingDir(): ?string
+    public function workingDir(): string|null
     {
         return null;
     }
