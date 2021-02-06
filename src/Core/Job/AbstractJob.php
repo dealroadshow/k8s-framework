@@ -10,6 +10,7 @@ use Dealroadshow\K8S\Framework\Core\LabelSelector\SelectorConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\Affinity\AffinityConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\ImagePullSecrets\ImagePullSecretsConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\Policy\RestartPolicy;
+use Dealroadshow\K8S\Framework\Core\Pod\PriorityClass\PriorityClassConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\Volume\VolumesConfigurator;
 
 abstract class AbstractJob extends AbstractManifest implements JobInterface
@@ -66,6 +67,10 @@ abstract class AbstractJob extends AbstractManifest implements JobInterface
     }
 
     public function volumes(VolumesConfigurator $volumes): void
+    {
+    }
+
+    public function priorityClass(PriorityClassConfigurator $priorityClass): void
     {
     }
 

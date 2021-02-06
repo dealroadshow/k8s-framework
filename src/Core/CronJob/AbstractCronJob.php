@@ -5,6 +5,7 @@ namespace Dealroadshow\K8S\Framework\Core\CronJob;
 use Dealroadshow\K8S\API\Batch\CronJob;
 use Dealroadshow\K8S\Framework\Core\Job\AbstractJob;
 use Dealroadshow\K8S\Framework\Core\Job\JobInterface;
+use Dealroadshow\K8S\Framework\Core\Pod\PriorityClass\PriorityClassConfigurator;
 
 abstract class AbstractCronJob extends AbstractJob implements CronJobInterface
 {
@@ -36,6 +37,10 @@ abstract class AbstractCronJob extends AbstractJob implements CronJobInterface
     public function suspend(): ?bool
     {
         return null;
+    }
+
+    public function priorityClass(PriorityClassConfigurator $priorityClass): void
+    {
     }
 
     public function configureCronJob(CronJob  $cronJob): void
