@@ -13,18 +13,18 @@ use Dealroadshow\K8S\Framework\Core\Container\Ports\PortsConfigurator;
 use Dealroadshow\K8S\Framework\Core\Container\Resources\ResourcesConfigurator;
 use Dealroadshow\K8S\Framework\Core\Container\Security\SecurityContextConfigurator;
 use Dealroadshow\K8S\Framework\Core\Container\VolumeMount\VolumeMountsConfigurator;
+use Dealroadshow\K8S\Framework\Core\ManifestManager;
 use Dealroadshow\K8S\Framework\Middleware\ContainerImageMiddlewareInterface;
 use Dealroadshow\K8S\Framework\Registry\AppRegistry;
-use Dealroadshow\K8S\Framework\Registry\ManifestRegistry;
 
 class ContainerMaker implements ContainerMakerInterface
 {
     /**
      * @param AppRegistry                         $appRegistry
-     * @param ManifestRegistry                    $manifestRegistry
+     * @param ManifestManager                     $manifestManager
      * @param ContainerImageMiddlewareInterface[] $middlewares
      */
-    public function __construct(private AppRegistry $appRegistry, private ManifestRegistry $manifestRegistry, private iterable $middlewares)
+    public function __construct(private AppRegistry $appRegistry, private ManifestManager $manifestManager, private iterable $middlewares)
     {
     }
 
@@ -35,7 +35,13 @@ class ContainerMaker implements ContainerMakerInterface
         $builder->args($container->args());
         $builder->command($container->command());
 
-        $env = new EnvConfigurator($container->env(), $container->envFrom(), $app, $this->appRegistry, $this->manifestRegistry);
+        $env = new EnvConfigurator(
+            $container->env(),
+            $container->envFrom(),
+            $app,
+            $this->appRegistry,
+            $this->manifestManager
+        );
         $builder->env($env);
 
         $mounts = new VolumeMountsConfigurator($volumes, $container->volumeMounts());
