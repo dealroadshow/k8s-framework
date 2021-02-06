@@ -27,7 +27,7 @@ class PodAffinityBuilder
      *
      * @return $this
      */
-    public function addPreferenceByExpression(PodAffinityExpression $expression, int $weight, string $topologyKey, array $namespaces = null): self
+    public function addPreferenceByExpression(PodAffinityExpression $expression, int $weight, string $topologyKey, array $namespaces = null): static
     {
         $term = $this->affinityTermFromExpression($expression, $topologyKey, $namespaces);
         $weightedTerm = new WeightedPodAffinityTerm($term, $weight);
@@ -37,17 +37,16 @@ class PodAffinityBuilder
     }
 
     /**
-     * @param string              $labelKey
-     * @param string              $labelValue
+     * @param array               $labels
      * @param int                 $weight
      * @param string              $topologyKey
      * @param string[]|array|null $namespaces
      *
      * @return $this
      */
-    public function addPreferenceByLabel(string $labelKey, string $labelValue, int $weight, string $topologyKey, array $namespaces = null)
+    public function addPreferenceByLabels(array $labels, int $weight, string $topologyKey, array $namespaces = null): static
     {
-        $term = $this->affinityTermByLabel($labelKey, $labelValue, $topologyKey, $namespaces);
+        $term = $this->affinityTermByLabel($labels, $topologyKey, $namespaces);
         $weightedTerm = new WeightedPodAffinityTerm($term, $weight);
         $this->preferences->add($weightedTerm);
 
@@ -61,7 +60,7 @@ class PodAffinityBuilder
      *
      * @return $this
      */
-    public function addRequirementByExpression(PodAffinityExpression $expression, string $topologyKey, array $namespaces = null): self
+    public function addRequirementByExpression(PodAffinityExpression $expression, string $topologyKey, array $namespaces = null): static
     {
         $term = $this->affinityTermFromExpression($expression, $topologyKey, $namespaces);
         $this->requirements->add($term);
@@ -70,22 +69,21 @@ class PodAffinityBuilder
     }
 
     /**
-     * @param string              $labelKey
-     * @param string              $labelValue
+     * @param array               $labels
      * @param string              $topologyKey
      * @param string[]|array|null $namespaces
      *
      * @return $this
      */
-    public function addRequirementByLabel(string $labelKey, string $labelValue, string $topologyKey, array $namespaces = null)
+    public function addRequirementByLabel(array $labels, string $topologyKey, array $namespaces = null): static
     {
-        $term = $this->affinityTermByLabel($labelKey, $labelValue, $topologyKey, $namespaces);
+        $term = $this->affinityTermByLabel($labels, $topologyKey, $namespaces);
         $this->requirements->add($term);
 
         return $this;
     }
 
-    private function affinityTermFromExpression(PodAffinityExpression $expression, string $topologyKey, ?array $namespaces = null): PodAffinityTerm
+    private function affinityTermFromExpression(PodAffinityExpression $expression, string $topologyKey, array $namespaces = null): PodAffinityTerm
     {
         $selector = $expression->toLabelSelectorRequirement();
         $term = new PodAffinityTerm($topologyKey);
@@ -97,10 +95,13 @@ class PodAffinityBuilder
         return $term;
     }
 
-    private function affinityTermByLabel(string $labelKey, string $labelValue, string $topologyKey, ?array $namespaces = null): PodAffinityTerm
+    private function affinityTermByLabel(array $labels, string $topologyKey, array $namespaces = null): PodAffinityTerm
     {
         $term = new PodAffinityTerm($topologyKey);
-        $term->labelSelector()->matchLabels()->add($labelKey, $labelValue);
+        $matchLabels = $term->labelSelector()->matchLabels();
+        foreach ($labels as $labelKey => $labelValue) {
+            $matchLabels->add($labelKey, $labelValue);
+        }
         if (null !== $namespaces) {
             $term->namespaces()->addAll(array_values($namespaces));
         }
