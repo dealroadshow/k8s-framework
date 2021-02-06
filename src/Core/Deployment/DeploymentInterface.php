@@ -10,8 +10,8 @@ use Dealroadshow\K8S\Framework\Core\Pod\PodTemplateSpecInterface;
 interface DeploymentInterface extends PodTemplateSpecInterface, ManifestInterface
 {
     public function selector(SelectorConfigurator $selector): void;
-    public function replicas(): ?int;
-    public function minReadySeconds(): ?int;
-    public function progressDeadlineSeconds(): ?int;
+    public function replicas(): int;
+    public function minReadySeconds(): int|null;
+    public function progressDeadlineSeconds(): int|null;
     public function configureDeployment(Deployment $deployment): void;
 }

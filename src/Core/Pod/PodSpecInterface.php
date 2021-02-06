@@ -26,6 +26,7 @@ interface PodSpecInterface
     public function imagePullSecrets(ImagePullSecretsConfigurator $secrets): void;
     public function nodeSelector(StringMap $nodeSelector): void;
     public function volumes(VolumesConfigurator $volumes): void;
-    public function restartPolicy(): ?RestartPolicy;
+    public function restartPolicy(): RestartPolicy|null;
     public function configurePodSpec(PodSpec $spec): void;
+    public function priorityClassName(): string|null;
 }

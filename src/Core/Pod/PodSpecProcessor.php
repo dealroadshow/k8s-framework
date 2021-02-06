@@ -59,6 +59,11 @@ class PodSpecProcessor
             $spec->setRestartPolicy($restartPolicy->toString());
         }
 
+        $priorityClassName = $builder->priorityClassName();
+        if (null !== $priorityClassName) {
+            $spec->setPriorityClassName($priorityClassName);
+        }
+
         $builder->configurePodSpec($spec);
     }
 
