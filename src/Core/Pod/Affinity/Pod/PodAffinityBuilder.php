@@ -75,7 +75,7 @@ class PodAffinityBuilder
      *
      * @return $this
      */
-    public function addRequirementByLabel(array $labels, string $topologyKey, array $namespaces = null): static
+    public function addRequirementByLabels(array $labels, string $topologyKey, array $namespaces = null): static
     {
         $term = $this->affinityTermByLabel($labels, $topologyKey, $namespaces);
         $this->requirements->add($term);
