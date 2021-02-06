@@ -69,7 +69,7 @@ class ManifestsQuery
         }
     }
 
-    public function getFirstResult(): ?ManifestInterface
+    public function getFirstResult(): ManifestInterface|null
     {
         foreach ($this->execute() as $manifest) {
             return $manifest;

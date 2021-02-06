@@ -16,7 +16,7 @@ class ManifestManager
         $manifestClass = new \ReflectionClass($manifestClass);
         $shortName = $manifestClass->getMethod('shortName')->invoke(null);
         $manifest = $this->manifestRegistry->query($appAlias)
-            ->instancesOf($manifestClass)
+            ->instancesOf($manifestClass->getName())
             ->shortName($shortName)
             ->getFirstResult();
 
