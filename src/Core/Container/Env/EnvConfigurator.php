@@ -12,10 +12,10 @@ use Dealroadshow\K8S\Data\SecretKeySelector;
 use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\ConfigMap\ConfigMapInterface;
 use Dealroadshow\K8S\Framework\Core\Container\Resources\ContainerResourcesField;
+use Dealroadshow\K8S\Framework\Core\ManifestManager;
 use Dealroadshow\K8S\Framework\Core\Pod\PodField;
 use Dealroadshow\K8S\Framework\Core\Secret\SecretInterface;
 use Dealroadshow\K8S\Framework\Registry\AppRegistry;
-use Dealroadshow\K8S\Framework\Registry\ManifestRegistry;
 
 class EnvConfigurator
 {
@@ -24,7 +24,7 @@ class EnvConfigurator
         private EnvFromSourceList $sources,
         private AppInterface $app,
         private AppRegistry $appRegistry,
-        private ManifestRegistry $manifestRegistry
+        private ManifestManager $manifestManager
     ) {
     }
 
@@ -178,20 +178,14 @@ class EnvConfigurator
             $this->sources,
             $this->appRegistry->get($appAlias),
             $this->appRegistry,
-            $this->manifestRegistry
+            $this->manifestManager
         );
     }
 
     private function ensureAppOwnsManifestClass(string $className)
     {
-        $manifestClass = new \ReflectionClass($className);
-        $shortName = $manifestClass->getMethod('shortName')->invoke(null);
-        $alias = $this->appRegistry->appAlias($this->app);
-        $manifest = $this->manifestRegistry->query($alias)
-            ->instancesOf($className)
-            ->shortName($shortName)
-            ->getFirstResult();
-        if (null !== $manifest) {
+        $appAlias = $this->appRegistry->appAlias($this->app);
+        if ($this->manifestManager->appOwnsManifest($appAlias, $className)) {
             return;
         }
 
@@ -206,7 +200,7 @@ class EnvConfigurator
         ERR;
 
         throw new \InvalidArgumentException(
-            sprintf($msg, $alias, $className, EnvConfigurator::class)
+            sprintf($msg, $appAlias, $className, EnvConfigurator::class)
         );
     }
 }

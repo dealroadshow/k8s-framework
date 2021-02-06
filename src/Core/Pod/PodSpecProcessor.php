@@ -6,18 +6,18 @@ use Dealroadshow\K8S\Data\PodSpec;
 use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\Container\ContainerInterface;
 use Dealroadshow\K8S\Framework\Core\Container\ContainerMakerInterface;
+use Dealroadshow\K8S\Framework\Core\ManifestManager;
 use Dealroadshow\K8S\Framework\Core\Pod\Affinity\AffinityConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\ImagePullSecrets\ImagePullSecretsConfigurator;
+use Dealroadshow\K8S\Framework\Core\Pod\PriorityClass\PriorityClassConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\Volume\VolumesConfigurator;
+use Dealroadshow\K8S\Framework\Registry\AppRegistry;
 use Dealroadshow\K8S\Framework\Util\ClassName;
 
 class PodSpecProcessor
 {
-    private ContainerMakerInterface $containerMaker;
-
-    public function __construct(ContainerMakerInterface $containerMaker)
+    public function __construct(private ContainerMakerInterface $containerMaker, private AppRegistry $appRegistry, private ManifestManager $manifestManager)
     {
-        $this->containerMaker = $containerMaker;
     }
 
     public function process(PodSpecInterface $builder, PodSpec $spec, AppInterface $app): void
@@ -59,10 +59,13 @@ class PodSpecProcessor
             $spec->setRestartPolicy($restartPolicy->toString());
         }
 
-        $priorityClassName = $builder->priorityClassName();
-        if (null !== $priorityClassName) {
-            $spec->setPriorityClassName($priorityClassName);
-        }
+        $priorityClass = new PriorityClassConfigurator(
+            spec: $spec,
+            app: $app,
+            appRegistry: $this->appRegistry,
+            manifestManager: $this->manifestManager
+        );
+        $builder->priorityClass($priorityClass);
 
         $builder->configurePodSpec($spec);
     }
