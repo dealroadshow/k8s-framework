@@ -44,7 +44,7 @@ class PodSpecProcessor
         }
 
         foreach ($builder->initContainers() as $containerBuilder) {
-            $this->ensureValidContainerBuilder($builder);
+            $this->ensureValidContainerBuilder($containerBuilder);
             $container = $this->containerMaker->make($containerBuilder, $spec->volumes(), $app);
             $spec->initContainers()->add($container);
         }
@@ -74,7 +74,11 @@ class PodSpecProcessor
     {
         if (!$builder instanceof ContainerInterface) {
             throw new \TypeError(
-                sprintf('All containers must be instances of "%s"', ContainerInterface::class)
+                sprintf(
+                    'All containers must be instances of "%s", "%s" given',
+                    ContainerInterface::class,
+                    get_debug_type($builder)
+                )
             );
         }
     }
