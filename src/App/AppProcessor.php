@@ -14,7 +14,6 @@ class AppProcessor
         private ManifestRegistry $manifestRegistry,
         private ManifestProcessor $manifestProcessor,
         private ContextInterface $context,
-        private array $appConfigs
     ) {
     }
 
@@ -28,8 +27,6 @@ class AppProcessor
     public function process(string $appAlias): void
     {
         $app = $this->appRegistry->get($appAlias);
-        $appConfig = $this->appConfigs[$appAlias] ?? [];
-        $app->setConfig($appConfig);
         $query = $this->manifestRegistry->query($appAlias);
         if ($tags = $this->context->includeTags()) {
             $query->includeTags($tags);
