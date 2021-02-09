@@ -28,12 +28,12 @@ class ContainerMaker implements ContainerMakerInterface
     {
     }
 
-    public function make(ContainerInterface $builder, VolumeList $volumes, AppInterface $app): Container
+    public function make(ContainerInterface $manifest, VolumeList $volumes, AppInterface $app): Container
     {
-        $container = new Container($builder->name());
+        $container = new Container($manifest::containerName());
 
-        $builder->args($container->args());
-        $builder->command($container->command());
+        $manifest->args($container->args());
+        $manifest->command($container->command());
 
         $env = new EnvConfigurator(
             $container->env(),
@@ -42,44 +42,44 @@ class ContainerMaker implements ContainerMakerInterface
             $this->appRegistry,
             $this->manifestManager
         );
-        $builder->env($env);
+        $manifest->env($env);
 
         $mounts = new VolumeMountsConfigurator($volumes, $container->volumeMounts());
-        $builder->volumeMounts($mounts);
+        $manifest->volumeMounts($mounts);
 
         $resources = new ResourcesConfigurator($container->resources());
-        $builder->resources($resources);
+        $manifest->resources($resources);
 
         $ports = new PortsConfigurator($container->ports());
-        $builder->ports($ports);
+        $manifest->ports($ports);
 
         $lifecycle = new LifecycleConfigurator($container->lifecycle());
-        $builder->lifecycle($lifecycle);
+        $manifest->lifecycle($lifecycle);
 
         $probes = new ProbesConfigurator(
             $container->livenessProbe(),
             $container->readinessProbe(),
             $container->startupProbe()
         );
-        $builder->probes($probes);
+        $manifest->probes($probes);
 
-        $image = $builder->image();
+        $image = $manifest->image();
         $this->applyMiddlewares($image, $app);
         $container->setImage($image->fullName());
-        $pullPolicy = $builder->imagePullPolicy();
+        $pullPolicy = $manifest->imagePullPolicy();
         if (null !== $pullPolicy) {
             $container->setImagePullPolicy($pullPolicy->toString());
         }
 
-        $workingDir = $builder->workingDir();
+        $workingDir = $manifest->workingDir();
         if (null !== $workingDir) {
             $container->setWorkingDir($workingDir);
         }
 
         $securityContext = new SecurityContextConfigurator($container->securityContext());
-        $builder->securityContext($securityContext);
+        $manifest->securityContext($securityContext);
 
-        $builder->configureContainer($container);
+        $manifest->configureContainer($container);
 
         return $container;
     }
