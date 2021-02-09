@@ -22,8 +22,19 @@ class DeploymentMaker extends AbstractResourceMaker
     {
         $deployment = new Deployment();
 
-        $selector = new SelectorConfigurator($deployment->spec()->selector());
+        $specSelector = $deployment->spec()->selector();
+        $selector = new SelectorConfigurator($specSelector);
         $manifest->selector($selector);
+
+        if (0 === $specSelector->matchLabels()->count() && 0 === $specSelector->matchExpressions()->count()) {
+            throw new \LogicException(
+                sprintf(
+                    'Manifest class "%s" does not provide selector labels or expressions. Please implement method "%s"::selector()',
+                    $manifest::class,
+                    $manifest::class,
+                )
+            );
+        }
 
         $app->metadataHelper()->configureMeta($manifest, $deployment);
         $this->specProcessor->process($manifest, $deployment->spec()->template(), $app);
