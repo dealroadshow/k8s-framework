@@ -2,7 +2,7 @@
 
 namespace Dealroadshow\K8S\Framework\Core\Container\Resources;
 
-class ContainerResourcesCallback
+class ResourcesCallback implements ContainerResourcesInterface
 {
     private CPU|null $cpuRequests = null;
     private CPU|null $cpuLimits = null;

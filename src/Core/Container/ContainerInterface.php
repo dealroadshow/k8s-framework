@@ -10,7 +10,7 @@ use Dealroadshow\K8S\Framework\Core\Container\Image\ImagePullPolicy;
 use Dealroadshow\K8S\Framework\Core\Container\Lifecycle\LifecycleConfigurator;
 use Dealroadshow\K8S\Framework\Core\Container\Lifecycle\Probes\ProbesConfigurator;
 use Dealroadshow\K8S\Framework\Core\Container\Ports\PortsConfigurator;
-use Dealroadshow\K8S\Framework\Core\Container\Resources\ResourcesConfigurator;
+use Dealroadshow\K8S\Framework\Core\Container\Resources\ContainerResourcesInterface;
 use Dealroadshow\K8S\Framework\Core\Container\Security\SecurityContextConfigurator;
 use Dealroadshow\K8S\Framework\Core\Container\VolumeMount\VolumeMountsConfigurator;
 
@@ -21,7 +21,7 @@ interface ContainerInterface
     public function command(StringList $command): void;
     public function env(EnvConfigurator $env): void;
     public function volumeMounts(VolumeMountsConfigurator $mounts): void;
-    public function resources(ResourcesConfigurator $resources): void;
+    public function resources(ContainerResourcesInterface $resources): void;
     public function ports(PortsConfigurator $ports): void;
     public function lifecycle(LifecycleConfigurator $lifecycle): void;
     public function probes(ProbesConfigurator $probes): void;

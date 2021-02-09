@@ -5,7 +5,7 @@ namespace Dealroadshow\K8S\Framework\Core\Container\Resources;
 use Dealroadshow\K8S\Data\Collection\StringOrFloatMap;
 use Dealroadshow\K8S\Data\ResourceRequirements;
 
-class ResourcesConfigurator
+class ResourcesConfigurator implements ContainerResourcesInterface
 {
     private const CPU = 'cpu';
     private const MEMORY = 'memory';
@@ -18,44 +18,44 @@ class ResourcesConfigurator
         $this->resources = $resources;
     }
 
-    public function requestCPU(CPU $cpu): self
+    public function requestCPU(CPU $cpu): static
     {
         return $this->setCPU($cpu, $this->resources->requests());
     }
 
-    public function requestMemory(Memory $memory): self
+    public function requestMemory(Memory $memory): static
     {
         return $this->setMemory(self::MEMORY, $memory, $this->resources->requests());
     }
 
-    public function requestStorage(Memory $memory): self
+    public function requestStorage(Memory $memory): static
     {
         return $this->setMemory(self::EPHEMERAL_STORAGE, $memory, $this->resources->requests());
     }
 
-    public function limitCPU(CPU $cpu): self
+    public function limitCPU(CPU $cpu): static
     {
         return $this->setCPU($cpu, $this->resources->limits());
     }
 
-    public function limitMemory(Memory $memory): self
+    public function limitMemory(Memory $memory): static
     {
         return $this->setMemory(self::MEMORY, $memory, $this->resources->limits());
     }
 
-    public function limitStorage(Memory $memory): self
+    public function limitStorage(Memory $memory): static
     {
         return $this->setMemory(self::EPHEMERAL_STORAGE, $memory, $this->resources->limits());
     }
 
-    private function setCPU(CPU $cpu, StringOrFloatMap $map): self
+    private function setCPU(CPU $cpu, StringOrFloatMap $map): static
     {
         $map->add(self::CPU, $cpu->toString());
 
         return $this;
     }
 
-    private function setMemory(string $key, Memory $memory, StringOrFloatMap $map): self
+    private function setMemory(string $key, Memory $memory, StringOrFloatMap $map): static
     {
         $map->add($key, $memory->toString());
 
