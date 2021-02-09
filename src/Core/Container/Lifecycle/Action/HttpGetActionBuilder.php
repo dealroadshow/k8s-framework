@@ -36,6 +36,13 @@ class HttpGetActionBuilder
         return $this;
     }
 
+    public function setPort(string|int $port): self
+    {
+        $this->action->setPort($port);
+
+        return $this;
+    }
+
     public function setScheme(string $scheme): self
     {
         $this->action->setScheme($scheme);
