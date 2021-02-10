@@ -30,7 +30,7 @@ class ContainerMaker implements ContainerMakerInterface
 
     public function make(ContainerInterface $manifest, VolumeList $volumes, AppInterface $app): Container
     {
-        $container = new Container($manifest::containerName());
+        $container = new Container($manifest->containerName());
 
         $manifest->args($container->args());
         $manifest->command($container->command());

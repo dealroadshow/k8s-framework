@@ -15,6 +15,11 @@ use Dealroadshow\K8S\Framework\Core\Container\VolumeMount\VolumeMountsConfigurat
 
 trait ContainerTrait
 {
+    public function containerName(): string
+    {
+        return 'app';
+    }
+
     public function args(StringList $args): void
     {
     }
@@ -63,10 +68,5 @@ trait ContainerTrait
 
     public function configureContainer(Container $container): void
     {
-    }
-
-    public static function containerName(): string
-    {
-        return 'app';
     }
 }

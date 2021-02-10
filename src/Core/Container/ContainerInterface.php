@@ -16,6 +16,7 @@ use Dealroadshow\K8S\Framework\Core\Container\VolumeMount\VolumeMountsConfigurat
 
 interface ContainerInterface
 {
+    public function containerName(): string;
     public function args(StringList $args): void;
     public function command(StringList $command): void;
     public function env(EnvConfigurator $env): void;
@@ -26,8 +27,7 @@ interface ContainerInterface
     public function probes(ProbesConfigurator $probes): void;
     public function securityContext(SecurityContextConfigurator $context): void;
     public function image(): Image;
-    public function imagePullPolicy(): ?ImagePullPolicy;
-    public function workingDir(): ?string;
+    public function imagePullPolicy(): ImagePullPolicy|null;
+    public function workingDir(): string|null;
     public function configureContainer(Container $container): void;
-    public static function containerName(): string;
 }
