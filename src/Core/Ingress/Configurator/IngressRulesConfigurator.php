@@ -13,6 +13,13 @@ class IngressRulesConfigurator
     private AppInterface $app;
     private IngressRuleList $rules;
 
+    /**
+     * @var IngressRule[]
+     */
+    private array $hostsMap = [];
+
+    private IngressRule|null $ruleWithoutHost = null;
+
     public function __construct(AppInterface $app, IngressRuleList $rules)
     {
         $this->app = $app;
@@ -21,14 +28,30 @@ class IngressRulesConfigurator
 
     public function addHttpRule(string $path, IngressBackend $backend, string $host = null): void
     {
+        $rule = null === $host ? $this->getRuleWithoutHost() : $this->getRuleForHost($host);
         $ingressPath = new HTTPIngressPath($backend);
         $ingressPath->setPath($path);
-
-        $rule = new IngressRule();
-        if (null !== $host) {
-            $rule->setHost($host);
-        }
         $rule->http()->paths()->add($ingressPath);
-        $this->rules->add($rule);
+    }
+
+    private function getRuleForHost(string $host): IngressRule
+    {
+        if (!array_key_exists($host, $this->hostsMap)) {
+            $this->hostsMap[$host] = new IngressRule();
+            $this->hostsMap[$host]->setHost($host);
+            $this->rules->add($this->hostsMap[$host]);
+        }
+
+        return $this->hostsMap[$host];
+    }
+
+    private function getRuleWithoutHost(): IngressRule
+    {
+        if (null === $this->ruleWithoutHost) {
+            $this->ruleWithoutHost = new IngressRule();
+            $this->rules->add($this->ruleWithoutHost);
+        }
+
+        return $this->ruleWithoutHost;
     }
 }
