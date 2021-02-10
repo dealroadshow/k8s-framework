@@ -7,11 +7,8 @@ use Dealroadshow\K8S\Framework\App\AppInterface;
 
 class IngressBackendFactory
 {
-    private AppInterface $app;
-
-    public function __construct(AppInterface $app)
+    public function __construct(private AppInterface $app)
     {
-        $this->app = $app;
     }
 
     public function fromServiceNameAndPort(string $serviceName, int|string $servicePort): IngressBackend

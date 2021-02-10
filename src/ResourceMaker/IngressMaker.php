@@ -23,7 +23,7 @@ class IngressMaker extends AbstractResourceMaker
             $ingress->spec()->setBackend($backend);
         }
 
-        $rules = new IngressRulesConfigurator($app, $ingress->spec()->rules());
+        $rules = new IngressRulesConfigurator($ingress->spec()->rules());
         $manifest->rules($rules, $backendFactory);
 
         $manifest->configureIngress($ingress);
