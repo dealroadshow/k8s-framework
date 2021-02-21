@@ -20,12 +20,14 @@ class IngressRulesConfigurator
     {
     }
 
-    public function addHttpRule(string $path, IngressBackend $backend, string $host = null): void
+    public function addHttpRule(string $path, IngressBackend $backend, string $host = null): static
     {
         $rule = null === $host ? $this->getRuleWithoutHost() : $this->getRuleForHost($host);
         $ingressPath = new HTTPIngressPath($backend);
         $ingressPath->setPath($path);
         $rule->http()->paths()->add($ingressPath);
+
+        return $this;
     }
 
     private function getRuleForHost(string $host): IngressRule
