@@ -4,6 +4,7 @@ namespace Dealroadshow\K8S\Framework\Proxy;
 
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 use Dealroadshow\K8S\Framework\Middleware\ManifestMethodMiddlewareInterface;
+use Dealroadshow\K8S\Framework\Middleware\ManifestMethodPrefixMiddlewareInterface;
 use Dealroadshow\K8S\Framework\Middleware\ManifestMiddlewareService;
 use ProxyManager\Factory\AccessInterceptorValueHolderFactory as ProxyFactory;
 
@@ -24,8 +25,8 @@ class ManifestProxyFactory
             array $params,
             bool &$returnEarly
         ) {
-            $result = $this->middlewareService->beforeMethodCall($wrapped, $method, $params);
-            if (ManifestMethodMiddlewareInterface::NO_RETURN_VALUE !== $result) {
+            $result = $this->middlewareService->beforeMethodCall($proxy, $wrapped, $method, $params);
+            if (ManifestMethodPrefixMiddlewareInterface::NO_RETURN_VALUE !== $result) {
                 $returnEarly = true;
             }
 
@@ -40,7 +41,7 @@ class ManifestProxyFactory
             mixed $returnedValue,
             bool &$returnEarly
         ) {
-            $result = $this->middlewareService->afterMethodCall($wrapped, $method, $params, $returnedValue);
+            $result = $this->middlewareService->afterMethodCall($proxy, $wrapped, $method, $params, $returnedValue);
             if (ManifestMethodMiddlewareInterface::NO_RETURN_VALUE !== $result) {
                 $returnEarly = true;
             }

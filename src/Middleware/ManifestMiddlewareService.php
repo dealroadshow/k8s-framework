@@ -7,39 +7,40 @@ use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 class ManifestMiddlewareService
 {
     /**
-     * @param ManifestMethodMiddlewareInterface[] $middlewares
+     * @param ManifestMethodPrefixMiddlewareInterface[] $prefixMiddlewares
+     * @param ManifestMethodSuffixMiddlewareInterface[] $suffixMiddlewares
      */
-    public function __construct(private iterable $middlewares)
+    public function __construct(private iterable $prefixMiddlewares, private iterable $suffixMiddlewares)
     {
     }
 
-    public function beforeMethodCall(ManifestInterface $manifest, string $methodName, array $params): mixed
+    public function beforeMethodCall(ManifestInterface $proxy, ManifestInterface $manifest, string $methodName, array $params): mixed
     {
-        foreach ($this->middlewares as $middleware) {
+        foreach ($this->prefixMiddlewares as $middleware) {
             if ($middleware->supports($manifest, $methodName, $params)) {
-                $returnValue = ManifestMethodMiddlewareInterface::NO_RETURN_VALUE;
-                $middleware->beforeMethodCall($manifest, $methodName, $params, $returnValue);
+                $returnValue = ManifestMethodPrefixMiddlewareInterface::NO_RETURN_VALUE;
+                $middleware->beforeMethodCall($proxy, $manifest, $methodName, $params, $returnValue);
                 if (ManifestMethodMiddlewareInterface::NO_RETURN_VALUE !== $returnValue) {
                     return $returnValue;
                 }
             }
         }
 
-        return ManifestMethodMiddlewareInterface::NO_RETURN_VALUE;
+        return ManifestMethodPrefixMiddlewareInterface::NO_RETURN_VALUE;
     }
 
-    public function afterMethodCall(ManifestInterface $manifest, string $methodName, array $params, mixed $returnedValue): mixed
+    public function afterMethodCall(ManifestInterface $proxy, ManifestInterface $manifest, string $methodName, array $params, mixed $returnedValue): mixed
     {
-        foreach ($this->middlewares as $middleware) {
+        foreach ($this->suffixMiddlewares as $middleware) {
             if ($middleware->supports($manifest, $methodName, $params)) {
-                $returnValue = ManifestMethodMiddlewareInterface::NO_RETURN_VALUE;
-                $middleware->afterMethodCall($manifest, $methodName, $params, $returnedValue, $returnValue);
+                $returnValue = ManifestMethodPrefixMiddlewareInterface::NO_RETURN_VALUE;
+                $middleware->afterMethodCall($proxy, $manifest, $methodName, $params, $returnedValue, $returnValue);
                 if (ManifestMethodMiddlewareInterface::NO_RETURN_VALUE !== $returnValue) {
                     return $returnValue;
                 }
             }
         }
 
-        return ManifestMethodMiddlewareInterface::NO_RETURN_VALUE;
+        return ManifestMethodPrefixMiddlewareInterface::NO_RETURN_VALUE;
     }
 }

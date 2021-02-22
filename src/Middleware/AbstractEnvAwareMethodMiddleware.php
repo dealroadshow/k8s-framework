@@ -9,7 +9,7 @@ use LogicException;
 use ReflectionException;
 use ReflectionObject;
 
-abstract class AbstractEnvAwareMethodMiddleware extends AbstractManifestMiddleware
+abstract class AbstractEnvAwareMethodMiddleware extends AbstractManifestSuffixMiddleware
 {
     abstract protected function methodName(): string;
     abstract protected function returnsValue(): bool;
