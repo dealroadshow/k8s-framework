@@ -4,12 +4,8 @@ namespace Dealroadshow\K8S\Framework\Middleware;
 
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 
-abstract class AbstractManifestMiddleware implements ManifestMethodMiddlewareInterface
+abstract class AbstractManifestSuffixMiddleware implements ManifestMethodSuffixMiddlewareInterface
 {
-    public function beforeMethodCall(ManifestInterface $manifest, string $methodName, array $params, &$returnValue)
-    {
-    }
-
     public function afterMethodCall(ManifestInterface $manifest, string $methodName, array $params, mixed $returnedValue, mixed &$returnValue)
     {
     }
