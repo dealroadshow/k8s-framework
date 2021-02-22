@@ -8,9 +8,12 @@ use Dealroadshow\K8S\Framework\Core\Deployment\DeploymentInterface;
 use Dealroadshow\K8S\Framework\Core\LabelSelector\SelectorConfigurator;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 use Dealroadshow\K8S\Framework\Core\Pod\PodTemplateSpecProcessor;
+use Dealroadshow\K8S\Framework\ResourceMaker\Traits\ConfigureSelectorTrait;
 
 class DeploymentMaker extends AbstractResourceMaker
 {
+    use ConfigureSelectorTrait;
+
     private PodTemplateSpecProcessor $specProcessor;
 
     public function __construct(PodTemplateSpecProcessor $specProcessor)
@@ -22,19 +25,7 @@ class DeploymentMaker extends AbstractResourceMaker
     {
         $deployment = new Deployment();
 
-        $specSelector = $deployment->spec()->selector();
-        $selector = new SelectorConfigurator($specSelector);
-        $manifest->selector($selector);
-
-        if (0 === $specSelector->matchLabels()->count() && 0 === $specSelector->matchExpressions()->count()) {
-            throw new \LogicException(
-                sprintf(
-                    'Manifest class "%s" does not provide selector labels or expressions. Please implement method "%s"::selector()',
-                    $manifest::class,
-                    $manifest::class,
-                )
-            );
-        }
+        $this->configureSelector($manifest, $deployment->spec()->selector());
 
         $app->metadataHelper()->configureMeta($manifest, $deployment);
         $this->specProcessor->process($manifest, $deployment->spec()->template(), $app);

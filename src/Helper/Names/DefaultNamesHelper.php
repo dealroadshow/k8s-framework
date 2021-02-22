@@ -12,14 +12,11 @@ class DefaultNamesHelper implements NamesHelperInterface
 {
     use HelperTrait;
 
-    private string $env;
-
     public function fullName(string $shortName): string
     {
-        $name = $this->env;
-        $prefix = $this->app->manifestNamePrefix();
-        if ($prefix) {
-            $name .= '-'.$prefix;
+        $name = '';
+        if ($prefix = $this->app->manifestNamePrefix()) {
+            $name = $prefix;
         }
         $name .= '-'.$shortName;
 
@@ -72,11 +69,6 @@ class DefaultNamesHelper implements NamesHelperInterface
             ServiceInterface::class,
             __METHOD__
         );
-    }
-
-    public function setEnv(string $env): void
-    {
-        $this->env = $env;
     }
 
     private function byExpectedClassName(string $actualClass, string $expectedClass, string $methodName): string
