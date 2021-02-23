@@ -39,7 +39,7 @@ class Image
     public function fullName(): string
     {
         $fullName = '';
-        if (null !== $this->registryUrl) {
+        if ($this->registryUrl) {
             $fullName .= $this->registryUrl.'/';
         }
         if (null !== $this->prefix) {
