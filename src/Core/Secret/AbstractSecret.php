@@ -21,6 +21,10 @@ abstract class AbstractSecret extends AbstractManifest implements SecretInterfac
         return '';
     }
 
+    public function configureSecret(Secret $secret): void
+    {
+    }
+
     final public static function kind(): string
     {
         return Secret::KIND;

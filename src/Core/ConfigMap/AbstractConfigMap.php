@@ -21,6 +21,10 @@ abstract class AbstractConfigMap extends AbstractManifest implements ConfigMapIn
         return '';
     }
 
+    public function configureConfigMap(ConfigMap $configMap): void
+    {
+    }
+
     final public static function kind(): string
     {
         return ConfigMap::KIND;

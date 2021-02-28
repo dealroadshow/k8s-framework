@@ -27,6 +27,8 @@ class ConfigMapMaker extends AbstractResourceMaker
             $this->prefixMapKeys($prefix, $binaryData);
         }
 
+        $manifest->configureConfigMap($configMap);
+
         return $configMap;
     }
 

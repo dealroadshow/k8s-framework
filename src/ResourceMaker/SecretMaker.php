@@ -31,6 +31,8 @@ class SecretMaker extends AbstractResourceMaker
             $data->add($key, base64_encode($value));
         }
 
+        $manifest->configureSecret($secret);
+
         return $secret;
     }
 
