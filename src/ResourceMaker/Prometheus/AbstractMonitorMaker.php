@@ -53,6 +53,8 @@ abstract class AbstractMonitorMaker extends AbstractResourceMaker
             $data['spec']['sampleLimit'] = $sampleLimit;
         }
 
+        $this->configureMonitor($manifest, $data);
+
         return $monitor;
     }
 
