@@ -17,6 +17,7 @@ class PriorityClassMaker extends AbstractResourceMaker
     protected function makeResource(ManifestInterface|PriorityClassInterface $manifest, AppInterface $app): PriorityClass
     {
         $priorityClass = new PriorityClass($manifest->value());
+        $app->metadataHelper()->configureMeta($manifest, $priorityClass);
         if ($description = $manifest->description()) {
             $priorityClass->setDescription($description);
         }
