@@ -4,7 +4,7 @@ namespace Dealroadshow\K8S\Framework\Renderer;
 
 class JsonRenderer extends AbstractRenderer
 {
-    public function render(\JsonSerializable $object): string
+    public function render(\JsonSerializable|array $object): string
     {
         $data = $this->withoutNullValues($object);
 

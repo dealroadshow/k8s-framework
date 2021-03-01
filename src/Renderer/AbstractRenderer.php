@@ -4,7 +4,7 @@ namespace Dealroadshow\K8S\Framework\Renderer;
 
 abstract class AbstractRenderer implements RendererInterface
 {
-    protected function withoutNullValues(\JsonSerializable $object): array
+    protected function withoutNullValues(\JsonSerializable|array $object): array
     {
         $json = json_encode($object);
         $data = json_decode($json, true);

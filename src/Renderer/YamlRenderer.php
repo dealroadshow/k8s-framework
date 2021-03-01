@@ -6,7 +6,7 @@ use Symfony\Component\Yaml\Yaml;
 
 class YamlRenderer extends AbstractRenderer
 {
-    public function render(\JsonSerializable $object): string
+    public function render(\JsonSerializable|array $object): string
     {
         $data = $this->withoutNullValues($object);
         $inline = $this->calcDumpInline($data);
