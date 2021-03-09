@@ -9,7 +9,7 @@ abstract class AbstractRenderer implements RendererInterface
         $json = json_encode($object);
         $data = json_decode($json, true);
 
-        $data = array_filter($data);
+        $data = array_filter($data, fn(mixed $elem) => null !== $elem);
 
         array_walk($data, [$this, 'walkFunction']);
 
@@ -23,7 +23,7 @@ abstract class AbstractRenderer implements RendererInterface
         if (\is_array($value)) {
             \array_walk($value, [$this, 'walkFunction']);
 
-            $value = \array_filter($value);
+            $value = array_filter($value, fn(mixed $elem) => null !== $elem);
         }
     }
 }
