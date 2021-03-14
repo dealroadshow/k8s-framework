@@ -11,7 +11,7 @@ class YamlRenderer extends AbstractRenderer
         $data = $this->withoutNullValues($object);
         $inline = $this->calcDumpInline($data);
 
-        return Yaml::dump($data, $inline, 2);
+        return Yaml::dump($data, $inline, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK);
     }
 
     private function calcDumpInline($array): int
