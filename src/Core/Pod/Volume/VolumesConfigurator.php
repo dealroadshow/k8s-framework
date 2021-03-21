@@ -10,16 +10,12 @@ use Dealroadshow\K8S\Framework\Core\Pod\Volume\Builder\DownwardAPIVolumeBuilder;
 use Dealroadshow\K8S\Framework\Core\Pod\Volume\Builder\EmptyDirVolumeBuilder;
 use Dealroadshow\K8S\Framework\Core\Pod\Volume\Builder\SecretVolumeBuilder;
 use Dealroadshow\K8S\Framework\Core\Pod\Volume\Builder\VolumeBuilderInterface;
+use Dealroadshow\K8S\Framework\Registry\AppRegistry;
 
 class VolumesConfigurator
 {
-    private VolumeList $volumes;
-    private AppInterface $app;
-
-    public function __construct(VolumeList $volumes, AppInterface $app)
+    public function __construct(private VolumeList $volumes, private AppInterface $app, private AppRegistry $registry)
     {
-        $this->volumes = $volumes;
-        $this->app = $app;
     }
 
     public function fromConfigMap(string $volumeName, string $configMapClass): ConfigMapVolumeBuilder
@@ -50,6 +46,11 @@ class VolumesConfigurator
         $builder = new SecretVolumeBuilder($secretName);
 
         return $this->initBuilder($builder, $volumeName);
+    }
+
+    public function withExternalApp(string $appAlias): VolumesConfigurator
+    {
+        return new static($this->volumes, $this->registry->get($appAlias), $this->registry);
     }
 
     private function createVolume(string $name): Volume
