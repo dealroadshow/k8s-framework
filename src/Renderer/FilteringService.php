@@ -8,7 +8,7 @@ class FilteringService
     {
         $parent = $array; // copy argument to new array
         return array_filter($array, function(mixed $value, int|string $key) use ($parent): bool {
-            if ('emptyDir' === $key && 1 === count($parent)) {
+            if ('emptyDir' === $key && 2 === count($parent)) {
                 return true; // Special case
             }
 
