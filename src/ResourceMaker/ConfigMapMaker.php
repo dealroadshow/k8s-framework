@@ -7,19 +7,19 @@ use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\ConfigMap\ConfigMapInterface;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 use Dealroadshow\K8S\Framework\ResourceMaker\Traits\PrefixMapKeysTrait;
-use Dealroadshow\K8S\Framework\ResourceMaker\Traits\ValueToStringTrait;
+use Dealroadshow\K8S\Framework\Util\Str;
+use Dealroadshow\K8S\Framework\Util\StringMapProxy;
 
 class ConfigMapMaker extends AbstractResourceMaker
 {
     use PrefixMapKeysTrait;
-    use ValueToStringTrait;
 
     public function makeResource(ManifestInterface|ConfigMapInterface $manifest, AppInterface $app): ConfigMap
     {
         $configMap = new ConfigMap();
 
         $app->metadataHelper()->configureMeta($manifest, $configMap);
-        $data = $configMap->data();
+        $data = StringMapProxy::make($configMap->data());
         $manifest->data($data);
         $binaryData = $configMap->binaryData();
         $manifest->binaryData($binaryData);
@@ -30,7 +30,7 @@ class ConfigMapMaker extends AbstractResourceMaker
         }
 
         foreach ($data as $key => $value) {
-            $data->add($key, $this->valueToString($value));
+            $data->add($key, Str::stringify($value));
         }
 
         $manifest->configureConfigMap($configMap);

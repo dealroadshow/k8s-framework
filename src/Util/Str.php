@@ -86,6 +86,15 @@ class Str
         return !str_contains($str, '.');
     }
 
+    public static function stringify(mixed $value): string
+    {
+        if (is_bool($value)) {
+            return $value ? 'true' : 'false';
+        }
+
+        return (string)$value;
+    }
+
     private static function camelCasedToSeparatedWords(string $camelCased, string $separator): string
     {
         return strtolower(
