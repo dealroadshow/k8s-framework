@@ -25,7 +25,7 @@ class PodSpecProcessor
         $affinity = new AffinityConfigurator($spec->affinity());
         $builder->affinity($affinity);
 
-        $volumes = new VolumesConfigurator($spec->volumes(), $app);
+        $volumes = new VolumesConfigurator($spec->volumes(), $app, $this->appRegistry);
         $builder->volumes($volumes);
 
         foreach ($builder->containers() as $containerBuilder) {
