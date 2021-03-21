@@ -9,11 +9,11 @@ abstract class AbstractRenderer implements RendererInterface
         $json = json_encode($object);
         $data = json_decode($json, true);
 
-        $data = array_filter($data, [$this, 'arrayFilterCallback']);
+        $data = array_filter($data, [$this, 'arrayFilterCallback'], ARRAY_FILTER_USE_BOTH);
 
         array_walk($data, [$this, 'walkFunction']);
 
-        $data = array_filter($data, [$this, 'arrayFilterCallback']);
+        $data = array_filter($data, [$this, 'arrayFilterCallback'], ARRAY_FILTER_USE_BOTH);
 
         return $data;
     }
@@ -23,12 +23,16 @@ abstract class AbstractRenderer implements RendererInterface
         if (\is_array($value)) {
             \array_walk($value, [$this, 'walkFunction']);
 
-            $value = \array_filter($value, [$this, 'arrayFilterCallback']);
+            $value = \array_filter($value, [$this, 'arrayFilterCallback'], ARRAY_FILTER_USE_BOTH);
         }
     }
 
-    private function arrayFilterCallback(mixed $elem): bool
+    private function arrayFilterCallback(mixed $value, string|int $key): bool
     {
-        return !in_array($elem, [null, []], true);
+        if ('emptyDir' === $key) {
+            return true; // Special case
+        }
+
+        return !in_array($value, [null, []], true);
     }
 }

@@ -43,7 +43,7 @@ abstract class AbstractCronJob extends AbstractJob implements CronJobInterface
     {
     }
 
-    public function configureCronJob(CronJob  $cronJob): void
+    public function configureCronJob(CronJob $cronJob): void
     {
     }
 

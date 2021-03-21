@@ -74,7 +74,7 @@ abstract class AbstractJob extends AbstractManifest implements JobInterface
     {
     }
 
-    public function restartPolicy(): ?RestartPolicy
+    public function restartPolicy(): RestartPolicy|null
     {
         return null;
     }

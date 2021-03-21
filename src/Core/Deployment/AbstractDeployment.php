@@ -36,7 +36,7 @@ abstract class AbstractDeployment extends AbstractManifest implements Deployment
     {
     }
 
-    public function restartPolicy(): ?RestartPolicy
+    public function restartPolicy(): RestartPolicy|null
     {
         return null;
     }
