@@ -7,10 +7,12 @@ use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 use Dealroadshow\K8S\Framework\Core\Secret\SecretInterface;
 use Dealroadshow\K8S\Framework\ResourceMaker\Traits\PrefixMapKeysTrait;
+use Dealroadshow\K8S\Framework\ResourceMaker\Traits\ValueToStringTrait;
 
 class SecretMaker extends AbstractResourceMaker
 {
     use PrefixMapKeysTrait;
+    use ValueToStringTrait;
 
     public function makeResource(ManifestInterface|SecretInterface $manifest, AppInterface $app): Secret
     {
@@ -28,7 +30,12 @@ class SecretMaker extends AbstractResourceMaker
         }
 
         foreach ($data->all() as $key => $value) {
+            $value = $this->valueToString($value);
             $data->add($key, base64_encode($value));
+        }
+
+        foreach ($stringData->all() as $key => $value) {
+            $stringData->add($key, $this->valueToString($value));
         }
 
         $manifest->configureSecret($secret);
