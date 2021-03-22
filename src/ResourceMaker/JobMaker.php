@@ -9,6 +9,7 @@ use Dealroadshow\K8S\Framework\Core\Job\JobInterface;
 use Dealroadshow\K8S\Framework\Core\Job\JobSpecProcessor;
 use Dealroadshow\K8S\Framework\Core\LabelSelector\SelectorConfigurator;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
+use Dealroadshow\K8S\Framework\Core\Pod\Policy\RestartPolicy;
 
 class JobMaker extends AbstractResourceMaker
 {
@@ -38,6 +39,12 @@ class JobMaker extends AbstractResourceMaker
         }
 
         $manifest->configureJob($job);
+
+        if (null === $job->spec()->template()->spec()->getRestartPolicy()) {
+            $job->spec()->template()->spec()->setRestartPolicy(
+                RestartPolicy::never()->toString()
+            );
+        }
 
         return $job;
     }

@@ -11,6 +11,7 @@ use Dealroadshow\K8S\Framework\Core\Job\JobInterface;
 use Dealroadshow\K8S\Framework\Core\Job\JobSpecProcessor;
 use Dealroadshow\K8S\Framework\Core\LabelSelector\SelectorConfigurator;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
+use Dealroadshow\K8S\Framework\Core\Pod\Policy\RestartPolicy;
 
 class CronJobMaker extends AbstractResourceMaker
 {
@@ -51,6 +52,12 @@ class CronJobMaker extends AbstractResourceMaker
             $spec->setSuspend($suspend);
         }
         $manifest->configureCronJob($cronJob);
+
+        if (null === $cronJob->getSpec()->jobTemplate()->spec()->template()->spec()->getRestartPolicy()) {
+            $cronJob->getSpec()->jobTemplate()->spec()->template()->spec()->setRestartPolicy(
+                RestartPolicy::never()->toString()
+            );
+        }
 
         return $cronJob;
     }
