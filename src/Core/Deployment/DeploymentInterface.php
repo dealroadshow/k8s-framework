@@ -6,6 +6,7 @@ use Dealroadshow\K8S\API\Apps\Deployment;
 use Dealroadshow\K8S\Framework\Core\LabelSelector\SelectorConfigurator;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 use Dealroadshow\K8S\Framework\Core\Pod\PodTemplateSpecInterface;
+use Dealroadshow\K8S\Framework\Core\Pod\Strategy\StrategyConfigurator;
 
 interface DeploymentInterface extends PodTemplateSpecInterface, ManifestInterface
 {
@@ -14,4 +15,5 @@ interface DeploymentInterface extends PodTemplateSpecInterface, ManifestInterfac
     public function minReadySeconds(): int|null;
     public function progressDeadlineSeconds(): int|null;
     public function configureDeployment(Deployment $deployment): void;
+    public function strategy(StrategyConfigurator $strategy): void;
 }
