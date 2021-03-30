@@ -8,7 +8,7 @@ use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\Deployment\DeploymentInterface;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 use Dealroadshow\K8S\Framework\Core\Pod\PodTemplateSpecProcessor;
-use Dealroadshow\K8S\Framework\Core\Pod\Strategy\StrategyConfigurator;
+use Dealroadshow\K8S\Framework\Core\Deployment\StrategyConfigurator;
 use Dealroadshow\K8S\Framework\ResourceMaker\Traits\ConfigureSelectorTrait;
 
 class DeploymentMaker extends AbstractResourceMaker
