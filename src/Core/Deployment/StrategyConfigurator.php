@@ -7,6 +7,7 @@ use Dealroadshow\K8S\Data\DeploymentStrategy;
 class StrategyConfigurator
 {
     private const TYPE_ROLLING_UPDATE = 'RollingUpdate';
+    private const TYPE_RECREATE = 'Recreate';
 
     public function __construct(private DeploymentStrategy $deploymentStrategy)
     {
@@ -19,5 +20,10 @@ class StrategyConfigurator
             ->rollingUpdate()
                 ->setMaxSurge($maxSurge)
                 ->setMaxUnavailable($maxUnavailable);
+    }
+
+    public function recreate(): void
+    {
+        $this->deploymentStrategy->setType(self::TYPE_RECREATE);
     }
 }
