@@ -54,6 +54,10 @@ abstract class AbstractDeployment extends AbstractManifest implements Deployment
     {
     }
 
+    public function strategy(StrategyConfigurator $strategy): void
+    {
+    }
+
     public function minReadySeconds(): ?int
     {
         return null;
