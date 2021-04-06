@@ -6,7 +6,7 @@ use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 use Dealroadshow\K8S\Framework\Middleware\ManifestMethodMiddlewareInterface;
 use Dealroadshow\K8S\Framework\Middleware\ManifestMethodPrefixMiddlewareInterface;
 use Dealroadshow\K8S\Framework\Middleware\ManifestMiddlewareService;
-use ProxyManager\Factory\AccessInterceptorValueHolderFactory as ProxyFactory;
+use ProxyManager\Factory\AccessInterceptorScopeLocalizerFactory as ProxyFactory;
 
 class ManifestProxyFactory
 {
@@ -20,12 +20,11 @@ class ManifestProxyFactory
 
         $prefixClosure = function(
             ManifestInterface $proxy,
-            ManifestInterface $wrapped,
             string $method,
             array $params,
             bool &$returnEarly
         ) {
-            $result = $this->middlewareService->beforeMethodCall($proxy, $wrapped, $method, $params);
+            $result = $this->middlewareService->beforeMethodCall($proxy, $method, $params);
             if (ManifestMethodPrefixMiddlewareInterface::NO_RETURN_VALUE !== $result) {
                 $returnEarly = true;
             }
@@ -35,13 +34,12 @@ class ManifestProxyFactory
 
         $suffixClosure = function(
             ManifestInterface $proxy,
-            ManifestInterface $wrapped,
             string $method,
             array $params,
             mixed $returnedValue,
             bool &$returnEarly
         ) {
-            $result = $this->middlewareService->afterMethodCall($proxy, $wrapped, $method, $params, $returnedValue);
+            $result = $this->middlewareService->afterMethodCall($proxy, $method, $params, $returnedValue);
             if (ManifestMethodMiddlewareInterface::NO_RETURN_VALUE !== $result) {
                 $returnEarly = true;
             }
