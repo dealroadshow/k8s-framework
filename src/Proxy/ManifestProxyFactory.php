@@ -20,6 +20,7 @@ class ManifestProxyFactory
 
         $prefixClosure = function(
             ManifestInterface $proxy,
+            ManifestInterface $proxyAgain,
             string $method,
             array $params,
             bool &$returnEarly
@@ -34,6 +35,7 @@ class ManifestProxyFactory
 
         $suffixClosure = function(
             ManifestInterface $proxy,
+            ManifestInterface $proxyAgain,
             string $method,
             array $params,
             mixed $returnedValue,
