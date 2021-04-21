@@ -20,13 +20,16 @@ class DefaultNamesHelper implements NamesHelperInterface
         }
         $name .= '-'.$shortName;
 
-        throw new \InvalidArgumentException(
-            sprintf(
-                'Resource name in Kubernetes is limited to 52 characters, but name "%s" is %d characters long',
-                $name,
-                mb_strlen($name)
-            )
-        );
+        $nameLength = mb_strlen($name);
+        if ($nameLength > 52) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'Resource name in Kubernetes is limited to 52 characters, but name "%s" is %d characters long',
+                    $name,
+                    $nameLength
+                )
+            );
+        }
 
         return $name;
     }
