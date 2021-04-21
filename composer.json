@@ -26,7 +26,8 @@
         "ext-json": "*",
         "symfony/yaml": "~5.2",
         "dealroadshow/k8s-resources": "^1.16 || ^1.17 || ^1.18 || ^1.19",
-        "ocramius/proxy-manager": "dev-non-nullable-typed-properties-support"
+        "ocramius/proxy-manager": "dev-non-nullable-typed-properties-support",
+        "ext-mbstring": "*"
     },
     "autoload": {
         "psr-4": {
