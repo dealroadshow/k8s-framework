@@ -22,7 +22,7 @@ class DefaultNamesHelper implements NamesHelperInterface
 
         throw new \InvalidArgumentException(
             sprintf(
-                'Resource name in Kubernetes is limited to 52 characters, but resource name "%s" is %d characters long',
+                'Resource name in Kubernetes is limited to 52 characters, but name "%s" is %d characters long',
                 $name,
                 mb_strlen($name)
             )
