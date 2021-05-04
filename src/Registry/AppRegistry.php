@@ -22,22 +22,6 @@ class AppRegistry
         $this->apps[$alias] = $app;
     }
 
-    public function appAlias(AppInterface $app): string
-    {
-        foreach ($this->allAppsByClass(get_class($app)) as $alias => $registeredApp) {
-            if ($app === $registeredApp) {
-                return $alias;
-            }
-        }
-
-        throw new \InvalidArgumentException(
-            sprintf(
-                'App instance with class "%s" is not contained in this AppRegistry',
-                get_class($app)
-            )
-        );
-    }
-
     /**
      * @return string[]
      */

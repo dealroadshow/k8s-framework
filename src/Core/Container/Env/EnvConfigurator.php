@@ -184,8 +184,7 @@ class EnvConfigurator
 
     private function ensureAppOwnsManifestClass(string $className): void
     {
-        $appAlias = $this->appRegistry->appAlias($this->app);
-        if ($this->manifestManager->appOwnsManifest($appAlias, $className)) {
+        if ($this->manifestManager->appOwnsManifest($this->app->alias(), $className)) {
             return;
         }
 
