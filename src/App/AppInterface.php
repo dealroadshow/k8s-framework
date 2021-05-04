@@ -11,6 +11,12 @@ use Dealroadshow\K8S\Framework\Helper\Names\NamesHelperInterface;
 interface AppInterface extends ConfigurableInterface
 {
     public static function name(): string;
+
+    /**
+     * @return string The alias with which app was registered in AppRegistry
+     */
+    public function alias(): string;
+
     public function addManifestFile(string $fileNameWithoutExtension, APIResourceInterface $resource): void;
     public function metadataHelper(): MetadataHelperInterface;
     public function namesHelper(): NamesHelperInterface;

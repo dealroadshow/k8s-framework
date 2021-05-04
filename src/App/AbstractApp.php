@@ -12,12 +12,23 @@ abstract class AbstractApp implements AppInterface
 {
     use ConfigAwareTrait;
 
+    protected string $alias;
     protected array $files = [];
 
     public function __construct(
         protected MetadataHelperInterface $metadataHelper,
         protected NamesHelperInterface $namesHelper
     ) {
+    }
+
+    public function alias(): string
+    {
+        return $this->alias;
+    }
+
+    public function setAlias(string $alias): void
+    {
+        $this->alias = $alias;
     }
 
     public function addManifestFile(string $fileNameWithoutExtension, APIResourceInterface $resource): void
