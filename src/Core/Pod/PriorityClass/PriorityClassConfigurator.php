@@ -35,7 +35,7 @@ class PriorityClassConfigurator
             );
         }
 
-        $appAlias = $this->appRegistry->appAlias($this->app);
+        $appAlias = $this->app->alias();
         if (!$this->manifestManager->appOwnsManifest($appAlias, $phpClassName)) {
             $msg = <<<'ERR'
             App "%s" does not have manifests with class "%s". Please use method "%s::withExternalApp()"
