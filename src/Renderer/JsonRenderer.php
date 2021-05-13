@@ -6,8 +6,11 @@ class JsonRenderer extends AbstractRenderer
 {
     public function render(\JsonSerializable|array $object): string
     {
-        $data = $this->withoutNullValues($object);
+        return \json_encode($this->renderAsArray($object));
+    }
 
-        return \json_encode($data);
+    public function renderAsArray(\JsonSerializable|array $object): array
+    {
+        return $this->withoutNullValues($object);
     }
 }

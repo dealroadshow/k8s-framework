@@ -17,9 +17,7 @@ abstract class AbstractRenderer implements RendererInterface
 
         array_walk($data, [$this, 'walkFunction']);
 
-        $data = $this->filteringService->filterArray($data);
-
-        return $data;
+        return $this->filteringService->filterArray($data);
     }
 
     private function walkFunction(&$value)
