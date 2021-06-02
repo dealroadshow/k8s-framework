@@ -199,7 +199,7 @@ class EnvConfigurator
         ERR;
 
         throw new \InvalidArgumentException(
-            sprintf($msg, $appAlias, $className, EnvConfigurator::class)
+            sprintf($msg, $this->app->alias(), $className, EnvConfigurator::class)
         );
     }
 }
