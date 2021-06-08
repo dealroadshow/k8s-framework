@@ -14,12 +14,12 @@ class ManifestMiddlewareService
     {
     }
 
-    public function beforeMethodCall(ManifestInterface $proxy, ManifestInterface $manifest, string $methodName, array $params): mixed
+    public function beforeMethodCall(ManifestInterface $proxy, string $methodName, array $params): mixed
     {
         foreach ($this->prefixMiddlewares as $middleware) {
-            if ($middleware->supports($manifest, $methodName, $params)) {
+            if ($middleware->supports($proxy, $methodName, $params)) {
                 $returnValue = ManifestMethodPrefixMiddlewareInterface::NO_RETURN_VALUE;
-                $middleware->beforeMethodCall($proxy, $manifest, $methodName, $params, $returnValue);
+                $middleware->beforeMethodCall($proxy, $methodName, $params, $returnValue);
                 if (ManifestMethodMiddlewareInterface::NO_RETURN_VALUE !== $returnValue) {
                     return $returnValue;
                 }
@@ -29,12 +29,12 @@ class ManifestMiddlewareService
         return ManifestMethodPrefixMiddlewareInterface::NO_RETURN_VALUE;
     }
 
-    public function afterMethodCall(ManifestInterface $proxy, ManifestInterface $manifest, string $methodName, array $params, mixed $returnedValue): mixed
+    public function afterMethodCall(ManifestInterface $proxy, string $methodName, array $params, mixed $returnedValue): mixed
     {
         foreach ($this->suffixMiddlewares as $middleware) {
-            if ($middleware->supports($manifest, $methodName, $params)) {
+            if ($middleware->supports($proxy, $methodName, $params)) {
                 $returnValue = ManifestMethodPrefixMiddlewareInterface::NO_RETURN_VALUE;
-                $middleware->afterMethodCall($proxy, $manifest, $methodName, $params, $returnedValue, $returnValue);
+                $middleware->afterMethodCall($proxy, $methodName, $params, $returnedValue, $returnValue);
                 if (ManifestMethodMiddlewareInterface::NO_RETURN_VALUE !== $returnValue) {
                     return $returnValue;
                 }

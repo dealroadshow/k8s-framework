@@ -15,12 +15,18 @@
     ],
     "minimum-stability": "dev",
     "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/petr-buchin/ProxyManager"
+        }
+    ],
     "require": {
         "php": "~8.0",
         "ext-json": "*",
-        "symfony/yaml": "~5.2",
+        "symfony/yaml": "5.3.*",
         "dealroadshow/k8s-resources": "^1.16 || ^1.17 || ^1.18 || ^1.19",
-        "ocramius/proxy-manager": "~2.11",
+        "ocramius/proxy-manager": "dev-non-nullable-typed-properties-support",
         "ext-mbstring": "*"
     },
     "autoload": {

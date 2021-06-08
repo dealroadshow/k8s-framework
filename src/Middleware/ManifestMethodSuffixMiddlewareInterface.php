@@ -6,5 +6,5 @@ use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 
 interface ManifestMethodSuffixMiddlewareInterface extends ManifestMethodMiddlewareInterface
 {
-    public function afterMethodCall(ManifestInterface $proxy, ManifestInterface $manifest, string $methodName, array $params, mixed $returnedValue, mixed &$returnValue);
+    public function afterMethodCall(ManifestInterface $proxy, string $methodName, array $params, mixed $returnedValue, mixed &$returnValue);
 }
