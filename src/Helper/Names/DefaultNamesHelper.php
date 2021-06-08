@@ -20,16 +20,7 @@ class DefaultNamesHelper implements NamesHelperInterface
         }
         $name .= '-'.$shortName;
 
-        $nameLength = mb_strlen($name);
-        if ($nameLength > 52) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    'Resource name in Kubernetes is limited to 52 characters, but name "%s" is %d characters long',
-                    $name,
-                    $nameLength
-                )
-            );
-        }
+        $this->ensureValidNameLength($name);
 
         return $name;
     }
@@ -80,6 +71,20 @@ class DefaultNamesHelper implements NamesHelperInterface
             ServiceInterface::class,
             __METHOD__
         );
+    }
+
+    protected function ensureValidNameLength(string $name): void
+    {
+        $nameLength = mb_strlen($name);
+        if ($nameLength > 52) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'Resource name in Kubernetes is limited to 52 characters, but name "%s" is %d characters long',
+                    $name,
+                    $nameLength
+                )
+            );
+        }
     }
 
     private function byExpectedClassName(string $actualClass, string $expectedClass, string $methodName): string
