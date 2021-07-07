@@ -2,8 +2,6 @@
 
 namespace Dealroadshow\K8S\Framework\Monitoring\Prometheus\Configurator;
 
-use Dealroadshow\K8S\Framework\Monitoring\Prometheus\Configurator\EndpointConfigurator;
-
 class EndpointsConfigurator
 {
     public function __construct(private \ArrayObject $data)
