@@ -8,7 +8,6 @@ use Dealroadshow\K8S\Data\LabelSelector;
 use Dealroadshow\K8S\Data\ObjectMeta;
 use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
-use Dealroadshow\K8S\Framework\Monitoring\Prometheus\Configurator\EndpointsConfigurator;
 use Dealroadshow\K8S\Framework\Monitoring\Prometheus\Configurator\NamespaceSelectorConfigurator;
 use Dealroadshow\K8S\Framework\Monitoring\Prometheus\MonitorApiResource;
 use Dealroadshow\K8S\Framework\Monitoring\Prometheus\MonitorInterface;
@@ -57,6 +56,4 @@ abstract class AbstractMonitorMaker extends AbstractResourceMaker
 
         return $monitor;
     }
-
-
 }

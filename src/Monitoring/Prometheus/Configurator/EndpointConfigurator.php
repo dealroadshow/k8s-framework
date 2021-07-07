@@ -2,8 +2,6 @@
 
 namespace Dealroadshow\K8S\Framework\Monitoring\Prometheus\Configurator;
 
-use Dealroadshow\K8S\Framework\Monitoring\Prometheus\Configurator\SecretKeyReference;
-
 class EndpointConfigurator
 {
     public function __construct(private \ArrayObject $data)
