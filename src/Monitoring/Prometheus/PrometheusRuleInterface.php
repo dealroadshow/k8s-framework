@@ -8,5 +8,5 @@ use Dealroadshow\K8S\Framework\Monitoring\Prometheus\Configurator\RuleGroupsConf
 interface PrometheusRuleInterface extends ManifestInterface
 {
     public function apiVersion(): string;
-    public function groups(RuleGroupsConfigurator $rules): void;
+    public function groups(RuleGroupsConfigurator $groups): void;
 }
