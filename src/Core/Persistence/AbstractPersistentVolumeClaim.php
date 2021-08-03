@@ -33,6 +33,11 @@ abstract class AbstractPersistentVolumeClaim extends AbstractManifest implements
         return VolumeMode::filesystem();
     }
 
+    public function volumeName(): string|null
+    {
+        return null;
+    }
+
     public static function kind(): string
     {
         return PersistentVolume::KIND;
