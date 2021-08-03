@@ -10,6 +10,7 @@ use Dealroadshow\K8S\Framework\Core\Container\Resources\ResourcesConfigurator;
 use Dealroadshow\K8S\Framework\Core\LabelSelector\SelectorConfigurator;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 use Dealroadshow\K8S\Framework\Core\Persistence\PersistentVolumeClaimInterface;
+use Dealroadshow\K8S\Framework\Core\Persistence\PvcResourcesConfigurator;
 use Dealroadshow\K8S\Framework\Registry\AppRegistry;
 
 /**
@@ -35,7 +36,7 @@ class PersistentVolumeClaimMaker extends AbstractResourceMaker
         $this->configureAccessModes($manifest, $pvc);
         $this->configureDataSource($manifest, $pvc);
 
-        $resources = new ResourcesConfigurator($spec->resources());
+        $resources = new PvcResourcesConfigurator($spec->resources());
         $manifest->resources($resources);
 
         $selector = new SelectorConfigurator($spec->selector());

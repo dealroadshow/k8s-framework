@@ -7,15 +7,13 @@ use Dealroadshow\K8S\Data\ResourceRequirements;
 
 class ResourcesConfigurator implements ContainerResourcesInterface
 {
-    private const CPU = 'cpu';
-    private const MEMORY = 'memory';
-    private const EPHEMERAL_STORAGE = 'ephemeral-storage';
+    protected const CPU = 'cpu';
+    protected const MEMORY = 'memory';
+    protected const EPHEMERAL_STORAGE = 'ephemeral-storage';
+    protected const STORAGE = 'storage';
 
-    private ResourceRequirements $resources;
-
-    public function __construct(ResourceRequirements $resources)
+    public function __construct(protected ResourceRequirements $resources)
     {
-        $this->resources = $resources;
     }
 
     public function requestCPU(CPU $cpu): static
@@ -55,7 +53,7 @@ class ResourcesConfigurator implements ContainerResourcesInterface
         return $this;
     }
 
-    private function setMemory(string $key, Memory $memory, StringOrFloatMap $map): static
+    protected function setMemory(string $key, Memory $memory, StringOrFloatMap $map): static
     {
         $map->add($key, $memory->toString());
 
