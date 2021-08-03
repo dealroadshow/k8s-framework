@@ -4,7 +4,7 @@ namespace Dealroadshow\K8S\Framework\Core;
 
 class ManifestReference
 {
-    public function __construct(private string $appAlias, private string $className, private string|null $apiGroup)
+    public function __construct(private string $appAlias, private string $className, private string|null $apiGroup = null)
     {
     }
 
