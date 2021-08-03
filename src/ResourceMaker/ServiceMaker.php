@@ -23,6 +23,11 @@ class ServiceMaker extends AbstractResourceMaker
         $service = new Service();
         $app->metadataHelper()->configureMeta($manifest, $service);
 
+        $clusterIp = $manifest->clusterIP();
+        if (null !== $clusterIp) {
+            $service->spec()->setClusterIP($clusterIp);
+        }
+
         $type = new ServiceTypeConfigurator($service);
         $manifest->type($type);
 

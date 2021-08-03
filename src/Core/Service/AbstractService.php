@@ -10,6 +10,11 @@ use Dealroadshow\K8S\Framework\Core\Service\Configurator\ServiceTypeConfigurator
 
 abstract class AbstractService extends AbstractManifest implements ServiceInterface
 {
+    public function clusterIP(): string|null
+    {
+        return null;
+    }
+
     public function ports(ServicePortsConfigurator $ports): void
     {
     }

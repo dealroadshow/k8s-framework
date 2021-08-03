@@ -1,8 +1,8 @@
 <?php
 
-namespace Dealroadshow\K8S\Framework\Core\Deployment;
+namespace Dealroadshow\K8S\Framework\Core\StatefulSet;
 
-use Dealroadshow\K8S\API\Apps\Deployment;
+use Dealroadshow\K8S\API\Apps\StatefulSet;
 use Dealroadshow\K8S\Data\Collection\StringMap;
 use Dealroadshow\K8S\Data\PodSpec;
 use Dealroadshow\K8S\Framework\Core\AbstractManifest;
@@ -12,16 +12,22 @@ use Dealroadshow\K8S\Framework\Core\Pod\ImagePullSecrets\ImagePullSecretsConfigu
 use Dealroadshow\K8S\Framework\Core\Pod\Policy\RestartPolicy;
 use Dealroadshow\K8S\Framework\Core\Pod\PriorityClass\PriorityClassConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\Volume\VolumesConfigurator;
+use Dealroadshow\K8S\Framework\Core\StatefulSet\UpdateStrategy\UpdateStrategyConfigurator;
 
-abstract class AbstractDeployment extends AbstractManifest implements DeploymentInterface
+abstract class AbstractStatefulSet extends AbstractManifest implements StatefulSetInterface
 {
-    public function affinity(AffinityConfigurator $affinity): void
+    public static function kind(): string
     {
+        return StatefulSet::KIND;
     }
 
     public function initContainers(): iterable
     {
         return [];
+    }
+
+    public function affinity(AffinityConfigurator $affinity): void
+    {
     }
 
     public function imagePullSecrets(ImagePullSecretsConfigurator $secrets): void
@@ -45,39 +51,39 @@ abstract class AbstractDeployment extends AbstractManifest implements Deployment
     {
     }
 
+    public function priorityClass(PriorityClassConfigurator $priorityClass): void
+    {
+    }
+
+    public function podManagementPolicy(): PodManagementPolicy|null
+    {
+       return null;
+    }
+
     public function replicas(): int
     {
         return 1;
+    }
+
+    public function revisionHistoryLimit(): int
+    {
+        return 10;
     }
 
     public function selector(SelectorConfigurator $selector): void
     {
     }
 
-    public function strategy(StrategyConfigurator $strategy): void
+    public function updateStrategy(UpdateStrategyConfigurator $updateStrategy): void
     {
     }
 
-    public function minReadySeconds(): int|null
+    public function volumeClaimTemplates(): iterable
     {
-        return null;
+        return [];
     }
 
-    public function progressDeadlineSeconds(): int|null
+    public function configureStatefulSet(StatefulSet $statefulSet): void
     {
-        return null;
-    }
-
-    public function priorityClass(PriorityClassConfigurator $priorityClass): void
-    {
-    }
-
-    public function configureDeployment(Deployment $deployment): void
-    {
-    }
-
-    final public static function kind(): string
-    {
-        return Deployment::KIND;
     }
 }
