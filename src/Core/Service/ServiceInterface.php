@@ -10,6 +10,7 @@ use Dealroadshow\K8S\Framework\Core\Service\Configurator\ServiceTypeConfigurator
 
 interface ServiceInterface extends ManifestInterface
 {
+    public function clusterIP(): string|null;
     public function ports(ServicePortsConfigurator $ports): void;
     public function selector(StringMap $selector): void;
     public function type(ServiceTypeConfigurator $type): void;

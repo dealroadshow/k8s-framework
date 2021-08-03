@@ -15,11 +15,8 @@ class DeploymentMaker extends AbstractResourceMaker
 {
     use ConfigureSelectorTrait;
 
-    private PodTemplateSpecProcessor $specProcessor;
-
-    public function __construct(PodTemplateSpecProcessor $specProcessor)
+    public function __construct(private PodTemplateSpecProcessor $specProcessor)
     {
-        $this->specProcessor = $specProcessor;
     }
 
     public function makeResource(ManifestInterface|DeploymentInterface $manifest, AppInterface $app): Deployment
