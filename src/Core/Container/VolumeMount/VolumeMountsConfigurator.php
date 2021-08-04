@@ -18,9 +18,9 @@ class VolumeMountsConfigurator
         $this->mounts = $mounts;
     }
 
-    public function add(string $volumeName, string $mountPath): VolumeMountBuilder
+    public function add(string $volumeName, string $mountPath, bool $checkVolumeExistence = true): VolumeMountBuilder
     {
-        if (!$this->volumes->has($volumeName)) {
+        if (!$this->volumes->has($volumeName) && $checkVolumeExistence) {
             throw new \InvalidArgumentException(
                 sprintf(
                     'Volume "%s" is not defined. Available volumes: %s',
