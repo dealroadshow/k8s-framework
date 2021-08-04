@@ -58,6 +58,7 @@ class StatefulSetMaker extends AbstractResourceMaker
 
         foreach ($manifest->volumeClaimTemplates() as $template) {
             $pvc = $this->pvcMaker->make($template, $app);
+            $pvc->metadata()->setName($template::shortName()); // Rewrite PVC full name to it's short name
             $spec->volumeClaimTemplates()->add($pvc);
         }
 
