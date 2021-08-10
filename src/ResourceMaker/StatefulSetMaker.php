@@ -65,6 +65,7 @@ class StatefulSetMaker extends AbstractResourceMaker
             if (!str_contains($template::class, '@anonymous')) {
                 $template = $this->proxyFactory->makeProxy($template);
             }
+            $template->setApp($app);
             $pvc = $this->pvcMaker->make($template, $app);
             $pvc->metadata()->setName($template::shortName()); // Rewrite PVC full name to it's short name
             $spec->volumeClaimTemplates()->add($pvc);
