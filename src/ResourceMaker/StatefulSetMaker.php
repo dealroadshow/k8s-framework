@@ -10,6 +10,7 @@ use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 use Dealroadshow\K8S\Framework\Core\Pod\PodTemplateSpecProcessor;
 use Dealroadshow\K8S\Framework\Core\StatefulSet\StatefulSetInterface;
 use Dealroadshow\K8S\Framework\Core\StatefulSet\UpdateStrategy\UpdateStrategyConfigurator;
+use Dealroadshow\K8S\Framework\Proxy\ManifestProxyFactory;
 use Dealroadshow\K8S\Framework\Registry\AppRegistry;
 use Dealroadshow\K8S\Framework\ResourceMaker\Traits\ConfigureSelectorTrait;
 
@@ -17,8 +18,12 @@ class StatefulSetMaker extends AbstractResourceMaker
 {
     use ConfigureSelectorTrait;
 
-    public function __construct(private AppRegistry $appRegistry, private PersistentVolumeClaimMaker $pvcMaker, private PodTemplateSpecProcessor $podSpecProcessor)
-    {
+    public function __construct(
+        private AppRegistry $appRegistry,
+        private PersistentVolumeClaimMaker $pvcMaker,
+        private PodTemplateSpecProcessor $podSpecProcessor,
+        private ManifestProxyFactory $proxyFactory
+    ) {
     }
 
     protected function supportsClass(): string
@@ -57,7 +62,8 @@ class StatefulSetMaker extends AbstractResourceMaker
         $manifest->updateStrategy($updateStrategy);
 
         foreach ($manifest->volumeClaimTemplates() as $template) {
-            $pvc = $this->pvcMaker->make($template, $app);
+            $templateProxy = $this->proxyFactory->makeProxy($template);
+            $pvc = $this->pvcMaker->make($templateProxy, $app);
             $pvc->metadata()->setName($template::shortName()); // Rewrite PVC full name to it's short name
             $spec->volumeClaimTemplates()->add($pvc);
         }
