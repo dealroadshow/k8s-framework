@@ -5,7 +5,7 @@ namespace Dealroadshow\K8S\Framework\ResourceMaker;
 use Dealroadshow\K8S\API\Extensions\Ingress;
 use Dealroadshow\K8S\APIResourceInterface;
 use Dealroadshow\K8S\Framework\App\AppInterface;
-use Dealroadshow\K8S\Framework\Core\Ingress\Configurator\IngressBackendFactory;
+use Dealroadshow\K8S\Framework\Core\Ingress\Configurator\IngressBackendConfigurator;
 use Dealroadshow\K8S\Framework\Core\Ingress\Configurator\IngressRulesConfigurator;
 use Dealroadshow\K8S\Framework\Core\Ingress\IngressInterface;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
@@ -22,11 +22,24 @@ class IngressMaker extends AbstractResourceMaker
         $ingress = new Ingress();
         $app->metadataHelper()->configureMeta($manifest, $ingress);
 
-        $backendFactory = new IngressBackendFactory($app, $this->manifestReferenceUtil, $ingress->spec()->defaultBackend());
-        $manifest->backend($backendFactory);
+        $backendConfigurator = new IngressBackendConfigurator(
+            app: $app,
+            manifestReferenceUtil: $this->manifestReferenceUtil,
+            backend: $ingress->spec()->defaultBackend()
+        );
+        $manifest->defaultBackend($backendConfigurator);
 
-        $rules = new IngressRulesConfigurator($ingress->spec()->rules());
-        $manifest->rules($rules, $backendFactory);
+        $rules = new IngressRulesConfigurator(
+            rules: $ingress->spec()->rules(),
+            app: $app,
+            manifestReferenceUtil: $this->manifestReferenceUtil
+        );
+        $manifest->rules($rules);
+
+        $ingressClassName = $manifest->ingressClassName();
+        if (null !== $ingressClassName) {
+            $ingress->spec()->setIngressClassName($ingressClassName);
+        }
 
         $manifest->configureIngress($ingress);
 

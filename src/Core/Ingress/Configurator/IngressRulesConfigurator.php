@@ -3,12 +3,10 @@
 namespace Dealroadshow\K8S\Framework\Core\Ingress\Configurator;
 
 use Dealroadshow\K8S\Data\Collection\IngressRuleList;
-use Dealroadshow\K8S\Data\HTTPIngressPath;
-use Dealroadshow\K8S\Data\IngressBackend;
 use Dealroadshow\K8S\Data\IngressRule;
-use Dealroadshow\K8S\Framework\Core\Ingress\IngressRule\PathType;
+use Dealroadshow\K8S\Framework\App\AppInterface;
+use Dealroadshow\K8S\Framework\Util\ManifestReferenceUtil;
 
-// @TODO needs refactoring along with future changes in IngressBackendFactory (it's refactoring to IngressBackendConfigurator)
 class IngressRulesConfigurator
 {
     /**
@@ -18,29 +16,22 @@ class IngressRulesConfigurator
 
     private IngressRule|null $ruleWithoutHost = null;
 
-    public function __construct(private IngressRuleList $rules)
-    {
+    public function __construct(
+        private IngressRuleList $rules,
+        private AppInterface $app,
+        private ManifestReferenceUtil $manifestReferenceUtil
+    ) {
     }
 
-    public function addHttpRule(string|null $path, IngressBackend|null $backend, string $host = null, PathType $pathType = null): static
+    public function addHttpRule(string $host = null): IngressRuleConfigurator
     {
         $rule = null === $host ? $this->getRuleWithoutHost() : $this->getRuleForHost($host);
-        $pathType = $pathType ?? PathType::prefix();
-        $ingressPath = new HTTPIngressPath($pathType->toString());
-        $rule->http()->paths()->add($ingressPath);
 
-        if ($path) {
-            $ingressPath->setPath($path);
-        }
-        if ($backend) {
-            if ($serviceBackend = $backend->getService()) {
-                $ingressPath->backend()->setService($serviceBackend);
-            } elseif ($resourceBackend = $backend->getResource()) {
-                $ingressPath->backend()->setResource($resourceBackend);
-            }
-        }
-
-        return $this;
+        return new IngressRuleConfigurator(
+            rule: $rule,
+            app: $this->app,
+            manifestReferenceUtil: $this->manifestReferenceUtil
+        );
     }
 
     private function getRuleForHost(string $host): IngressRule

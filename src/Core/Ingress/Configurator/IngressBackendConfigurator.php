@@ -8,22 +8,20 @@ use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\ManifestReference;
 use Dealroadshow\K8S\Framework\Util\ManifestReferenceUtil;
 
-class IngressBackendFactory
+class IngressBackendConfigurator
 {
-    // @TODO refactor this class to IngressBackendConfigurator, since now backends should be configured, not created
-    private IngressBackend|null $ingressBackend;
+    private IngressBackend $backend;
 
     public function __construct(
         private AppInterface $app,
         private ManifestReferenceUtil $manifestReferenceUtil,
-        IngressBackend|null $backend = null
+        IngressBackend $backend
     ) {
-        $this->ingressBackend = $backend;
+        $this->backend = $backend;
     }
 
-    public function fromServiceNameAndPort(string $serviceName, int|string $servicePort): IngressBackend
+    public function fromServiceNameAndPort(string $serviceName, int|string $servicePort): void
     {
-        $backend = $this->ingressBackend ?? new IngressBackend();
         $serviceBackend = new IngressServiceBackend($serviceName);
 
         if (is_numeric($servicePort)) {
@@ -32,24 +30,19 @@ class IngressBackendFactory
             $serviceBackend->port()->setName($servicePort);
         }
 
-        $backend->setService($serviceBackend);
-
-        return $backend;
+        $this->backend->setService($serviceBackend);
     }
 
-    public function fromServiceClassAndPort(string $serviceClass, int|string $servicePort): IngressBackend
+    public function fromServiceClassAndPort(string $serviceClass, int|string $servicePort): void
     {
         $serviceName = $this->app->namesHelper()->byServiceClass($serviceClass);
 
-        return $this->fromServiceNameAndPort($serviceName, $servicePort);
+        $this->fromServiceNameAndPort($serviceName, $servicePort);
     }
 
-    public function fromManifestReference(ManifestReference $manifestReference): IngressBackend
+    public function fromManifestReference(ManifestReference $manifestReference): void
     {
-        $backend = $this->ingressBackend ?? new IngressBackend();
         $resource = $this->manifestReferenceUtil->toTypedLocalObjectReference($manifestReference);
-        $backend->setResource($resource);
-
-        return $backend;
+        $this->backend->setResource($resource);
     }
 }

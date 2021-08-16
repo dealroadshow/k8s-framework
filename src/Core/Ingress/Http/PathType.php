@@ -1,6 +1,6 @@
 <?php
 
-namespace Dealroadshow\K8S\Framework\Core\Ingress\IngressRule;
+namespace Dealroadshow\K8S\Framework\Core\Ingress\Http;
 
 final class PathType
 {
