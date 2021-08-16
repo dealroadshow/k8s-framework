@@ -10,13 +10,20 @@ use Dealroadshow\K8S\Framework\Util\ManifestReferenceUtil;
 
 class IngressBackendFactory
 {
-    public function __construct(private AppInterface $app, private ManifestReferenceUtil $manifestReferenceUtil)
-    {
+    // @TODO refactor this class to IngressBackendConfigurator, since now backends should be configured, not created
+    private IngressBackend|null $ingressBackend;
+
+    public function __construct(
+        private AppInterface $app,
+        private ManifestReferenceUtil $manifestReferenceUtil,
+        IngressBackend|null $backend = null
+    ) {
+        $this->ingressBackend = $backend;
     }
 
     public function fromServiceNameAndPort(string $serviceName, int|string $servicePort): IngressBackend
     {
-        $backend = new IngressBackend();
+        $backend = $this->ingressBackend ?? new IngressBackend();
         $serviceBackend = new IngressServiceBackend($serviceName);
 
         if (is_numeric($servicePort)) {
@@ -39,7 +46,7 @@ class IngressBackendFactory
 
     public function fromManifestReference(ManifestReference $manifestReference): IngressBackend
     {
-        $backend = new IngressBackend();
+        $backend = $this->ingressBackend ?? new IngressBackend();
         $resource = $this->manifestReferenceUtil->toTypedLocalObjectReference($manifestReference);
         $backend->setResource($resource);
 
