@@ -27,7 +27,8 @@
         "symfony/yaml": "5.3.*",
         "dealroadshow/k8s-resources": "^1.19 || ^1.20 || ^1.21 || ^1.22",
         "ocramius/proxy-manager": "dev-non-nullable-typed-properties-support",
-        "ext-mbstring": "*"
+        "ext-mbstring": "*",
+        "composer/semver": "^3.2"
     },
     "autoload": {
         "psr-4": {
