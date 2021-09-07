@@ -2,7 +2,7 @@
 
 namespace Dealroadshow\K8S\Framework\ResourceMaker;
 
-use Dealroadshow\K8S\API\Extensions\Ingress;
+use Dealroadshow\K8S\API\Networking\Ingress;
 use Dealroadshow\K8S\APIResourceInterface;
 use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\Ingress\Configurator\IngressBackendConfigurator;
