@@ -9,8 +9,12 @@ class AppGroups
 {
     private array $groups;
 
-    public function __construct(string ...$groups)
+    public function __construct(string|array $groups)
     {
+        if (is_string($groups)) {
+            $groups = [$groups];
+        }
+
         $this->groups = $groups;
     }
 
