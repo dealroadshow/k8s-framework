@@ -38,6 +38,8 @@ class SecretMaker extends AbstractResourceMaker
             $stringData->add($key, Str::stringify($value));
         }
 
+        $secret->setType($manifest->type()->value);
+
         $manifest->configureSecret($secret);
 
         return $secret;

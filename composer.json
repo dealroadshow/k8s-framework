@@ -22,7 +22,7 @@
         }
     ],
     "require": {
-        "php": ">=8.0",
+        "php": ">=8.1",
         "ext-json": "*",
         "symfony/yaml": ">=6.0",
         "dealroadshow/k8s-resources": "^1.19 || ^1.20 || ^1.21 || ^1.22",
