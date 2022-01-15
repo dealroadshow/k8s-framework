@@ -8,5 +8,5 @@ use Dealroadshow\K8S\Framework\App\AppInterface;
 
 interface ContainerMakerInterface
 {
-    public function make(ContainerInterface $manifest, VolumeList $volumes, AppInterface $app): Container;
+    public function make(ContainerInterface $builder, VolumeList $volumes, AppInterface $app): Container;
 }

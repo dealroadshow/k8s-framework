@@ -11,12 +11,14 @@ use Dealroadshow\K8S\Framework\Core\Pod\Affinity\AffinityConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\ImagePullSecrets\ImagePullSecretsConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\PriorityClass\PriorityClassConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\Volume\VolumesConfigurator;
+use Dealroadshow\K8S\Framework\Event\PodSpecCreatedEvent;
 use Dealroadshow\K8S\Framework\Registry\AppRegistry;
 use Dealroadshow\K8S\Framework\Util\ClassName;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
 class PodSpecProcessor
 {
-    public function __construct(private ContainerMakerInterface $containerMaker, private AppRegistry $appRegistry, private ManifestManager $manifestManager)
+    public function __construct(private ContainerMakerInterface $containerMaker, private AppRegistry $appRegistry, private ManifestManager $manifestManager, private EventDispatcherInterface $dispatcher)
     {
     }
 
@@ -68,6 +70,8 @@ class PodSpecProcessor
         $builder->priorityClass($priorityClass);
 
         $builder->configurePodSpec($spec);
+
+        $this->dispatcher->dispatch(new PodSpecCreatedEvent($spec, $builder), PodSpecCreatedEvent::NAME);
     }
 
     private function ensureValidContainerBuilder(mixed $builder): void
