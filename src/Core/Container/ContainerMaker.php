@@ -14,17 +14,20 @@ use Dealroadshow\K8S\Framework\Core\Container\Resources\ResourcesConfigurator;
 use Dealroadshow\K8S\Framework\Core\Container\Security\SecurityContextConfigurator;
 use Dealroadshow\K8S\Framework\Core\Container\VolumeMount\VolumeMountsConfigurator;
 use Dealroadshow\K8S\Framework\Core\ManifestManager;
+use Dealroadshow\K8S\Framework\Event\ContainerCreatedEvent;
 use Dealroadshow\K8S\Framework\Middleware\ContainerImageMiddlewareInterface;
 use Dealroadshow\K8S\Framework\Registry\AppRegistry;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
 class ContainerMaker implements ContainerMakerInterface
 {
     /**
-     * @param AppRegistry                         $appRegistry
-     * @param ManifestManager                     $manifestManager
+     * @param AppRegistry $appRegistry
+     * @param ManifestManager $manifestManager
+     * @param EventDispatcherInterface $dispatcher
      * @param ContainerImageMiddlewareInterface[] $middlewares
      */
-    public function __construct(private AppRegistry $appRegistry, private ManifestManager $manifestManager, private iterable $middlewares)
+    public function __construct(private AppRegistry $appRegistry, private ManifestManager $manifestManager, private EventDispatcherInterface $dispatcher, private iterable $middlewares)
     {
     }
 
@@ -80,6 +83,8 @@ class ContainerMaker implements ContainerMakerInterface
         $manifest->securityContext($securityContext);
 
         $manifest->configureContainer($container);
+
+        $this->dispatcher->dispatch(new ContainerCreatedEvent($container), ContainerCreatedEvent::NAME);
 
         return $container;
     }

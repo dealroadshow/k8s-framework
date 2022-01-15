@@ -28,7 +28,8 @@
         "dealroadshow/k8s-resources": "^1.19 || ^1.20 || ^1.21 || ^1.22",
         "ocramius/proxy-manager": "dev-non-nullable-typed-properties-support",
         "ext-mbstring": "*",
-        "composer/semver": "^3.2"
+        "composer/semver": "^3.2",
+        "psr/event-dispatcher": "^1.0"
     },
     "autoload": {
         "psr-4": {
