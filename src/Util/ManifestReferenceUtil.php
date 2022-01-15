@@ -2,6 +2,7 @@
 
 namespace Dealroadshow\K8S\Framework\Util;
 
+use Dealroadshow\K8S\Data\LocalObjectReference;
 use Dealroadshow\K8S\Data\TypedLocalObjectReference;
 use Dealroadshow\K8S\Framework\Core\ManifestReference;
 use Dealroadshow\K8S\Framework\Registry\AppRegistry;
@@ -23,6 +24,17 @@ class ManifestReferenceUtil
         if ($apiGroup = $manifestReference->apiGroup()) {
             $objectReference->setApiGroup($apiGroup);
         }
+
+        return $objectReference;
+    }
+
+    public function toLocalObjectReference(ManifestReference $manifestReference): LocalObjectReference
+    {
+        $app = $this->appRegistry->get($manifestReference->appAlias());
+        $name = $app->namesHelper()->byManifestClass($manifestReference->className());
+
+        $objectReference = new LocalObjectReference();
+        $objectReference->setName($name);
 
         return $objectReference;
     }
