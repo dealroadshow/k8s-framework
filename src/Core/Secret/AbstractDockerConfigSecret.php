@@ -12,7 +12,7 @@ abstract class AbstractDockerConfigSecret extends AbstractSecret
     /**
      * @return DockerAuth[]
      */
-    abstract protected function auths(): array;
+    abstract protected function auths(): iterable;
 
     final public function data(StringMap $data): void
     {
