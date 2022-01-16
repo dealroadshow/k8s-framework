@@ -105,7 +105,7 @@ class AppRegistry
             /** @var AppGroups $attribute */
             $attribute = $reflectionAttributes[0]->newInstance();
 
-            return array_intersect($groups, $attribute->get()) > 0;
+            return count(array_intersect($groups, $attribute->get())) > 0;
         });
     }
 }
