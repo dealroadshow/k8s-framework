@@ -20,7 +20,7 @@ class ManifestMiddlewareService
     {
         foreach ($this->prefixMiddlewares as $middleware) {
             if ($middleware->supports($proxy, $methodName, $params)) {
-                $returnValue = ManifestMethodPrefixMiddlewareInterface::NO_RETURN_VALUE;
+                $returnValue = ManifestMethodMiddlewareInterface::NO_RETURN_VALUE;
                 $middleware->beforeMethodCall($proxy, $methodName, $params, $returnValue);
                 if (ManifestMethodMiddlewareInterface::NO_RETURN_VALUE !== $returnValue) {
                     return $returnValue;
@@ -28,14 +28,14 @@ class ManifestMiddlewareService
             }
         }
 
-        return ManifestMethodPrefixMiddlewareInterface::NO_RETURN_VALUE;
+        return ManifestMethodMiddlewareInterface::NO_RETURN_VALUE;
     }
 
     public function afterMethodCall(ManifestInterface $proxy, string $methodName, array $params, mixed $returnedValue): mixed
     {
         foreach ($this->suffixMiddlewares as $middleware) {
             if ($middleware->supports($proxy, $methodName, $params)) {
-                $returnValue = ManifestMethodPrefixMiddlewareInterface::NO_RETURN_VALUE;
+                $returnValue = ManifestMethodMiddlewareInterface::NO_RETURN_VALUE;
                 $middleware->afterMethodCall($proxy, $methodName, $params, $returnedValue, $returnValue);
                 if (ManifestMethodMiddlewareInterface::NO_RETURN_VALUE !== $returnValue) {
                     return $returnValue;
@@ -43,6 +43,6 @@ class ManifestMiddlewareService
             }
         }
 
-        return ManifestMethodPrefixMiddlewareInterface::NO_RETURN_VALUE;
+        return ManifestMethodMiddlewareInterface::NO_RETURN_VALUE;
     }
 }
