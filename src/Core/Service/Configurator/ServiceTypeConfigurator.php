@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\Core\Service\Configurator;
 
 use Dealroadshow\K8S\API\Service;
 
 class ServiceTypeConfigurator
 {
-    const TYPE_CLUSTER_IP = 'ClusterIP';
-    const TYPE_NODE_PORT = 'NodePort';
-    const TYPE_LOAD_BALANCER = 'LoadBalancer';
-    const TYPE_EXTERNAL_NAME = 'ExternalName';
+    public const TYPE_CLUSTER_IP = 'ClusterIP';
+    public const TYPE_NODE_PORT = 'NodePort';
+    public const TYPE_LOAD_BALANCER = 'LoadBalancer';
+    public const TYPE_EXTERNAL_NAME = 'ExternalName';
 
     private Service $service;
 

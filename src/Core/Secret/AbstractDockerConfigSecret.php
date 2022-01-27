@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\Core\Secret;
 
 use Dealroadshow\K8S\Data\Collection\StringMap;
@@ -32,7 +34,7 @@ abstract class AbstractDockerConfigSecret extends AbstractSecret
             $authsList[$auth->host] = [
                 'username' => $auth->username,
                 'password' => $auth->password,
-                'auth' => base64_encode($auth->username.':'.$auth->password)
+                'auth' => base64_encode($auth->username.':'.$auth->password),
             ];
 
             if (null !== $auth->email) {

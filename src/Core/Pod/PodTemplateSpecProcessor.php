@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\Core\Pod;
 
 use Dealroadshow\K8S\Data\PodTemplateSpec;
 use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\MetadataConfigurator;
-use Dealroadshow\K8S\Framework\Event\PodTemplateSpecCreatedEvent;
+use Dealroadshow\K8S\Framework\Event\PodTemplateSpecGeneratedEvent;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
 class PodTemplateSpecProcessor
@@ -25,6 +27,6 @@ class PodTemplateSpecProcessor
 
         $this->specProcessor->process($builder, $templateSpec->spec(), $app);
 
-        $this->dispatcher->dispatch(new PodTemplateSpecCreatedEvent($templateSpec, $builder), PodTemplateSpecCreatedEvent::NAME);
+        $this->dispatcher->dispatch(new PodTemplateSpecGeneratedEvent($templateSpec, $builder), PodTemplateSpecGeneratedEvent::NAME);
     }
 }

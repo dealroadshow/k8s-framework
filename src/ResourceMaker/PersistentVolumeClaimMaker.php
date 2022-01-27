@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\ResourceMaker;
 
 use Dealroadshow\K8S\API\PersistentVolumeClaim;
@@ -54,7 +56,7 @@ class PersistentVolumeClaimMaker extends AbstractResourceMaker
         return $pvc;
     }
 
-    private function configureAccessModes(PersistentVolumeClaimInterface $manifest, PersistentVolumeClaim $pvc)
+    private function configureAccessModes(PersistentVolumeClaimInterface $manifest, PersistentVolumeClaim $pvc): void
     {
         $accessModes = $pvc->spec()->accessModes();
         foreach ($manifest->accessModes() as $mode) {
@@ -62,7 +64,7 @@ class PersistentVolumeClaimMaker extends AbstractResourceMaker
         }
     }
 
-    private function configureDataSource(PersistentVolumeClaimInterface $manifest, PersistentVolumeClaim $pvc)
+    private function configureDataSource(PersistentVolumeClaimInterface $manifest, PersistentVolumeClaim $pvc): void
     {
         $manifestReference = $manifest->dataSource();
         if (null !== $manifestReference) {

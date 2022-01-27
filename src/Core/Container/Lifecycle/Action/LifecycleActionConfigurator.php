@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\Core\Container\Lifecycle\Action;
 
 use Dealroadshow\K8S\Data\Handler;

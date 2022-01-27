@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\Core\Pod\PriorityClass;
 
 use Dealroadshow\K8S\Data\PodSpec;
@@ -38,11 +40,11 @@ class PriorityClassConfigurator
         $appAlias = $this->app->alias();
         if (!$this->manifestManager->appOwnsManifest($appAlias, $phpClassName)) {
             $msg = <<<'ERR'
-            App "%s" does not have manifests with class "%s". Please use method "%s::withExternalApp()"
-            for using priority classes from another app. Example:
+                App "%s" does not have manifests with class "%s". Please use method "%s::withExternalApp()"
+                for using priority classes from another app. Example:
             
-            $priorityClass->withExternalApp('externalAppAlias')->fromPHPClass(ExternalPriorityClass::class);
-            ERR;
+                $priorityClass->withExternalApp('externalAppAlias')->fromPHPClass(ExternalPriorityClass::class);
+                ERR;
 
             throw new \InvalidArgumentException(
                 sprintf($msg, $appAlias, $phpClassName, static::class)
@@ -68,9 +70,9 @@ class PriorityClassConfigurator
     {
         if ($this->locked) {
             $err = <<<'ERR'
-            %s allows to set priority class name only once, but multiple calls detected.
-            Ensure you call only one of methods "fromPHPClass()" or "fromPriorityClassName()", and only once.
-            ERR;
+                %s allows to set priority class name only once, but multiple calls detected.
+                Ensure you call only one of methods "fromPHPClass()" or "fromPriorityClassName()", and only once.
+                ERR;
 
             throw new \LogicException(sprintf($err, static::class));
         }

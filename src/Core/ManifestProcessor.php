@@ -1,23 +1,32 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\Core;
 
 use Dealroadshow\K8S\Framework\App\AppInterface;
+use Dealroadshow\K8S\Framework\ResourceMaker\AbstractResourceMaker;
 use Dealroadshow\K8S\Framework\ResourceMaker\ResourceMakerInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
 class ManifestProcessor
 {
     /**
-     * @var ResourceMakerInterface[]|iterable
+     * @var ResourceMakerInterface[]
      */
-    private iterable $makers;
+    private array $makers = [];
 
     /**
      * @param ResourceMakerInterface[] $makers
      */
-    public function __construct(iterable $makers)
+    public function __construct(EventDispatcherInterface $dispatcher, iterable $makers)
     {
-        $this->makers = $makers;
+        foreach ($makers as $maker) {
+            if ($maker instanceof AbstractResourceMaker) {
+                $maker->setEventDispatcher($dispatcher);
+            }
+            $this->makers[] = $maker;
+        }
     }
 
     public function process(ManifestInterface $manifest, AppInterface $app): void

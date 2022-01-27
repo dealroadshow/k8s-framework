@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\Renderer;
 
 use Symfony\Component\Yaml\Yaml;
@@ -21,7 +23,8 @@ class YamlRenderer extends AbstractRenderer
         return max(7, $depth - 1);
     }
 
-    private function calcDepth(array $array): int {
+    private function calcDepth(array $array): int
+    {
         $maxDepth = 1;
         foreach ($array as $value) {
             if (is_array($value)) {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\Util;
 
 use Dealroadshow\K8S\Data\Collection\StringMap;
@@ -58,9 +60,9 @@ class StringMapProxy extends StringMap
 
     public function remove(string $name): self
     {
-       $this->map->remove($name);
+        $this->map->remove($name);
 
-       return $this;
+        return $this;
     }
 
     public function jsonSerialize(): array

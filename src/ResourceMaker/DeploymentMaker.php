@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\ResourceMaker;
 
 use Dealroadshow\K8S\API\Apps\Deployment;
@@ -9,6 +11,7 @@ use Dealroadshow\K8S\Framework\Core\Deployment\DeploymentInterface;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 use Dealroadshow\K8S\Framework\Core\Pod\PodTemplateSpecProcessor;
 use Dealroadshow\K8S\Framework\Core\Deployment\StrategyConfigurator;
+use Dealroadshow\K8S\Framework\Event\DeploymentGeneratedEvent;
 use Dealroadshow\K8S\Framework\ResourceMaker\Traits\ConfigureSelectorTrait;
 
 class DeploymentMaker extends AbstractResourceMaker
@@ -38,9 +41,7 @@ class DeploymentMaker extends AbstractResourceMaker
         $replicas = $manifest->replicas();
         $minReadySeconds = $manifest->minReadySeconds();
         $progressDeadlineSeconds = $manifest->progressDeadlineSeconds();
-        if (null !== $replicas) {
-            $spec->setReplicas($replicas);
-        }
+        $spec->setReplicas($replicas);
         if (null !== $minReadySeconds) {
             $spec->setMinReadySeconds($minReadySeconds);
         }
@@ -48,6 +49,8 @@ class DeploymentMaker extends AbstractResourceMaker
             $spec->setProgressDeadlineSeconds($progressDeadlineSeconds);
         }
         $manifest->configureDeployment($deployment);
+
+        $this->dispatcher->dispatch(new DeploymentGeneratedEvent($manifest, $deployment, $app));
 
         return $deployment;
     }
@@ -57,7 +60,7 @@ class DeploymentMaker extends AbstractResourceMaker
         return DeploymentInterface::class;
     }
 
-    private function configureStrategy(DeploymentInterface|ManifestInterface $manifest, DeploymentStrategy $strategy)
+    private function configureStrategy(DeploymentInterface|ManifestInterface $manifest, DeploymentStrategy $strategy): void
     {
         $strategyConfigurator = new StrategyConfigurator($strategy);
         $manifest->strategy($strategyConfigurator);

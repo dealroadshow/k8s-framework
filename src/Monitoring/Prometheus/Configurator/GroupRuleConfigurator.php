@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\Monitoring\Prometheus\Configurator;
 
 use Dealroadshow\K8S\Data\Collection\StringMap;

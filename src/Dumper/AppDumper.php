@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\Dumper;
 
 use Dealroadshow\K8S\Framework\Registry\AppRegistry;
@@ -17,7 +19,7 @@ class AppDumper
      */
     public function dumpAll(string $dir, iterable $appsAliases): void
     {
-        @mkdir($dir, 0777, true);
+        @mkdir($dir, 0o777, true);
         foreach ($appsAliases as $alias) {
             $appDir = $dir.DIRECTORY_SEPARATOR.$alias;
             $this->dump($alias, $appDir);
@@ -26,7 +28,7 @@ class AppDumper
 
     public function dump(string $appAlias, string $appDir): void
     {
-        @mkdir($appDir, 0777, true);
+        @mkdir($appDir, 0o777, true);
         $app = $this->appRegistry->get($appAlias);
         foreach ($app->manifestFiles() as $file) {
             $yaml = $this->renderer->render($file->resource());

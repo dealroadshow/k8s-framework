@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\Registry;
 
 use Dealroadshow\K8S\Framework\App\AppInterface;
@@ -56,7 +58,7 @@ class AppRegistry
      */
     public function classes(): array
     {
-        $classes = array_map(fn (AppInterface $app) => get_class($app), $this->apps);
+        $classes = array_map(fn (AppInterface $app) => $app::class, $this->apps);
 
         return array_values(array_unique($classes));
     }
@@ -68,7 +70,7 @@ class AppRegistry
 
     public function get(string $alias): AppInterface
     {
-        if(!$this->has($alias)) {
+        if (!$this->has($alias)) {
             throw new \InvalidArgumentException(
                 sprintf('App "%s" does not exist', $alias)
             );

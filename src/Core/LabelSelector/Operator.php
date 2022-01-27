@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\Core\LabelSelector;
 
 final class Operator
 {
-    const IN = 'In';
-    const NOT_IN = 'NotIn';
-    const EXISTS = 'Exists';
-    const DOES_NOT_EXIST = 'DoesNotExist';
-    const GREATER_THAN = 'Gt';
-    const LOWER_THAN = 'Lt';
+    public const IN = 'In';
+    public const NOT_IN = 'NotIn';
+    public const EXISTS = 'Exists';
+    public const DOES_NOT_EXIST = 'DoesNotExist';
+    public const GREATER_THAN = 'Gt';
+    public const LOWER_THAN = 'Lt';
 }

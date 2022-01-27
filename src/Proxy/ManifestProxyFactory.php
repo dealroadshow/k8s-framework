@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\Proxy;
 
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
@@ -18,7 +20,7 @@ class ManifestProxyFactory
     {
         $factory = new ProxyFactory();
 
-        $prefixClosure = function(
+        $prefixClosure = function (
             ManifestInterface $proxy,
             ManifestInterface $proxyAgain,
             string $method,
@@ -33,7 +35,7 @@ class ManifestProxyFactory
             return $result;
         };
 
-        $suffixClosure = function(
+        $suffixClosure = function (
             ManifestInterface $proxy,
             ManifestInterface $proxyAgain,
             string $method,

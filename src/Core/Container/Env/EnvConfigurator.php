@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\Core\Container\Env;
 
 use Dealroadshow\K8S\Data\Collection\EnvFromSourceList;
@@ -189,14 +191,14 @@ class EnvConfigurator
         }
 
         $msg = <<<'ERR'
-        App "%s" does not have manifests with class "%s". Please use method "%s::withExternalApp()"
-        for adding configmaps or secrets from another app. Example:
+            App "%s" does not have manifests with class "%s". Please use method "%s::withExternalApp()"
+            for adding configmaps or secrets from another app. Example:
         
-        $env->withExternalApp('externalAppAlias')
-            ->addConfigMap(MyConfigMap::class)
-            ->addSecret(MySecret::class)
-        ;
-        ERR;
+            $env->withExternalApp('externalAppAlias')
+                ->addConfigMap(MyConfigMap::class)
+                ->addSecret(MySecret::class)
+            ;
+            ERR;
 
         throw new \InvalidArgumentException(
             sprintf($msg, $this->app->alias(), $className, EnvConfigurator::class)

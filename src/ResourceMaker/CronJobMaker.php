@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\ResourceMaker;
 
 use Dealroadshow\K8S\API\Batch\CronJob;
@@ -12,6 +14,7 @@ use Dealroadshow\K8S\Framework\Core\Job\JobSpecProcessor;
 use Dealroadshow\K8S\Framework\Core\LabelSelector\SelectorConfigurator;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 use Dealroadshow\K8S\Framework\Core\Pod\Policy\RestartPolicy;
+use Dealroadshow\K8S\Framework\Event\CronJobGeneratedEvent;
 
 class CronJobMaker extends AbstractResourceMaker
 {
@@ -36,9 +39,7 @@ class CronJobMaker extends AbstractResourceMaker
         $startingDeadlineSeconds = $manifest->startingDeadlineSeconds();
         $successfulJobsHistoryLimit = $manifest->successfulJobsHistoryLimit();
         $suspend = $manifest->suspend();
-        if (null !== $concurrencyPolicy) {
-            $spec->setConcurrencyPolicy($concurrencyPolicy->toString());
-        }
+        $spec->setConcurrencyPolicy($concurrencyPolicy->toString());
         if (null !== $failedJobsHistoryLimit) {
             $spec->setFailedJobsHistoryLimit($failedJobsHistoryLimit);
         }
@@ -59,10 +60,12 @@ class CronJobMaker extends AbstractResourceMaker
             );
         }
 
+        $this->dispatcher->dispatch(new CronJobGeneratedEvent($manifest, $cronJob, $app));
+
         return $cronJob;
     }
 
-    private function configureJobTemplate(JobTemplateSpec $templateSpec, JobInterface $manifest, AppInterface $app)
+    private function configureJobTemplate(JobTemplateSpec $templateSpec, JobInterface $manifest, AppInterface $app): void
     {
         $jobSpec = $templateSpec->spec();
         $manifest->selector(new SelectorConfigurator($jobSpec->selector()));

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\ResourceMaker;
 
 use Dealroadshow\K8S\API\Networking\Ingress;
@@ -9,6 +11,7 @@ use Dealroadshow\K8S\Framework\Core\Ingress\Configurator\IngressBackendConfigura
 use Dealroadshow\K8S\Framework\Core\Ingress\Configurator\IngressRulesConfigurator;
 use Dealroadshow\K8S\Framework\Core\Ingress\IngressInterface;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
+use Dealroadshow\K8S\Framework\Event\IngressGeneratedEvent;
 use Dealroadshow\K8S\Framework\Util\ManifestReferenceUtil;
 
 class IngressMaker extends AbstractResourceMaker
@@ -42,6 +45,8 @@ class IngressMaker extends AbstractResourceMaker
         }
 
         $manifest->configureIngress($ingress);
+
+        $this->dispatcher->dispatch(new IngressGeneratedEvent($manifest, $ingress, $app));
 
         return $ingress;
     }

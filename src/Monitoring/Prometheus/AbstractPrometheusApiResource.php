@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\Monitoring\Prometheus;
 
 use Dealroadshow\K8S\APIResourceInterface;
@@ -11,7 +13,7 @@ abstract class AbstractPrometheusApiResource implements APIResourceInterface
     {
     }
 
-    function metadata(): ObjectMeta
+    public function metadata(): ObjectMeta
     {
         return $this->data['metadata'];
     }

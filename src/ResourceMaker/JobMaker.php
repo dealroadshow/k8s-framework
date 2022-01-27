@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\ResourceMaker;
 
 use Dealroadshow\K8S\API\Batch\Job;
@@ -10,6 +12,7 @@ use Dealroadshow\K8S\Framework\Core\Job\JobSpecProcessor;
 use Dealroadshow\K8S\Framework\Core\LabelSelector\SelectorConfigurator;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 use Dealroadshow\K8S\Framework\Core\Pod\Policy\RestartPolicy;
+use Dealroadshow\K8S\Framework\Event\JobGeneratedEvent;
 
 class JobMaker extends AbstractResourceMaker
 {
@@ -45,6 +48,8 @@ class JobMaker extends AbstractResourceMaker
                 RestartPolicy::never()->toString()
             );
         }
+
+        $this->dispatcher->dispatch(new JobGeneratedEvent($manifest, $job, $app));
 
         return $job;
     }

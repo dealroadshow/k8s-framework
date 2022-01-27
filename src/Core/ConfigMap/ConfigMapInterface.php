@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\Core\ConfigMap;
 
 use Dealroadshow\K8S\API\ConfigMap;

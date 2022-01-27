@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\ResourceMaker;
 
 use Dealroadshow\K8S\API\Secret;
 use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 use Dealroadshow\K8S\Framework\Core\Secret\SecretInterface;
+use Dealroadshow\K8S\Framework\Event\SecretGeneratedEvent;
 use Dealroadshow\K8S\Framework\ResourceMaker\Traits\PrefixMapKeysTrait;
 use Dealroadshow\K8S\Framework\Util\Str;
 use Dealroadshow\K8S\Framework\Util\StringMapProxy;
@@ -41,6 +44,8 @@ class SecretMaker extends AbstractResourceMaker
         $secret->setType($manifest->type()->value);
 
         $manifest->configureSecret($secret);
+
+        $this->dispatcher->dispatch(new SecretGeneratedEvent($manifest, $secret, $app));
 
         return $secret;
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\Renderer;
 
 abstract class AbstractRenderer implements RendererInterface
@@ -20,7 +22,7 @@ abstract class AbstractRenderer implements RendererInterface
         return $this->filteringService->filterArray($data);
     }
 
-    private function walkFunction(&$value)
+    private function walkFunction(&$value): void
     {
         if (\is_array($value)) {
             \array_walk($value, [$this, 'walkFunction']);

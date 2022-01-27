@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\ResourceMaker\Traits;
 
 use Dealroadshow\K8S\Data\LabelSelector;
@@ -9,7 +11,7 @@ use Dealroadshow\K8S\Framework\Util\ClassName;
 
 trait ConfigureSelectorTrait
 {
-    private function configureSelector(ManifestInterface $manifest, LabelSelector $specSelector)
+    private function configureSelector(ManifestInterface $manifest, LabelSelector $specSelector): void
     {
         $selector = new SelectorConfigurator($specSelector);
         $manifest->selector($selector);

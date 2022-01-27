@@ -1,7 +1,8 @@
 <?php
 
-namespace Dealroadshow\K8S\Framework\Core\Pod\Volume\Builder;
+declare(strict_types=1);
 
+namespace Dealroadshow\K8S\Framework\Core\Pod\Volume\Builder;
 
 use Dealroadshow\K8S\Data\DownwardAPIVolumeFile;
 use Dealroadshow\K8S\Data\DownwardAPIVolumeSource;

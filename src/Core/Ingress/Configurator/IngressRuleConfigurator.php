@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\Core\Ingress\Configurator;
 
 use Composer\Semver\Comparator;
@@ -27,7 +29,7 @@ class IngressRuleConfigurator
                 $pathType->toString(),
                 [
                     PathType::exact()->toString(),
-                    PathType::prefix()->toString()
+                    PathType::prefix()->toString(),
                 ]
             )
         ) {

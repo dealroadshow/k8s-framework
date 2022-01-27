@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\Core\Container\Resources;
 
 use Dealroadshow\K8S\Data\Collection\StringOrFloatMap;

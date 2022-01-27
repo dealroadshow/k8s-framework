@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\Core\Pod\Affinity\Node;
 
 use Dealroadshow\K8S\Data\NodeAffinity;

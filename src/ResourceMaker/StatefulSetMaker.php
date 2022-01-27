@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\ResourceMaker;
 
 use Dealroadshow\K8S\API\Apps\StatefulSet;
@@ -10,6 +12,7 @@ use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 use Dealroadshow\K8S\Framework\Core\Pod\PodTemplateSpecProcessor;
 use Dealroadshow\K8S\Framework\Core\StatefulSet\StatefulSetInterface;
 use Dealroadshow\K8S\Framework\Core\StatefulSet\UpdateStrategy\UpdateStrategyConfigurator;
+use Dealroadshow\K8S\Framework\Event\StatefulSetGeneratedEvent;
 use Dealroadshow\K8S\Framework\Proxy\ManifestProxyFactory;
 use Dealroadshow\K8S\Framework\Registry\AppRegistry;
 use Dealroadshow\K8S\Framework\ResourceMaker\Traits\ConfigureSelectorTrait;
@@ -72,6 +75,8 @@ class StatefulSetMaker extends AbstractResourceMaker
         }
 
         $manifest->configureStatefulSet($sts);
+
+        $this->dispatcher->dispatch(new StatefulSetGeneratedEvent($manifest, $sts, $app));
 
         return $sts;
     }

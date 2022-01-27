@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\Core\Container\Security;
 
 use Dealroadshow\K8S\Data\Capabilities;
@@ -16,7 +18,7 @@ class CapabilitiesConfigurator
     /**
      * @param array|string[] $capabilities
      */
-    public function add(array $capabilities)
+    public function add(array $capabilities): void
     {
         $this->capabilities->add()->addAll(array_values($capabilities));
     }
@@ -24,7 +26,7 @@ class CapabilitiesConfigurator
     /**
      * @param array|string[] $capabilities
      */
-    public function drop(array $capabilities)
+    public function drop(array $capabilities): void
     {
         $this->capabilities->drop()->addAll(array_values($capabilities));
     }

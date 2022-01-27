@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\Core\Secret;
 
 use Dealroadshow\K8S\Data\Collection\StringMap;
@@ -30,7 +32,7 @@ abstract class AbstractServiceAccountSecret extends AbstractSecret
         return SecretType::ServiceAccountToken;
     }
 
-    protected function extraData(StringMap $data)
+    protected function extraData(StringMap $data): void
     {
     }
 }

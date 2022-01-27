@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\Core\Pod\Affinity;
 
 use Dealroadshow\K8S\Framework\Core\LabelSelector\LabelSelectorExpression;
 
 class PodAffinityExpression extends LabelSelectorExpression
 {
-    const TARGET_LABEL = 'label';
-    const TARGET_FIELD = 'field';
+    public const TARGET_LABEL = 'label';
+    public const TARGET_FIELD = 'field';
 
     protected string $target;
 

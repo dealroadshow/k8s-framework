@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\Core\Container;
 
 use Dealroadshow\K8S\Data\Collection\VolumeList;
@@ -14,7 +16,7 @@ use Dealroadshow\K8S\Framework\Core\Container\Resources\ResourcesConfigurator;
 use Dealroadshow\K8S\Framework\Core\Container\Security\SecurityContextConfigurator;
 use Dealroadshow\K8S\Framework\Core\Container\VolumeMount\VolumeMountsConfigurator;
 use Dealroadshow\K8S\Framework\Core\ManifestManager;
-use Dealroadshow\K8S\Framework\Event\ContainerCreatedEvent;
+use Dealroadshow\K8S\Framework\Event\ContainerGeneratedEvent;
 use Dealroadshow\K8S\Framework\Middleware\ContainerImageMiddlewareInterface;
 use Dealroadshow\K8S\Framework\Registry\AppRegistry;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -84,12 +86,12 @@ class ContainerMaker implements ContainerMakerInterface
 
         $builder->configureContainer($container);
 
-        $this->dispatcher->dispatch(new ContainerCreatedEvent($container, $builder), ContainerCreatedEvent::NAME);
+        $this->dispatcher->dispatch(new ContainerGeneratedEvent($container, $builder), ContainerGeneratedEvent::NAME);
 
         return $container;
     }
 
-    private function applyMiddlewares(Image $image, AppInterface $app)
+    private function applyMiddlewares(Image $image, AppInterface $app): void
     {
         foreach ($this->middlewares as $middleware) {
             $middleware->apply($image, $app);

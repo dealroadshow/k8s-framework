@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\Monitoring\Prometheus\ServiceMonitor;
 
 use Dealroadshow\K8S\Data\Collection\StringList;

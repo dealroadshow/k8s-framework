@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\Core\StatefulSet;
 
 use Dealroadshow\K8S\API\Apps\StatefulSet;
@@ -57,7 +59,7 @@ abstract class AbstractStatefulSet extends AbstractManifest implements StatefulS
 
     public function podManagementPolicy(): PodManagementPolicy|null
     {
-       return null;
+        return null;
     }
 
     public function replicas(): int

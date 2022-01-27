@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\Core\Service;
 
 final class IPProtocol
 {
-    const TCP = 'TCP';
-    const UDP = 'UDP';
-    const SCTP = 'SCTP';
+    public const TCP = 'TCP';
+    public const UDP = 'UDP';
+    public const SCTP = 'SCTP';
 
     private string $value;
 

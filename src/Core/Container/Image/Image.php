@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\Core\Container\Image;
 
 class Image
@@ -88,10 +90,10 @@ class Image
 
     public static function fromString(string $string): static
     {
-        if(preg_match('#(.+)/(.+):(.+)#', $string, $matches)) {
+        if (preg_match('#(.+)/(.+):(.+)#', $string, $matches)) {
             return new self($matches[2], $matches[1], $matches[3]);
         }
-        if(preg_match('#(.+):(.+)#', $string, $matches)) {
+        if (preg_match('#(.+):(.+)#', $string, $matches)) {
             return new self($matches[1], null, $matches[2]);
         }
         return new static($string, null, null);

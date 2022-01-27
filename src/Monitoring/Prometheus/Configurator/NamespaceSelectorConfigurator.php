@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\Monitoring\Prometheus\Configurator;
 
 class NamespaceSelectorConfigurator
@@ -18,7 +20,7 @@ class NamespaceSelectorConfigurator
     /**
      * @param string[] $names
      */
-    public function matchNames(array $names)
+    public function matchNames(array $names): void
     {
         $this->data['matchNames'] = $names;
     }

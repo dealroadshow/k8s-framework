@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\ResourceMaker;
 
 use Dealroadshow\K8S\API\Service;
@@ -10,6 +12,7 @@ use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 use Dealroadshow\K8S\Framework\Core\Service\Configurator\ServicePortsConfigurator;
 use Dealroadshow\K8S\Framework\Core\Service\Configurator\ServiceTypeConfigurator;
 use Dealroadshow\K8S\Framework\Core\Service\ServiceInterface;
+use Dealroadshow\K8S\Framework\Event\ServiceGeneratedEvent;
 
 class ServiceMaker extends AbstractResourceMaker
 {
@@ -38,10 +41,12 @@ class ServiceMaker extends AbstractResourceMaker
         $manifest->selector($service->spec()->selector());
         $manifest->configureService($service);
 
+        $this->dispatcher->dispatch(new ServiceGeneratedEvent($manifest, $service, $app));
+
         return $service;
     }
 
-    private function validatePorts(ServicePortList $ports, ServiceInterface $manifest, AppInterface $app)
+    private function validatePorts(ServicePortList $ports, ServiceInterface $manifest, AppInterface $app): void
     {
         $ports = $ports->all();
         if (count($ports) > 1) {

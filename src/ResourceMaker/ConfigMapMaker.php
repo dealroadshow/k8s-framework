@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\ResourceMaker;
 
 use Dealroadshow\K8S\API\ConfigMap;
 use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\ConfigMap\ConfigMapInterface;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
+use Dealroadshow\K8S\Framework\Event\ConfigMapGeneratedEvent;
 use Dealroadshow\K8S\Framework\ResourceMaker\Traits\PrefixMapKeysTrait;
 use Dealroadshow\K8S\Framework\Util\Str;
 use Dealroadshow\K8S\Framework\Util\StringMapProxy;
@@ -14,7 +17,7 @@ class ConfigMapMaker extends AbstractResourceMaker
 {
     use PrefixMapKeysTrait;
 
-    public function makeResource(ManifestInterface|ConfigMapInterface $manifest, AppInterface $app): ConfigMap
+    protected function makeResource(ManifestInterface|ConfigMapInterface $manifest, AppInterface $app): ConfigMap
     {
         $configMap = new ConfigMap();
 
@@ -35,10 +38,12 @@ class ConfigMapMaker extends AbstractResourceMaker
 
         $manifest->configureConfigMap($configMap);
 
+        $this->dispatcher->dispatch(new ConfigMapGeneratedEvent($manifest, $configMap, $app));
+
         return $configMap;
     }
 
-    public function supportsClass(): string
+    protected function supportsClass(): string
     {
         return ConfigMapInterface::class;
     }

@@ -1,3 +1,7 @@
 /vendor/
 /composer.lock
 /.idea/
+
+/tools/php-cs-fixer/vendor/
+/tools/php-cs-fixer/composer.lock
+/.php-cs-fixer.cache
