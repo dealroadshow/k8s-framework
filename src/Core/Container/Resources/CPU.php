@@ -79,7 +79,7 @@ class CPU implements \JsonSerializable
                 throw $exception;
             }
 
-            return self::millicores($millicoresNumber);
+            return self::millicores((int)$millicoresNumber);
         }
 
         throw $exception;
