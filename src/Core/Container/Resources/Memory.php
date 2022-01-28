@@ -34,7 +34,7 @@ class Memory implements \JsonSerializable
 
     private string $value;
 
-    protected function __construct(string $value)
+    private function __construct(string $value)
     {
         $this->value = $value;
     }
