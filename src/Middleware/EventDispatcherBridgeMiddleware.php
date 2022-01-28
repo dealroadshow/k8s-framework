@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Dealroadshow\Bundle\K8SBundle\Middleware;
+namespace Dealroadshow\K8S\Framework\Middleware;
 
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 use Dealroadshow\K8S\Framework\Event\ManifestMethodCalledEvent;
