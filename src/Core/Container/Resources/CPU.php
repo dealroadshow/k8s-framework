@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Container\Resources;
 
+use LogicException;
+
 class CPU implements \JsonSerializable
 {
     private const MILLICORES_SUFFIX = 'm';
@@ -18,6 +20,36 @@ class CPU implements \JsonSerializable
     public function toString(): string
     {
         return $this->value;
+    }
+
+    public function greaterThan(CPU $cpu): bool
+    {
+        return $this->millicoresNumber() > $cpu->millicoresNumber();
+    }
+
+    public function lowerThan(CPU $cpu): bool
+    {
+        return $this->millicoresNumber() < $cpu->millicoresNumber();
+    }
+
+    public function equals(CPU $cpu): bool
+    {
+        return $this->millicoresNumber() === $cpu->millicoresNumber();
+    }
+
+    public function millicoresNumber(): int
+    {
+        if (str_ends_with($this->value, self::MILLICORES_SUFFIX)) {
+            return (int)rtrim($this->value, self::MILLICORES_SUFFIX);
+        } elseif (is_numeric($this->value)) {
+            return (int)$this->value * 1000;
+        }
+
+        throw new LogicException(
+            sprintf(
+                'Invalid value format for CPU: "%s"', $this->value
+            )
+        );
     }
 
     public static function millicores(int $millicoresNumber): self

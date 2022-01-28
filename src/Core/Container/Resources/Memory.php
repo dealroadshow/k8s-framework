@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Container\Resources;
 
+use LogicException;
+
 class Memory implements \JsonSerializable
 {
     private const SUFFIX_KIBIBYTES = 'Ki';
@@ -19,6 +21,15 @@ class Memory implements \JsonSerializable
        self::SUFFIX_TEBIBYTES,
        self::SUFFIX_PEBIBYTES,
        self::SUFFIX_EXBIBYTES,
+    ];
+
+    private const SUFFIX_MULTIPLIERS  = [
+        self::SUFFIX_KIBIBYTES => 1024,
+        self::SUFFIX_MEBIBYTES => 1024 * 1024,
+        self::SUFFIX_GIBIBYTES => 1024 * 1024 * 1024,
+        self::SUFFIX_TEBIBYTES => 1024 * 1024 * 1024 * 1024,
+        self::SUFFIX_PEBIBYTES => 1024 * 1024 * 1024 * 1024 * 1024,
+        self::SUFFIX_EXBIBYTES => 1024 * 1024 * 1024 * 1024 * 1024 * 1024,
     ];
 
     private string $value;
@@ -78,6 +89,38 @@ class Memory implements \JsonSerializable
         $value = strval($gibibytes).self::SUFFIX_EXBIBYTES;
 
         return new self($value);
+    }
+
+    public function greaterThan(Memory $memory): bool
+    {
+        return $this->bytesNumber() > $memory->bytesNumber();
+    }
+
+    public function lowerThan(Memory $memory): bool
+    {
+        return $this->bytesNumber() < $memory->bytesNumber();
+    }
+
+    public function equals(Memory $memory): bool
+    {
+        return $this->bytesNumber() === $memory->bytesNumber();
+    }
+
+    public function bytesNumber(): int
+    {
+        if (is_numeric($this->value)) {
+            return (int)$this->value;
+        }
+
+        $pattern = '/(\d+)([a-z]+)/ui';
+        preg_match($pattern, $this->value, $matches);
+        $number = (int)$matches[1];
+        $suffix = $matches[2] ?? null;
+        if (!$suffix || !array_key_exists($suffix, self::SUFFIX_MULTIPLIERS)) {
+            throw new LogicException(sprintf('Invalid Memory value format: "%s"', $this->value));
+        }
+
+        return $number * self::SUFFIX_MULTIPLIERS[$suffix];
     }
 
     public static function fromString(string $string): self
