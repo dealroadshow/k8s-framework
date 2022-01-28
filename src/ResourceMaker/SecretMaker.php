@@ -45,7 +45,7 @@ class SecretMaker extends AbstractResourceMaker
 
         $manifest->configureSecret($secret);
 
-        $this->dispatcher->dispatch(new SecretGeneratedEvent($manifest, $secret, $app));
+        $this->dispatcher->dispatch(new SecretGeneratedEvent($manifest, $secret, $app), SecretGeneratedEvent::NAME);
 
         return $secret;
     }

@@ -46,7 +46,7 @@ class IngressMaker extends AbstractResourceMaker
 
         $manifest->configureIngress($ingress);
 
-        $this->dispatcher->dispatch(new IngressGeneratedEvent($manifest, $ingress, $app));
+        $this->dispatcher->dispatch(new IngressGeneratedEvent($manifest, $ingress, $app), IngressGeneratedEvent::NAME);
 
         return $ingress;
     }

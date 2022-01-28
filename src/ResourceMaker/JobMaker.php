@@ -49,7 +49,7 @@ class JobMaker extends AbstractResourceMaker
             );
         }
 
-        $this->dispatcher->dispatch(new JobGeneratedEvent($manifest, $job, $app));
+        $this->dispatcher->dispatch(new JobGeneratedEvent($manifest, $job, $app), JobGeneratedEvent::NAME);
 
         return $job;
     }

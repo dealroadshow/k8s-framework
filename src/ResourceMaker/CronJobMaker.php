@@ -60,7 +60,7 @@ class CronJobMaker extends AbstractResourceMaker
             );
         }
 
-        $this->dispatcher->dispatch(new CronJobGeneratedEvent($manifest, $cronJob, $app));
+        $this->dispatcher->dispatch(new CronJobGeneratedEvent($manifest, $cronJob, $app), CronJobGeneratedEvent::NAME);
 
         return $cronJob;
     }

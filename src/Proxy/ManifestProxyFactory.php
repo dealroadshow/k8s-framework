@@ -28,7 +28,7 @@ class ManifestProxyFactory
             bool &$returnEarly
         ) {
             $result = $this->middlewareService->beforeMethodCall($proxy, $method, $params);
-            if (ManifestMethodPrefixMiddlewareInterface::NO_RETURN_VALUE !== $result) {
+            if (ManifestMethodMiddlewareInterface::NO_RETURN_VALUE !== $result) {
                 $returnEarly = true;
             }
 

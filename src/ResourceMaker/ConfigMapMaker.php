@@ -38,7 +38,7 @@ class ConfigMapMaker extends AbstractResourceMaker
 
         $manifest->configureConfigMap($configMap);
 
-        $this->dispatcher->dispatch(new ConfigMapGeneratedEvent($manifest, $configMap, $app));
+        $this->dispatcher->dispatch(new ConfigMapGeneratedEvent($manifest, $configMap, $app), ConfigMapGeneratedEvent::NAME);
 
         return $configMap;
     }

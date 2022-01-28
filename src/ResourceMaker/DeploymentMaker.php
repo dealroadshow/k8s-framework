@@ -50,7 +50,7 @@ class DeploymentMaker extends AbstractResourceMaker
         }
         $manifest->configureDeployment($deployment);
 
-        $this->dispatcher->dispatch(new DeploymentGeneratedEvent($manifest, $deployment, $app));
+        $this->dispatcher->dispatch(new DeploymentGeneratedEvent($manifest, $deployment, $app), DeploymentGeneratedEvent::NAME);
 
         return $deployment;
     }

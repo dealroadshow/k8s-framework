@@ -76,7 +76,7 @@ class StatefulSetMaker extends AbstractResourceMaker
 
         $manifest->configureStatefulSet($sts);
 
-        $this->dispatcher->dispatch(new StatefulSetGeneratedEvent($manifest, $sts, $app));
+        $this->dispatcher->dispatch(new StatefulSetGeneratedEvent($manifest, $sts, $app), StatefulSetGeneratedEvent::NAME);
 
         return $sts;
     }

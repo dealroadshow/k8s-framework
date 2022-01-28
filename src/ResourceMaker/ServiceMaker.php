@@ -41,7 +41,7 @@ class ServiceMaker extends AbstractResourceMaker
         $manifest->selector($service->spec()->selector());
         $manifest->configureService($service);
 
-        $this->dispatcher->dispatch(new ServiceGeneratedEvent($manifest, $service, $app));
+        $this->dispatcher->dispatch(new ServiceGeneratedEvent($manifest, $service, $app), ServiceGeneratedEvent::NAME);
 
         return $service;
     }
