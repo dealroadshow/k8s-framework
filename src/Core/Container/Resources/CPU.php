@@ -67,7 +67,7 @@ class CPU implements \JsonSerializable
     public static function fromString(string $string): self
     {
         if (is_numeric($string)) {
-            return static::cores($string);
+            return static::cores((int)$string);
         }
 
         $exception = new \InvalidArgumentException(
