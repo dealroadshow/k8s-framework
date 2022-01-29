@@ -11,6 +11,11 @@ class JsonRenderer extends AbstractRenderer
         return \json_encode($this->renderAsArray($object));
     }
 
+    public function fileExtension(): string
+    {
+        return '.json';
+    }
+
     public function renderAsArray(\JsonSerializable|array $object): array
     {
         return $this->withoutNullValues($object);

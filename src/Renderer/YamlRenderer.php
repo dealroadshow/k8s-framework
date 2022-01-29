@@ -16,6 +16,11 @@ class YamlRenderer extends AbstractRenderer
         return Yaml::dump($data, $inline, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK);
     }
 
+    public function fileExtension(): string
+    {
+        return '.yaml';
+    }
+
     private function calcDumpInline($array): int
     {
         $depth = $this->calcDepth($array);
