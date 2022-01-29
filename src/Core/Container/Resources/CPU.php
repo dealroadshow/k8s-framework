@@ -47,7 +47,8 @@ class CPU implements \JsonSerializable
 
         throw new LogicException(
             sprintf(
-                'Invalid value format for CPU: "%s"', $this->value
+                'Invalid value format for CPU: "%s"',
+                $this->value
             )
         );
     }
