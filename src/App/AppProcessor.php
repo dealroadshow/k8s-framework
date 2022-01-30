@@ -20,36 +20,12 @@ class AppProcessor
     ) {
     }
 
-    public function processAll(string ...$appAliases): void
-    {
-        foreach ($appAliases as $alias) {
-            $this->process($alias);
-        }
-    }
-
     public function process(string $appAlias): void
     {
         $app = $this->appRegistry->get($appAlias);
         $query = $this->createQuery($appAlias);
         foreach ($query->execute() as $manifest) {
             $this->manifestProcessor->process($manifest, $app);
-        }
-    }
-
-    public function processInstancesOf(string $appAlias, array $classNames): void
-    {
-        $app = $this->appRegistry->get($appAlias);
-        $processedManifests = [];
-        foreach ($classNames as $className) {
-            $query = $this->createQuery($appAlias);
-            $query->instancesOf($className);
-
-            foreach ($query->execute() as $manifest) {
-                if (in_array($manifest, $processedManifests)) {
-                    continue;
-                }
-                $this->manifestProcessor->process($manifest, $app);
-            }
         }
     }
 
