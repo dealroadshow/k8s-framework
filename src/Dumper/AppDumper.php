@@ -13,19 +13,6 @@ class AppDumper
     {
     }
 
-    /**
-     * @param string         $dir
-     * @param string[]       $appsAliases
-     */
-    public function dumpAll(string $dir, iterable $appsAliases): void
-    {
-        @mkdir($dir, 0o777, true);
-        foreach ($appsAliases as $alias) {
-            $appDir = $dir.DIRECTORY_SEPARATOR.$alias;
-            $this->dump($alias, $appDir);
-        }
-    }
-
     public function dump(string $appAlias, string $appDir): void
     {
         @mkdir($appDir, 0o777, true);
