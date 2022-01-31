@@ -32,10 +32,6 @@ class ConfigMapMaker extends AbstractResourceMaker
             $this->prefixMapKeys($prefix, $binaryData);
         }
 
-        foreach ($data as $key => $value) {
-            $data->add($key, Str::stringify($value));
-        }
-
         $manifest->configureConfigMap($configMap);
 
         $this->dispatcher->dispatch(new ConfigMapGeneratedEvent($manifest, $configMap, $app), ConfigMapGeneratedEvent::NAME);
