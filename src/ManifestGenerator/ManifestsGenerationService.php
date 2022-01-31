@@ -77,7 +77,12 @@ class ManifestsGenerationService
         foreach ($this->registry->aliases() as $alias) {
             $app = $this->registry->get($alias);
             foreach ($app->manifestFiles() as $file) {
-                $fileName = $file->fileNameWithoutExtension().$this->renderer->fileExtension();
+                $fileName = sprintf(
+                    '%s/%s%s',
+                    $alias,
+                    $file->fileNameWithoutExtension(),
+                    $this->renderer->fileExtension()
+                );
                 $rendered[$fileName] = $this->renderer->render($file->resource());
             }
         }
@@ -95,7 +100,12 @@ class ManifestsGenerationService
         foreach ($appAliases as $alias) {
             $app = $this->registry->get($alias);
             foreach ($app->manifestFiles() as $file) {
-                $fileName = $file->fileNameWithoutExtension().$this->renderer->fileExtension();
+                $fileName = sprintf(
+                    '%s/%s%s',
+                    $alias,
+                    $file->fileNameWithoutExtension(),
+                    $this->renderer->fileExtension()
+                );
                 $rendered[$fileName] = $this->renderer->render($file->resource());
             }
         }
