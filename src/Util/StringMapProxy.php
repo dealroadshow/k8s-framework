@@ -13,7 +13,7 @@ class StringMapProxy extends StringMap
         parent::__construct();
     }
 
-    public function add(string $name, string|bool $value): StringMap
+    public function add(string $name, mixed $value): StringMap
     {
         $value = Str::stringify($value);
         $this->map->add($name, $value);
@@ -23,7 +23,9 @@ class StringMapProxy extends StringMap
 
     public function addAll(array $items): StringMap
     {
-        $this->map->addAll($items);
+        foreach ($items as $key => $value) {
+            $this->add($key, $value);
+        }
 
         return $this;
     }
