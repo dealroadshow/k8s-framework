@@ -93,6 +93,9 @@ class Str
 
     public static function stringify(mixed $value): string
     {
+        if (is_string($value)) {
+            return $value;
+        }
         if (is_bool($value)) {
             return $value ? 'true' : 'false';
         } elseif (is_int($value) || is_float($value) || $value instanceof Stringable) {
