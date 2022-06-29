@@ -60,11 +60,7 @@ class ManifestRegistry
 
     public function query(string $appAlias): ManifestsQuery
     {
-        if (!array_key_exists($appAlias, $this->manifests)) {
-            throw new \InvalidArgumentException(
-                sprintf('There is no manifests for app "%s"', $appAlias)
-            );
-        }
+        $this->manifests[$appAlias] ??= [];
         $manifests = $this->manifests[$appAlias];
 
         return new ManifestsQuery($manifests);
