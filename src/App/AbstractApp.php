@@ -50,7 +50,7 @@ abstract class AbstractApp implements AppInterface
 
     public function manifestNamePrefix(): string
     {
-        return static::name();
+        return $this->alias;
     }
 
     public function manifestFiles(): iterable
