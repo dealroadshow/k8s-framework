@@ -15,7 +15,7 @@ class SecretVolumeBuilder extends AbstractVolumeBuilder
 
     public function __construct(string $secretName)
     {
-        $this->secretName= $secretName;
+        $this->secretName = $secretName;
     }
 
     public function init(Volume $volume): void

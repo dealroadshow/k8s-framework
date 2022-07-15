@@ -7,9 +7,11 @@ namespace Dealroadshow\K8S\Framework\Core\Pod\Volume;
 use Dealroadshow\K8S\Data\Collection\VolumeList;
 use Dealroadshow\K8S\Data\Volume;
 use Dealroadshow\K8S\Framework\App\AppInterface;
+use Dealroadshow\K8S\Framework\Core\ManifestReference;
 use Dealroadshow\K8S\Framework\Core\Pod\Volume\Builder\ConfigMapVolumeBuilder;
 use Dealroadshow\K8S\Framework\Core\Pod\Volume\Builder\DownwardAPIVolumeBuilder;
 use Dealroadshow\K8S\Framework\Core\Pod\Volume\Builder\EmptyDirVolumeBuilder;
+use Dealroadshow\K8S\Framework\Core\Pod\Volume\Builder\PVCVolumeBuilder;
 use Dealroadshow\K8S\Framework\Core\Pod\Volume\Builder\SecretVolumeBuilder;
 use Dealroadshow\K8S\Framework\Core\Pod\Volume\Builder\VolumeBuilderInterface;
 use Dealroadshow\K8S\Framework\Registry\AppRegistry;
@@ -42,6 +44,14 @@ class VolumesConfigurator
         return $this->initBuilder($builder, $volumeName);
     }
 
+    public function fromPersistentVolumeClaim(string $volumeName, string $pvcClass): PVCVolumeBuilder
+    {
+        $pvcName = $this->app->namesHelper()->byManifestClass($pvcClass);
+        $builder = new PVCVolumeBuilder($pvcName);
+
+        return $this->initBuilder($builder, $volumeName);
+    }
+
     public function fromSecret(string $volumeName, string $secretClass): SecretVolumeBuilder
     {
         $secretName = $this->app->namesHelper()->bySecretClass($secretClass);
@@ -67,7 +77,7 @@ class VolumesConfigurator
      * @param VolumeBuilderInterface $builder
      * @param string                 $volumeName
      *
-     * @return ConfigMapVolumeBuilder|SecretVolumeBuilder|DownwardAPIVolumeBuilder|EmptyDirVolumeBuilder
+     * @return ConfigMapVolumeBuilder|SecretVolumeBuilder|DownwardAPIVolumeBuilder|EmptyDirVolumeBuilder|PVCVolumeBuilder|VolumeBuilderInterface
      */
     private function initBuilder(VolumeBuilderInterface $builder, string $volumeName): VolumeBuilderInterface
     {
