@@ -29,6 +29,23 @@ class AppProcessor
         }
     }
 
+    public function processInstancesOf(string $appAlias, array $classNames): void
+    {
+        $app = $this->appRegistry->get($appAlias);
+        $processedManifests = [];
+        foreach ($classNames as $className) {
+            $query = $this->createQuery($appAlias);
+            $query->instancesOf($className);
+
+            foreach ($query->execute() as $manifest) {
+                if (in_array($manifest, $processedManifests)) {
+                    continue;
+                }
+                $this->manifestProcessor->process($manifest, $app);
+            }
+        }
+    }
+
     private function createQuery(string $appAlias): ManifestsQuery
     {
         $query = $this->manifestRegistry->query($appAlias);

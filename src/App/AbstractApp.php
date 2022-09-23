@@ -40,7 +40,7 @@ abstract class AbstractApp implements AppInterface
                 sprintf(
                     'Filename "%s" for app "%s" is already reserved by "%s" instance',
                     $fileNameWithoutExtension,
-                    static::name(),
+                    $this::name(),
                     get_class($this->files[$fileNameWithoutExtension])
                 )
             );
@@ -48,9 +48,14 @@ abstract class AbstractApp implements AppInterface
         $this->files[$fileNameWithoutExtension] = new ManifestFile($fileNameWithoutExtension, $resource);
     }
 
+    public function manifestConfig(string $shortName): array
+    {
+        return $this->config['manifests'][$shortName] ?? [];
+    }
+
     public function manifestNamePrefix(): string
     {
-        return static::name();
+        return $this->alias;
     }
 
     public function manifestFiles(): iterable

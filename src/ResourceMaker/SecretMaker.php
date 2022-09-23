@@ -33,12 +33,7 @@ class SecretMaker extends AbstractResourceMaker
         }
 
         foreach ($data->all() as $key => $value) {
-            $value = Str::stringify($value);
             $data->add($key, base64_encode($value));
-        }
-
-        foreach ($stringData->all() as $key => $value) {
-            $stringData->add($key, Str::stringify($value));
         }
 
         $secret->setType($manifest->type()->value);
