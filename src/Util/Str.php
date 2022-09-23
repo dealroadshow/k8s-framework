@@ -54,6 +54,7 @@ class Str
 
     public static function asDNSSubdomain(string $str): string
     {
+        $str = self::camelCased($str);
         $dashed = self::camelCasedToSeparatedWords($str, '-');
         $valid = preg_replace('/([^\w\-]|[_])+/', '', $dashed);
 
@@ -76,6 +77,8 @@ class Str
 
     public static function underscored(string $str): string
     {
+        $str = self::camelCased($str);
+
         return self::camelCasedToSeparatedWords($str, '_');
     }
 
