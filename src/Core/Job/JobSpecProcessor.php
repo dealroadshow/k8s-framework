@@ -49,5 +49,7 @@ class JobSpecProcessor
         if (null !== $parallelism) {
             $spec->setParallelism($parallelism);
         }
+
+        $spec->setSuspend($manifest->suspend());
     }
 }

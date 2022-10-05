@@ -81,6 +81,11 @@ abstract class AbstractJob extends AbstractManifest implements JobInterface
         return null;
     }
 
+    public function suspend(): bool
+    {
+        return false;
+    }
+
     public function configurePodSpec(PodSpec $spec): void
     {
     }

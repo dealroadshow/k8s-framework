@@ -18,5 +18,6 @@ interface JobInterface extends PodTemplateSpecInterface, ManifestInterface
     public function completions(): ?int;
     public function manualSelector(): ?bool;
     public function parallelism(): ?int;
+    public function suspend(): bool;
     public function configureJob(Job  $job): void;
 }
