@@ -12,6 +12,7 @@ class PodField
     private const METADATA_NAMESPACE = 'metadata.namespace';
     private const METADATA_LABELS = 'metadata.labels';
     private const METADATA_ANNOTATIONS = 'metadata.annotations';
+    private const METADATA_UID = 'metadata.uid';
     private const NODE_NAME = 'spec.nodeName';
     private const SERVICE_ACCOUNT_NAME = 'spec.serviceAccountName';
     private const HOST_IP = 'status.hostIP';
@@ -52,6 +53,11 @@ class PodField
     public static function metadataAnnotations(): self
     {
         return new self(self::METADATA_ANNOTATIONS);
+    }
+
+    public static function metadataUid(): self
+    {
+        return new self(self::METADATA_UID);
     }
 
     public static function nodeName(): self
