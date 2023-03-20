@@ -193,7 +193,7 @@ class EnvConfigurator
         $msg = <<<'ERR'
             App "%s" does not have manifests with class "%s". Please use method "%s::withExternalApp()"
             for adding configmaps or secrets from another app. Example:
-        
+
             $env->withExternalApp('externalAppAlias')
                 ->addConfigMap(MyConfigMap::class)
                 ->addSecret(MySecret::class)

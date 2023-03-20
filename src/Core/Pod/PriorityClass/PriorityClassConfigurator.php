@@ -42,7 +42,7 @@ class PriorityClassConfigurator
             $msg = <<<'ERR'
                 App "%s" does not have manifests with class "%s". Please use method "%s::withExternalApp()"
                 for using priority classes from another app. Example:
-            
+
                 $priorityClass->withExternalApp('externalAppAlias')->fromPHPClass(ExternalPriorityClass::class);
                 ERR;
 
