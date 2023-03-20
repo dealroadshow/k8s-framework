@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dealroadshow\K8S\Framework\Event;
 
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
+use Dealroadshow\Proximity\ProxyInterface;
 
 class ManifestMethodEvent
 {
@@ -12,7 +13,7 @@ class ManifestMethodEvent
 
     private mixed $returnValue = null;
 
-    public function __construct(private ManifestInterface $proxy, private string $methodName, private array $methodParams)
+    public function __construct(private ManifestInterface&ProxyInterface $proxy, private string $methodName, private array $methodParams)
     {
     }
 

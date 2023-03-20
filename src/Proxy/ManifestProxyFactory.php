@@ -5,63 +5,35 @@ declare(strict_types=1);
 namespace Dealroadshow\K8S\Framework\Proxy;
 
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
-use Dealroadshow\K8S\Framework\Middleware\ManifestMethodMiddlewareInterface;
-use Dealroadshow\K8S\Framework\Middleware\ManifestMethodPrefixMiddlewareInterface;
-use Dealroadshow\K8S\Framework\Middleware\ManifestMiddlewareService;
-use ProxyManager\Factory\AccessInterceptorScopeLocalizerFactory as ProxyFactory;
+use Dealroadshow\Proximity\MethodsInterception\BodyInterceptorInterface;
+use Dealroadshow\Proximity\MethodsInterception\ResultInterceptorInterface;
+use Dealroadshow\Proximity\ProxyFactory;
+use Dealroadshow\Proximity\ProxyInterface;
+use Dealroadshow\Proximity\ProxyOptions;
 
 class ManifestProxyFactory
 {
-    public function __construct(private ManifestMiddlewareService $middlewareService)
+    private array $bodyInterceptors;
+    private array $resultInterceptors;
+
+    /**
+     * @param ProxyFactory $proxyFactory
+     * @param BodyInterceptorInterface[] $bodyInterceptors
+     * @param ResultInterceptorInterface[] $resultInterceptors
+     */
+    public function __construct(private ProxyFactory $proxyFactory, iterable $bodyInterceptors, iterable $resultInterceptors)
     {
+        $this->bodyInterceptors = $bodyInterceptors instanceof \Traversable ? iterator_to_array($bodyInterceptors) : $bodyInterceptors;
+        $this->resultInterceptors = $resultInterceptors instanceof \Traversable ? iterator_to_array($resultInterceptors) : $resultInterceptors;
     }
 
-    public function makeProxy(ManifestInterface $manifest): ManifestInterface
+    public function makeProxy(ManifestInterface $manifest): ManifestInterface&ProxyInterface
     {
-        $factory = new ProxyFactory();
+        $options = new ProxyOptions(
+            defaultBodyInterceptors: $this->bodyInterceptors,
+            defaultResultInterceptors: $this->resultInterceptors
+        );
 
-        $prefixClosure = function (
-            ManifestInterface $proxy,
-            ManifestInterface $proxyAgain,
-            string $method,
-            array $params,
-            bool &$returnEarly
-        ) {
-            $result = $this->middlewareService->beforeMethodCall($proxy, $method, $params);
-            if (ManifestMethodMiddlewareInterface::NO_RETURN_VALUE !== $result) {
-                $returnEarly = true;
-            }
-
-            return $result;
-        };
-
-        $suffixClosure = function (
-            ManifestInterface $proxy,
-            ManifestInterface $proxyAgain,
-            string $method,
-            array $params,
-            mixed $returnedValue,
-            bool &$returnEarly
-        ) {
-            $result = $this->middlewareService->afterMethodCall($proxy, $method, $params, $returnedValue);
-            if (ManifestMethodMiddlewareInterface::NO_RETURN_VALUE !== $result) {
-                $returnEarly = true;
-            }
-
-            return $result;
-        };
-
-        $prefixClosures = [];
-        $suffixClosures = [];
-        $class = new \ReflectionClass($manifest);
-        foreach ($class->getMethods() as $method) {
-            if ($method->isFinal() || $method->isPrivate() || $method->isConstructor() || $method->isDestructor()) {
-                continue;
-            }
-            $prefixClosures[$method->getName()] = $prefixClosure;
-            $suffixClosures[$method->getName()] = $suffixClosure;
-        }
-
-        return $factory->createProxy($manifest, $prefixClosures, $suffixClosures);
+        return $this->proxyFactory->proxy($manifest, $options);
     }
 }
