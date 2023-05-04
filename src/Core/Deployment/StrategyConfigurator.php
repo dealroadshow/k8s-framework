@@ -15,7 +15,7 @@ class StrategyConfigurator
     {
     }
 
-    public function rollingUpdate(int $maxSurge, int $maxUnavailable): void
+    public function rollingUpdate(int|string $maxSurge, int|string $maxUnavailable): void
     {
         $this->deploymentStrategy
             ->setType(self::TYPE_ROLLING_UPDATE)
