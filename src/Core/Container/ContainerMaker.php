@@ -18,23 +18,31 @@ use Dealroadshow\K8S\Framework\Core\Container\VolumeMount\VolumeMountsConfigurat
 use Dealroadshow\K8S\Framework\Core\ManifestManager;
 use Dealroadshow\K8S\Framework\Event\ContainerGeneratedEvent;
 use Dealroadshow\K8S\Framework\Middleware\ContainerImageMiddlewareInterface;
+use Dealroadshow\K8S\Framework\Proxy\ProxyFactory;
 use Dealroadshow\K8S\Framework\Registry\AppRegistry;
+use Dealroadshow\Proximity\ProxyInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
-class ContainerMaker implements ContainerMakerInterface
+readonly class ContainerMaker implements ContainerMakerInterface
 {
     /**
-     * @param AppRegistry $appRegistry
-     * @param ManifestManager $manifestManager
-     * @param EventDispatcherInterface $dispatcher
      * @param ContainerImageMiddlewareInterface[] $middlewares
      */
-    public function __construct(private AppRegistry $appRegistry, private ManifestManager $manifestManager, private EventDispatcherInterface $dispatcher, private iterable $middlewares)
-    {
+    public function __construct(
+        private AppRegistry $appRegistry,
+        private ManifestManager $manifestManager,
+        private EventDispatcherInterface $dispatcher,
+        private ProxyFactory $proxyFactory,
+        private iterable $middlewares
+    ) {
     }
 
     public function make(ContainerInterface $builder, VolumeList $volumes, AppInterface $app): Container
     {
+        if (!($builder instanceof ProxyInterface)) {
+            $builder = $this->proxyFactory->makeProxy($builder);
+        }
+
         $container = new Container($builder->containerName());
 
         $builder->args($container->args());
