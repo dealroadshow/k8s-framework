@@ -15,8 +15,9 @@ use Dealroadshow\K8S\Framework\Core\Container\Ports\PortsConfigurator;
 use Dealroadshow\K8S\Framework\Core\Container\Resources\ContainerResourcesInterface;
 use Dealroadshow\K8S\Framework\Core\Container\Security\SecurityContextConfigurator;
 use Dealroadshow\K8S\Framework\Core\Container\VolumeMount\VolumeMountsConfigurator;
+use Dealroadshow\K8S\Framework\Core\ProxyableInterface;
 
-interface ContainerInterface
+interface ContainerInterface extends ProxyableInterface
 {
     public function containerName(): string;
     public function args(StringList $args): void;

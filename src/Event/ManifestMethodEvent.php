@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace Dealroadshow\K8S\Framework\Event;
 
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
+use Dealroadshow\K8S\Framework\Core\ProxyableInterface;
 use Dealroadshow\Proximity\ProxyInterface;
 
-class ManifestMethodEvent
+class ManifestMethodEvent implements ProxyableMethodEventInterface
 {
     public const NAME = 'dealroadshow_k8s.manifest.before_method';
 
@@ -15,6 +16,11 @@ class ManifestMethodEvent
 
     public function __construct(private readonly ManifestInterface&ProxyInterface $manifest, private readonly string $methodName, private readonly array $methodParams)
     {
+    }
+
+    public function proxyable(): ProxyableInterface
+    {
+        return $this->manifest;
     }
 
     public function manifest(): ManifestInterface

@@ -7,7 +7,7 @@ namespace Dealroadshow\K8S\Framework\Event;
 use Dealroadshow\K8S\Framework\Core\Container\ContainerInterface;
 use Dealroadshow\Proximity\ProxyInterface;
 
-class ContainerMethodCalledEvent extends ContainerMethodEvent
+class ContainerMethodCalledEvent extends ContainerMethodEvent implements ProxyableMethodCalledEventInterface
 {
     public const NAME = 'dealroadshow_k8s.container.method_called';
 
