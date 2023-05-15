@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dealroadshow\K8S\Framework\Registry;
 
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
-use Dealroadshow\K8S\Framework\Proxy\ManifestProxyFactory;
+use Dealroadshow\K8S\Framework\Proxy\ProxyFactory;
 use Dealroadshow\K8S\Framework\Registry\Query\ManifestsQuery;
 use Dealroadshow\Proximity\ProxyInterface;
 
@@ -16,7 +16,7 @@ class ManifestRegistry
      */
     private array $manifests = [];
 
-    public function __construct(private ManifestProxyFactory $proxyFactory)
+    public function __construct(private ProxyFactory $proxyFactory)
     {
     }
 

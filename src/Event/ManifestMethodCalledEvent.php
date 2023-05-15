@@ -11,9 +11,9 @@ class ManifestMethodCalledEvent extends ManifestMethodEvent
 {
     public const NAME = 'dealroadshow_k8s.manifest.method_called';
 
-    public function __construct(ManifestInterface&ProxyInterface $proxy, string $methodName, array $methodParams, private mixed $returnedValue)
+    public function __construct(ManifestInterface&ProxyInterface $manifest, string $methodName, array $methodParams, private readonly mixed $returnedValue)
     {
-        parent::__construct($proxy, $methodName, $methodParams);
+        parent::__construct($manifest, $methodName, $methodParams);
     }
 
     public function returnedValue(): mixed
