@@ -13,7 +13,7 @@ use Dealroadshow\K8S\Framework\Core\Pod\PodTemplateSpecProcessor;
 use Dealroadshow\K8S\Framework\Core\StatefulSet\StatefulSetInterface;
 use Dealroadshow\K8S\Framework\Core\StatefulSet\UpdateStrategy\UpdateStrategyConfigurator;
 use Dealroadshow\K8S\Framework\Event\StatefulSetGeneratedEvent;
-use Dealroadshow\K8S\Framework\Proxy\ManifestProxyFactory;
+use Dealroadshow\K8S\Framework\Proxy\ProxyFactory;
 use Dealroadshow\K8S\Framework\Registry\AppRegistry;
 use Dealroadshow\K8S\Framework\ResourceMaker\Traits\ConfigureSelectorTrait;
 
@@ -25,7 +25,7 @@ class StatefulSetMaker extends AbstractResourceMaker
         private AppRegistry $appRegistry,
         private PersistentVolumeClaimMaker $pvcMaker,
         private PodTemplateSpecProcessor $podSpecProcessor,
-        private ManifestProxyFactory $proxyFactory
+        private ProxyFactory $proxyFactory
     ) {
     }
 

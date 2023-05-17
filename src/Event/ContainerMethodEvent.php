@@ -4,28 +4,28 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Event;
 
-use Dealroadshow\K8S\Framework\Core\ManifestInterface;
+use Dealroadshow\K8S\Framework\Core\Container\ContainerInterface;
 use Dealroadshow\K8S\Framework\Core\ProxyableInterface;
 use Dealroadshow\Proximity\ProxyInterface;
 
-class ManifestMethodEvent implements ProxyableMethodEventInterface
+class ContainerMethodEvent implements ProxyableMethodEventInterface
 {
-    public const NAME = 'dealroadshow_k8s.manifest.before_method';
+    public const NAME = 'dealroadshow_k8s.container.before_method';
 
     private mixed $returnValue = null;
 
-    public function __construct(private readonly ManifestInterface&ProxyInterface $manifest, private readonly string $methodName, private readonly array $methodParams)
+    public function __construct(private readonly ContainerInterface&ProxyInterface $container, private readonly string $methodName, private readonly array $methodParams)
     {
     }
 
     public function proxyable(): ProxyableInterface
     {
-        return $this->manifest;
+        return $this->container;
     }
 
-    public function manifest(): ManifestInterface
+    public function container(): ContainerInterface&ProxyInterface
     {
-        return $this->manifest;
+        return $this->container;
     }
 
     public function methodName(): string

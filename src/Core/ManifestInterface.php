@@ -6,7 +6,7 @@ namespace Dealroadshow\K8S\Framework\Core;
 
 use Dealroadshow\K8S\Framework\Config\ConfigAwareInterface;
 
-interface ManifestInterface extends AppAwareInterface, ConfigAwareInterface, MetadataAwareInterface
+interface ManifestInterface extends AppAwareInterface, ConfigAwareInterface, MetadataAwareInterface, ProxyableInterface
 {
     public static function kind(): string;
     public static function shortName(): string;

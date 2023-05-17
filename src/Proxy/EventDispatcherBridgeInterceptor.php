@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Proxy;
 
+use Dealroadshow\K8S\Framework\Core\Container\ContainerInterface;
+use Dealroadshow\K8S\Framework\Core\ManifestInterface;
+use Dealroadshow\K8S\Framework\Event\ContainerMethodCalledEvent;
+use Dealroadshow\K8S\Framework\Event\ContainerMethodEvent;
 use Dealroadshow\K8S\Framework\Event\ManifestMethodCalledEvent;
 use Dealroadshow\K8S\Framework\Event\ManifestMethodEvent;
 use Dealroadshow\Proximity\MethodsInterception\BodyInterceptionResult;
@@ -19,21 +23,39 @@ readonly class EventDispatcherBridgeInterceptor implements BodyInterceptorInterf
     {
     }
 
-    public function beforeMethodBody(ProxyInterface $proxy, object $object, string $methodName, array $methodArgs): BodyInterceptionResult
+    public function beforeMethodBody(ProxyInterface $proxy, object $object, string $methodName, array $methodArgs): BodyInterceptionResult|null
     {
-        $event = new ManifestMethodEvent($proxy, $methodName, $methodArgs);
-        $this->dispatcher->dispatch($event, ManifestMethodEvent::NAME);
+        if ($proxy instanceof ManifestInterface) {
+            $event = new ManifestMethodEvent($proxy, $methodName, $methodArgs);
+            $eventName = ManifestMethodEvent::NAME;
+        } elseif ($proxy instanceof ContainerInterface) {
+            $event = new ContainerMethodEvent($proxy, $methodName, $methodArgs);
+            $eventName = ContainerMethodEvent::NAME;
+        } else {
+            return null;
+        }
+
+        $this->dispatcher->dispatch($event, $eventName);
         if (null !== ($result = $event->getReturnValue())) {
             return new BodyInterceptionResult(true, $result);
         }
 
-        return new BodyInterceptionResult();
+        return null;
     }
 
     public function afterMethodBody(ProxyInterface $proxy, object $object, string $methodName, array $methodArgs, InterceptionContext $context): void
     {
-        $event = new ManifestMethodCalledEvent($proxy, $methodName, $methodArgs, $context->returnValue);
-        $this->dispatcher->dispatch($event, ManifestMethodCalledEvent::NAME);
+        if ($proxy instanceof ManifestInterface) {
+            $event = new ManifestMethodCalledEvent($proxy, $methodName, $methodArgs, $context->returnValue);
+            $eventName = ManifestMethodCalledEvent::NAME;
+        } elseif ($proxy instanceof ContainerInterface) {
+            $event = new ContainerMethodCalledEvent($proxy, $methodName, $methodArgs, $context->returnValue);
+            $eventName = ContainerMethodCalledEvent::NAME;
+        } else {
+            return;
+        }
+
+        $this->dispatcher->dispatch($event, $eventName);
         if (null !== ($result = $event->getReturnValue())) {
             $context->returnValue = $result;
         }
