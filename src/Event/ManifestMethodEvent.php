@@ -13,6 +13,7 @@ class ManifestMethodEvent implements ProxyableMethodEventInterface
     public const NAME = 'dealroadshow_k8s.manifest.before_method';
 
     private mixed $returnValue = null;
+    public bool $returnValueChanged = false;
 
     public function __construct(private readonly ManifestInterface&ProxyInterface $manifest, private readonly string $methodName, private readonly array $methodParams)
     {
@@ -46,5 +47,6 @@ class ManifestMethodEvent implements ProxyableMethodEventInterface
     public function setReturnValue(mixed $returnValue): void
     {
         $this->returnValue = $returnValue;
+        $this->returnValueChanged = true;
     }
 }

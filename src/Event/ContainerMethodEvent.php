@@ -13,6 +13,7 @@ class ContainerMethodEvent implements ProxyableMethodEventInterface
     public const NAME = 'dealroadshow_k8s.container.before_method';
 
     private mixed $returnValue = null;
+    public bool $returnValueChanged = false;
 
     public function __construct(private readonly ContainerInterface&ProxyInterface $container, private readonly string $methodName, private readonly array $methodParams)
     {
@@ -46,5 +47,6 @@ class ContainerMethodEvent implements ProxyableMethodEventInterface
     public function setReturnValue(mixed $returnValue): void
     {
         $this->returnValue = $returnValue;
+        $this->returnValueChanged = true;
     }
 }
