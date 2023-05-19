@@ -25,9 +25,9 @@ abstract class AbstractPersistentVolumeClaim extends AbstractManifest implements
     {
     }
 
-    public function storageClassName(): string
+    public function storageClassName(): string|null
     {
-        return "";
+        return null;
     }
 
     public function volumeMode(): VolumeMode

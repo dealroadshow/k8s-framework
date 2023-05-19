@@ -1,6 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\Event;
+
 use Dealroadshow\K8S\Framework\Core\ProxyableInterface;
 
 interface ProxyableMethodEventInterface
@@ -10,4 +13,5 @@ interface ProxyableMethodEventInterface
     public function methodParams(): array;
     public function getReturnValue(): mixed;
     public function setReturnValue(mixed $returnValue): void;
+    public function returnValueHasChanged(): bool;
 }
