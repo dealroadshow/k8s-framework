@@ -11,9 +11,9 @@ class ManifestMethodCalledEvent extends ManifestMethodEvent implements Proxyable
 {
     public const NAME = 'dealroadshow_k8s.manifest.method_called';
 
-    public function __construct(ManifestInterface&ProxyInterface $manifest, string $methodName, array $methodParams, private readonly mixed $returnedValue)
+    public function __construct(ManifestInterface&ProxyInterface $proxyable, string $methodName, array $methodParams, private readonly mixed $returnedValue)
     {
-        parent::__construct($manifest, $methodName, $methodParams);
+        parent::__construct($proxyable, $methodName, $methodParams);
     }
 
     public function returnedValue(): mixed

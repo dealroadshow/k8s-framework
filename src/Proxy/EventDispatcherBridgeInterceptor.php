@@ -36,7 +36,7 @@ readonly class EventDispatcherBridgeInterceptor implements BodyInterceptorInterf
         }
 
         $this->dispatcher->dispatch($event, $eventName);
-        if ($event->returnValueChanged) {
+        if ($event->returnValueHasChanged()) {
             return new BodyInterceptionResult(true, $event->getReturnValue());
         }
 
@@ -56,7 +56,7 @@ readonly class EventDispatcherBridgeInterceptor implements BodyInterceptorInterf
         }
 
         $this->dispatcher->dispatch($event, $eventName);
-        if ($event->returnValueChanged) {
+        if ($event->returnValueHasChanged()) {
             $context->returnValue = $event->getReturnValue();
         }
     }

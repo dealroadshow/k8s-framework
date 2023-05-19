@@ -11,9 +11,9 @@ class ContainerMethodCalledEvent extends ContainerMethodEvent implements Proxyab
 {
     public const NAME = 'dealroadshow_k8s.container.method_called';
 
-    public function __construct(ContainerInterface&ProxyInterface $container, string $methodName, array $methodParams, private readonly mixed $returnedValue)
+    public function __construct(ContainerInterface&ProxyInterface $proxyable, string $methodName, array $methodParams, private readonly mixed $returnedValue)
     {
-        parent::__construct($container, $methodName, $methodParams);
+        parent::__construct($proxyable, $methodName, $methodParams);
     }
 
     public function returnedValue(): mixed
