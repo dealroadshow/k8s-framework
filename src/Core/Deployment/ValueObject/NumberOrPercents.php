@@ -1,6 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Dealroadshow\K8S\Framework\Core\Deployment\ValueObject;
+
 final readonly class NumberOrPercents
 {
     private function __construct(public int|string $value)
