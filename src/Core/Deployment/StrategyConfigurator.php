@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dealroadshow\K8S\Framework\Core\Deployment;
 
 use Dealroadshow\K8S\Data\DeploymentStrategy;
+use Dealroadshow\K8S\Framework\Core\Deployment\ValueObject\NumberOrPercents;
 
 class StrategyConfigurator
 {
@@ -15,13 +16,13 @@ class StrategyConfigurator
     {
     }
 
-    public function rollingUpdate(int|string $maxSurge, int|string $maxUnavailable): void
+    public function rollingUpdate(NumberOrPercents $maxSurge, NumberOrPercents $maxUnavailable): void
     {
         $this->deploymentStrategy
             ->setType(self::TYPE_ROLLING_UPDATE)
             ->rollingUpdate()
-                ->setMaxSurge($maxSurge)
-                ->setMaxUnavailable($maxUnavailable);
+                ->setMaxSurge($maxSurge->value)
+                ->setMaxUnavailable($maxUnavailable->value);
     }
 
     public function recreate(): void
