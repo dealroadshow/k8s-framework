@@ -49,7 +49,12 @@ class Image
         }
         $fullName .= $this->name;
         if (null !== $this->tag) {
-            $fullName .= ':'.$this->tag;
+            $separator = ':';
+            if (str_contains($this->tag, ':')) {
+                $separator = '@';
+            }
+
+            $fullName .= $separator.$this->tag;
         }
 
         return $fullName;
