@@ -9,6 +9,7 @@ use Dealroadshow\K8S\Data\Collection\StringMap;
 use Dealroadshow\K8S\Data\PodSpec;
 use Dealroadshow\K8S\Framework\Core\AbstractManifest;
 use Dealroadshow\K8S\Framework\Core\LabelSelector\SelectorConfigurator;
+use Dealroadshow\K8S\Framework\Core\ManifestReference;
 use Dealroadshow\K8S\Framework\Core\Pod\Affinity\AffinityConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\ImagePullSecrets\ImagePullSecretsConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\Policy\RestartPolicy;
@@ -83,6 +84,16 @@ abstract class AbstractStatefulSet extends AbstractManifest implements StatefulS
     public function volumeClaimTemplates(): iterable
     {
         return [];
+    }
+
+    public function serviceAccountName(): string|null
+    {
+        return null;
+    }
+
+    public function serviceAccount(): ManifestReference|null
+    {
+        return null;
     }
 
     public function configureStatefulSet(StatefulSet $statefulSet): void

@@ -9,7 +9,7 @@ use Dealroadshow\K8S\APIResourceInterface;
 use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\Service\ServiceInterface;
 
-class ServiceGeneratedEvent implements ManifestGeneratedEventInterface
+readonly class ServiceGeneratedEvent implements ManifestGeneratedEventInterface
 {
     public const NAME = 'dealroadshow_k8s.manifest_generated.service';
 
