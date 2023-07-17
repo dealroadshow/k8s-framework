@@ -7,6 +7,7 @@ namespace Dealroadshow\K8S\Framework\Core\Pod;
 use Dealroadshow\K8S\Data\Collection\StringMap;
 use Dealroadshow\K8S\Data\PodSpec;
 use Dealroadshow\K8S\Framework\Core\Container\ContainerInterface;
+use Dealroadshow\K8S\Framework\Core\ManifestReference;
 use Dealroadshow\K8S\Framework\Core\Pod\Affinity\AffinityConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\ImagePullSecrets\ImagePullSecretsConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\Policy\RestartPolicy;
@@ -32,4 +33,6 @@ interface PodSpecInterface
     public function restartPolicy(): RestartPolicy|null;
     public function configurePodSpec(PodSpec $spec): void;
     public function priorityClass(PriorityClassConfigurator $priorityClass): void;
+    public function serviceAccountName(): string|null;
+    public function serviceAccount(): ManifestReference|null;
 }

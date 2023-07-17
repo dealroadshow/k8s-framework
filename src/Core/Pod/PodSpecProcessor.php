@@ -16,12 +16,18 @@ use Dealroadshow\K8S\Framework\Core\Pod\Volume\VolumesConfigurator;
 use Dealroadshow\K8S\Framework\Event\PodSpecGeneratedEvent;
 use Dealroadshow\K8S\Framework\Registry\AppRegistry;
 use Dealroadshow\K8S\Framework\Util\ClassName;
+use Dealroadshow\K8S\Framework\Util\ManifestReferenceUtil;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
-class PodSpecProcessor
+readonly class PodSpecProcessor
 {
-    public function __construct(private ContainerMakerInterface $containerMaker, private AppRegistry $appRegistry, private ManifestManager $manifestManager, private EventDispatcherInterface $dispatcher)
-    {
+    public function __construct(
+        private ContainerMakerInterface $containerMaker,
+        private AppRegistry $appRegistry,
+        private ManifestManager $manifestManager,
+        private EventDispatcherInterface $dispatcher,
+        private ManifestReferenceUtil $manifestReferenceUtil
+    ) {
     }
 
     public function process(PodSpecInterface $builder, PodSpec $spec, AppInterface $app): void
@@ -70,6 +76,17 @@ class PodSpecProcessor
             manifestManager: $this->manifestManager
         );
         $builder->priorityClass($priorityClass);
+
+        $serviceAccountName = null;
+        if ($serviceAccountReference = $builder->serviceAccount()) {
+            $serviceAccountName = $this->manifestReferenceUtil->toResourceName($serviceAccountReference);
+        }
+        if (null !== $builder->serviceAccountName()) {
+            $serviceAccountName = $builder->serviceAccountName();
+        }
+        if (null !== $serviceAccountName) {
+            $spec->setServiceAccountName($serviceAccountName);
+        }
 
         $builder->configurePodSpec($spec);
 

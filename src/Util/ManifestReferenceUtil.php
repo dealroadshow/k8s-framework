@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Dealroadshow\K8S\Framework\Util;
 
 use Dealroadshow\K8S\Data\LocalObjectReference;
+use Dealroadshow\K8S\Data\ObjectReference;
 use Dealroadshow\K8S\Data\TypedLocalObjectReference;
 use Dealroadshow\K8S\Framework\Core\ManifestReference;
 use Dealroadshow\K8S\Framework\Registry\AppRegistry;
 
-class ManifestReferenceUtil
+readonly class ManifestReferenceUtil
 {
     public function __construct(private AppRegistry $appRegistry)
     {
@@ -17,9 +18,9 @@ class ManifestReferenceUtil
 
     public function toTypedLocalObjectReference(ManifestReference $manifestReference): TypedLocalObjectReference
     {
-        $app = $this->appRegistry->get($manifestReference->appAlias());
+        $name = $this->toResourceName($manifestReference);
+
         $class = new \ReflectionClass($manifestReference->className());
-        $name = $app->namesHelper()->byManifestClass($class->getName());
         $kind = $class->getMethod('kind')->invoke(null);
 
         $objectReference = new TypedLocalObjectReference($kind, $name);
@@ -32,12 +33,34 @@ class ManifestReferenceUtil
 
     public function toLocalObjectReference(ManifestReference $manifestReference): LocalObjectReference
     {
-        $app = $this->appRegistry->get($manifestReference->appAlias());
-        $name = $app->namesHelper()->byManifestClass($manifestReference->className());
+        $name = $this->toResourceName($manifestReference);
 
         $objectReference = new LocalObjectReference();
         $objectReference->setName($name);
 
         return $objectReference;
+    }
+
+    public function toObjectReference(ManifestReference $manifestReference): ObjectReference
+    {
+        $name = $this->toResourceName($manifestReference);
+
+        $class = new \ReflectionClass($manifestReference->className());
+        $kind = $class->getMethod('kind')->invoke(null);
+
+        $objectReference = new ObjectReference();
+        $objectReference
+            ->setName($name)
+            ->setKind($kind)
+        ;
+
+        return $objectReference;
+    }
+
+    public function toResourceName(ManifestReference $manifestReference): string
+    {
+        $app = $this->appRegistry->get($manifestReference->appAlias());
+
+        return $app->namesHelper()->byManifestClass($manifestReference->className());
     }
 }
