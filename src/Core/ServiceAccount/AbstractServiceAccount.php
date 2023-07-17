@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Dealroadshow\K8S\Framework\Core\ServiceAccount;
 
 use Dealroadshow\K8S\API\ServiceAccount;
+use Dealroadshow\K8S\Framework\Core\AbstractManifest;
 
-abstract class AbstractServiceAccount implements ServiceAccountInterface
+abstract class AbstractServiceAccount extends AbstractManifest implements ServiceAccountInterface
 {
     public function automountServiceAccountToken(): bool
     {
