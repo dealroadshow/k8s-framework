@@ -33,8 +33,6 @@ interface PodSpecInterface
     public function restartPolicy(): RestartPolicy|null;
     public function configurePodSpec(PodSpec $spec): void;
     public function priorityClass(PriorityClassConfigurator $priorityClass): void;
-
     public function serviceAccountName(): string|null;
-
     public function serviceAccount(): ManifestReference|null;
 }
