@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dealroadshow\K8S\Framework\Core;
 
 use Dealroadshow\K8S\Framework\App\AppInterface;
+use Dealroadshow\K8S\Framework\Event\ManifestGeneratedEvent;
 use Dealroadshow\K8S\Framework\ResourceMaker\AbstractResourceMaker;
 use Dealroadshow\K8S\Framework\ResourceMaker\ResourceMakerInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -19,11 +20,12 @@ class ManifestProcessor
     /**
      * @param ResourceMakerInterface[] $makers
      */
-    public function __construct(EventDispatcherInterface $dispatcher, iterable $makers)
+    public function __construct(private readonly EventDispatcherInterface $dispatcher, iterable $makers)
     {
+
         foreach ($makers as $maker) {
             if ($maker instanceof AbstractResourceMaker) {
-                $maker->setEventDispatcher($dispatcher);
+                $maker->setEventDispatcher($this->dispatcher);
             }
             $this->makers[] = $maker;
         }
@@ -36,6 +38,8 @@ class ManifestProcessor
             if ($maker->supports($manifest, $app)) {
                 $resource = $maker->make($manifest, $app);
                 $app->addManifestFile($manifest->fileNameWithoutExtension(), $resource);
+
+                $this->dispatcher->dispatch(new ManifestGeneratedEvent($manifest, $resource), ManifestGeneratedEvent::NAME);
 
                 return;
             }
