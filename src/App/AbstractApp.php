@@ -7,8 +7,10 @@ namespace Dealroadshow\K8S\Framework\App;
 use Dealroadshow\K8S\APIResourceInterface;
 use Dealroadshow\K8S\Framework\Config\ConfigAwareTrait;
 use Dealroadshow\K8S\Framework\Core\ManifestFile;
+use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 use Dealroadshow\K8S\Framework\Helper\Metadata\MetadataHelperInterface;
 use Dealroadshow\K8S\Framework\Helper\Names\NamesHelperInterface;
+use Dealroadshow\K8S\Framework\Registry\ManifestRegistry;
 
 abstract class AbstractApp implements AppInterface
 {
@@ -19,7 +21,8 @@ abstract class AbstractApp implements AppInterface
 
     public function __construct(
         protected MetadataHelperInterface $metadataHelper,
-        protected NamesHelperInterface $namesHelper
+        protected NamesHelperInterface $namesHelper,
+        protected ManifestRegistry $manifestRegistry
     ) {
     }
 
@@ -94,5 +97,23 @@ abstract class AbstractApp implements AppInterface
         }
 
         return file_get_contents($path);
+    }
+
+    public function ownsManifest(string $manifestClass): bool
+    {
+        return null !== $this->getManifest($manifestClass);
+    }
+
+    public function getManifest(string $manifestClass): ManifestInterface|null
+    {
+        if (!class_exists($manifestClass)) {
+            throw new \InvalidArgumentException(sprintf('Class "%s" does not exist', $manifestClass));
+        }
+        $shortName = $manifestClass::shortName();
+
+        return $this->manifestRegistry->query($this->alias)
+            ->instancesOf($manifestClass)
+            ->shortName($shortName)
+            ->getFirstResult();
     }
 }

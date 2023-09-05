@@ -8,7 +8,6 @@ use Dealroadshow\K8S\Data\PodSpec;
 use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\Container\ContainerInterface;
 use Dealroadshow\K8S\Framework\Core\Container\ContainerMakerInterface;
-use Dealroadshow\K8S\Framework\Core\ManifestManager;
 use Dealroadshow\K8S\Framework\Core\Pod\Affinity\AffinityConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\ImagePullSecrets\ImagePullSecretsConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\PriorityClass\PriorityClassConfigurator;
@@ -24,7 +23,6 @@ readonly class PodSpecProcessor
     public function __construct(
         private ContainerMakerInterface $containerMaker,
         private AppRegistry $appRegistry,
-        private ManifestManager $manifestManager,
         private EventDispatcherInterface $dispatcher,
         private ManifestReferenceUtil $manifestReferenceUtil
     ) {
@@ -72,8 +70,7 @@ readonly class PodSpecProcessor
         $priorityClass = new PriorityClassConfigurator(
             spec: $spec,
             app: $app,
-            appRegistry: $this->appRegistry,
-            manifestManager: $this->manifestManager
+            appRegistry: $this->appRegistry
         );
         $builder->priorityClass($priorityClass);
 

@@ -6,7 +6,6 @@ namespace Dealroadshow\K8S\Framework\Core\Pod\PriorityClass;
 
 use Dealroadshow\K8S\Data\PodSpec;
 use Dealroadshow\K8S\Framework\App\AppInterface;
-use Dealroadshow\K8S\Framework\Core\ManifestManager;
 use Dealroadshow\K8S\Framework\Core\PriorityClass\PriorityClassInterface;
 use Dealroadshow\K8S\Framework\Registry\AppRegistry;
 
@@ -14,7 +13,7 @@ class PriorityClassConfigurator
 {
     private bool $locked = false;
 
-    public function __construct(private PodSpec $spec, private AppInterface $app, private AppRegistry $appRegistry, private ManifestManager $manifestManager)
+    public function __construct(private PodSpec $spec, private AppInterface $app, private AppRegistry $appRegistry)
     {
     }
 
@@ -37,8 +36,7 @@ class PriorityClassConfigurator
             );
         }
 
-        $appAlias = $this->app->alias();
-        if (!$this->manifestManager->appOwnsManifest($appAlias, $phpClassName)) {
+        if (!$this->app->ownsManifest($phpClassName)) {
             $msg = <<<'ERR'
                 App "%s" does not have manifests with class "%s". Please use method "%s::withExternalApp()"
                 for using priority classes from another app. Example:
@@ -47,7 +45,7 @@ class PriorityClassConfigurator
                 ERR;
 
             throw new \InvalidArgumentException(
-                sprintf($msg, $appAlias, $phpClassName, static::class)
+                sprintf($msg, $this->app->alias(), $phpClassName, static::class)
             );
         }
 
@@ -63,7 +61,7 @@ class PriorityClassConfigurator
 
     public function withExternalApp(string $appAlias): static
     {
-        return new self($this->spec, $this->appRegistry->get($appAlias), $this->appRegistry, $this->manifestManager);
+        return new self($this->spec, $this->appRegistry->get($appAlias), $this->appRegistry);
     }
 
     private function prohibitMultipleCalls(): void

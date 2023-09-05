@@ -14,7 +14,6 @@ use Dealroadshow\K8S\Data\SecretKeySelector;
 use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\ConfigMap\ConfigMapInterface;
 use Dealroadshow\K8S\Framework\Core\Container\Resources\ContainerResourcesField;
-use Dealroadshow\K8S\Framework\Core\ManifestManager;
 use Dealroadshow\K8S\Framework\Core\Pod\PodField;
 use Dealroadshow\K8S\Framework\Core\Secret\SecretInterface;
 use Dealroadshow\K8S\Framework\Registry\AppRegistry;
@@ -25,8 +24,7 @@ class EnvConfigurator
         private EnvVarList $vars,
         private EnvFromSourceList $sources,
         private AppInterface $app,
-        private AppRegistry $appRegistry,
-        private ManifestManager $manifestManager
+        private AppRegistry $appRegistry
     ) {
     }
 
@@ -179,14 +177,13 @@ class EnvConfigurator
             $this->vars,
             $this->sources,
             $this->appRegistry->get($appAlias),
-            $this->appRegistry,
-            $this->manifestManager
+            $this->appRegistry
         );
     }
 
     private function ensureAppOwnsManifestClass(string $className): void
     {
-        if ($this->manifestManager->appOwnsManifest($this->app->alias(), $className)) {
+        if ($this->app->ownsManifest($className)) {
             return;
         }
 

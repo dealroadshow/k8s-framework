@@ -15,7 +15,6 @@ use Dealroadshow\K8S\Framework\Core\Container\Ports\PortsConfigurator;
 use Dealroadshow\K8S\Framework\Core\Container\Resources\ResourcesConfigurator;
 use Dealroadshow\K8S\Framework\Core\Container\Security\SecurityContextConfigurator;
 use Dealroadshow\K8S\Framework\Core\Container\VolumeMount\VolumeMountsConfigurator;
-use Dealroadshow\K8S\Framework\Core\ManifestManager;
 use Dealroadshow\K8S\Framework\Event\ContainerGeneratedEvent;
 use Dealroadshow\K8S\Framework\Middleware\ContainerImageMiddlewareInterface;
 use Dealroadshow\K8S\Framework\Proxy\ProxyFactory;
@@ -30,7 +29,6 @@ readonly class ContainerMaker implements ContainerMakerInterface
      */
     public function __construct(
         private AppRegistry $appRegistry,
-        private ManifestManager $manifestManager,
         private EventDispatcherInterface $dispatcher,
         private ProxyFactory $proxyFactory,
         private iterable $middlewares
@@ -52,8 +50,7 @@ readonly class ContainerMaker implements ContainerMakerInterface
             $container->env(),
             $container->envFrom(),
             $app,
-            $this->appRegistry,
-            $this->manifestManager
+            $this->appRegistry
         );
         $builder->env($env);
 

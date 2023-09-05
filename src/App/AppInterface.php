@@ -7,6 +7,7 @@ namespace Dealroadshow\K8S\Framework\App;
 use Dealroadshow\K8S\APIResourceInterface;
 use Dealroadshow\K8S\Framework\Config\ConfigurableInterface;
 use Dealroadshow\K8S\Framework\Core\ManifestFile;
+use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 use Dealroadshow\K8S\Framework\Helper\Metadata\MetadataHelperInterface;
 use Dealroadshow\K8S\Framework\Helper\Names\NamesHelperInterface;
 
@@ -29,4 +30,8 @@ interface AppInterface extends ConfigurableInterface
      * @return ManifestFile[]
      */
     public function manifestFiles(): iterable;
+
+    public function getManifest(string $manifestClass): ManifestInterface|null;
+
+    public function ownsManifest(string $manifestClass): bool;
 }
