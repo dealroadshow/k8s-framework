@@ -37,9 +37,12 @@ class ManifestProcessor
         foreach ($this->makers as $maker) {
             if ($maker->supports($manifest, $app)) {
                 $resource = $maker->make($manifest, $app);
-                $app->addManifestFile($manifest->fileNameWithoutExtension(), $resource);
+                $event = new ManifestGeneratedEvent($manifest, $resource);
+                $this->dispatcher->dispatch($event, ManifestGeneratedEvent::NAME);
 
-                $this->dispatcher->dispatch(new ManifestGeneratedEvent($manifest, $resource), ManifestGeneratedEvent::NAME);
+                if (!$event->preventProcessing) {
+                    $app->addManifestFile($manifest->fileNameWithoutExtension(), $resource);
+                }
 
                 return;
             }
