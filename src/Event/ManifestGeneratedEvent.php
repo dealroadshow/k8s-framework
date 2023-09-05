@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dealroadshow\K8S\Framework\Event;
 
 use Dealroadshow\K8S\APIResourceInterface;
+use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 
 class ManifestGeneratedEvent implements ManifestGeneratedEventInterface
@@ -16,8 +17,11 @@ class ManifestGeneratedEvent implements ManifestGeneratedEventInterface
      */
     public bool $preventProcessing = false;
 
-    public function __construct(private readonly ManifestInterface $manifest, private readonly APIResourceInterface $resource)
-    {
+    public function __construct(
+        private readonly ManifestInterface $manifest,
+        private readonly APIResourceInterface $resource,
+        public readonly AppInterface $app
+    ) {
     }
 
     public function manifest(): ManifestInterface

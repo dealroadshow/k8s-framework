@@ -37,7 +37,7 @@ class ManifestProcessor
         foreach ($this->makers as $maker) {
             if ($maker->supports($manifest, $app)) {
                 $resource = $maker->make($manifest, $app);
-                $event = new ManifestGeneratedEvent($manifest, $resource);
+                $event = new ManifestGeneratedEvent($manifest, $resource, $app);
                 $this->dispatcher->dispatch($event, ManifestGeneratedEvent::NAME);
 
                 if (!$event->preventProcessing) {
