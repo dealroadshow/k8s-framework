@@ -36,9 +36,9 @@ abstract class AbstractCronJob extends AbstractJob implements CronJobInterface
         return null;
     }
 
-    public function suspend(): bool
+    public function suspendCronJob(): bool
     {
-        return false;
+        return $this->suspend();
     }
 
     public function priorityClass(PriorityClassConfigurator $priorityClass): void
