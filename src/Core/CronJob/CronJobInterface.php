@@ -16,4 +16,5 @@ interface CronJobInterface extends JobInterface
     public function startingDeadlineSeconds(): ?int;
     public function successfulJobsHistoryLimit(): ?int;
     public function configureCronJob(CronJob $cronJob): void;
+    public function suspendCronJob(): bool;
 }
