@@ -9,9 +9,14 @@ use Dealroadshow\K8S\Framework\Core\AbstractManifest;
 
 abstract class AbstractPriorityClass extends AbstractManifest implements PriorityClassInterface
 {
-    public static function kind(): string
+    final public static function kind(): string
     {
         return PriorityClass::KIND;
+    }
+
+    public static function apiVersion(): string
+    {
+        return PriorityClass::API_VERSION;
     }
 
     public function description(): string|null

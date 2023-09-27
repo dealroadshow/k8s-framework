@@ -11,14 +11,14 @@ use Dealroadshow\K8S\Framework\Core\LabelSelector\SelectorConfigurator;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 use Dealroadshow\K8S\Framework\Core\Persistence\PersistentVolumeClaimInterface;
 use Dealroadshow\K8S\Framework\Core\Persistence\PvcResourcesConfigurator;
-use Dealroadshow\K8S\Framework\Util\ManifestReferenceUtil;
+use Dealroadshow\K8S\Framework\Util\ManifestReferencesService;
 
 /**
  * @method PersistentVolumeClaim make(ManifestInterface $manifest, AppInterface $app)
  */
 class PersistentVolumeClaimMaker extends AbstractResourceMaker
 {
-    public function __construct(private ManifestReferenceUtil $manifestReferenceUtil)
+    public function __construct(private ManifestReferencesService $referencesService)
     {
     }
 
@@ -68,7 +68,7 @@ class PersistentVolumeClaimMaker extends AbstractResourceMaker
     {
         $manifestReference = $manifest->dataSource();
         if (null !== $manifestReference) {
-            $dataSource = $this->manifestReferenceUtil->toTypedLocalObjectReference($manifestReference);
+            $dataSource = $this->referencesService->toTypedLocalObjectReference($manifestReference);
 
             $pvc->spec()->setDataSource($dataSource);
         }

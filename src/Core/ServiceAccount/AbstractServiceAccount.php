@@ -28,8 +28,13 @@ abstract class AbstractServiceAccount extends AbstractManifest implements Servic
     {
     }
 
-    public static function kind(): string
+    final public static function kind(): string
     {
         return ServiceAccount::KIND;
+    }
+
+    final public static function apiVersion(): string
+    {
+        return ServiceAccount::API_VERSION;
     }
 }

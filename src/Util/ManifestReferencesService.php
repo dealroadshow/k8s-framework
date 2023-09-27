@@ -10,7 +10,7 @@ use Dealroadshow\K8S\Data\TypedLocalObjectReference;
 use Dealroadshow\K8S\Framework\Core\ManifestReference;
 use Dealroadshow\K8S\Framework\Registry\AppRegistry;
 
-readonly class ManifestReferenceUtil
+readonly class ManifestReferencesService
 {
     public function __construct(private AppRegistry $appRegistry)
     {

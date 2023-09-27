@@ -109,4 +109,9 @@ abstract class AbstractJob extends AbstractManifest implements JobInterface
     {
         return Job::KIND;
     }
+
+    public static function apiVersion(): string
+    {
+        return Job::API_VERSION;
+    }
 }

@@ -25,7 +25,7 @@ abstract class AbstractMonitorMaker extends AbstractResourceMaker
     protected function makeResource(ManifestInterface|MonitorInterface $manifest, AppInterface $app): APIResourceInterface
     {
         $data = new \ArrayObject();
-        $data['apiVersion'] = $manifest->apiVersion();
+        $data['apiVersion'] = $manifest::apiVersion();
         $data['kind'] = $manifest::kind();
         $data['metadata'] = new ObjectMeta();
         $data['spec'] = new \ArrayObject();

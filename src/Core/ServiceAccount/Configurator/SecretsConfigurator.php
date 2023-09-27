@@ -8,12 +8,12 @@ use Dealroadshow\K8S\Data\Collection\ObjectReferenceList;
 use Dealroadshow\K8S\Data\ObjectReference;
 use Dealroadshow\K8S\Framework\Core\ManifestReference;
 use Dealroadshow\K8S\Framework\Core\Secret\SecretInterface;
-use Dealroadshow\K8S\Framework\Util\ManifestReferenceUtil;
+use Dealroadshow\K8S\Framework\Util\ManifestReferencesService;
 
 readonly class SecretsConfigurator
 {
     public function __construct(
-        private ManifestReferenceUtil $manifestReferenceUtil,
+        private ManifestReferencesService $referencesService,
         private ObjectReferenceList $secrets
     ) {
     }
@@ -30,7 +30,7 @@ readonly class SecretsConfigurator
             );
         }
 
-        $this->secrets->add($this->manifestReferenceUtil->toObjectReference($secretReference));
+        $this->secrets->add($this->referencesService->toObjectReference($secretReference));
 
         return $this;
     }

@@ -36,4 +36,9 @@ abstract class AbstractSecret extends AbstractManifest implements SecretInterfac
     {
         return Secret::KIND;
     }
+
+    final public static function apiVersion(): string
+    {
+        return Secret::API_VERSION;
+    }
 }

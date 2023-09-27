@@ -9,11 +9,6 @@ use Dealroadshow\K8S\Data\ResourceRequirements;
 
 class ResourcesConfigurator implements ContainerResourcesInterface
 {
-    protected const CPU = 'cpu';
-    protected const MEMORY = 'memory';
-    protected const EPHEMERAL_STORAGE = 'ephemeral-storage';
-    protected const STORAGE = 'storage';
-
     public function __construct(protected ResourceRequirements $resources)
     {
     }
@@ -25,12 +20,12 @@ class ResourcesConfigurator implements ContainerResourcesInterface
 
     public function requestMemory(Memory $memory): static
     {
-        return $this->setMemory(self::MEMORY, $memory, $this->resources->requests());
+        return $this->setMemory(ContainerResource::MEMORY, $memory, $this->resources->requests());
     }
 
     public function requestStorage(Memory $memory): static
     {
-        return $this->setMemory(self::EPHEMERAL_STORAGE, $memory, $this->resources->requests());
+        return $this->setMemory(ContainerResource::EPHEMERAL_STORAGE, $memory, $this->resources->requests());
     }
 
     public function limitCPU(CPU $cpu): static
@@ -40,24 +35,24 @@ class ResourcesConfigurator implements ContainerResourcesInterface
 
     public function limitMemory(Memory $memory): static
     {
-        return $this->setMemory(self::MEMORY, $memory, $this->resources->limits());
+        return $this->setMemory(ContainerResource::MEMORY, $memory, $this->resources->limits());
     }
 
     public function limitStorage(Memory $memory): static
     {
-        return $this->setMemory(self::EPHEMERAL_STORAGE, $memory, $this->resources->limits());
+        return $this->setMemory(ContainerResource::EPHEMERAL_STORAGE, $memory, $this->resources->limits());
     }
 
     private function setCPU(CPU $cpu, StringOrFloatMap $map): static
     {
-        $map->add(self::CPU, $cpu->toString());
+        $map->add(ContainerResource::CPU->value, $cpu->toString());
 
         return $this;
     }
 
-    protected function setMemory(string $key, Memory $memory, StringOrFloatMap $map): static
+    protected function setMemory(ContainerResource $resource, Memory $memory, StringOrFloatMap $map): static
     {
-        $map->add($key, $memory->toString());
+        $map->add($resource->value, $memory->toString());
 
         return $this;
     }

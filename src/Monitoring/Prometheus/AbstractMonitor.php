@@ -10,7 +10,7 @@ use Dealroadshow\K8S\Framework\Monitoring\Prometheus\Configurator\NamespaceSelec
 
 abstract class AbstractMonitor extends AbstractManifest implements MonitorInterface
 {
-    public function apiVersion(): string
+    public static function apiVersion(): string
     {
         return 'monitoring.coreos.com/v1';
     }

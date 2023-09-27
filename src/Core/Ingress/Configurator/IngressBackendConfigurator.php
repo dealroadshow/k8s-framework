@@ -8,7 +8,7 @@ use Dealroadshow\K8S\Data\IngressBackend;
 use Dealroadshow\K8S\Data\IngressServiceBackend;
 use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\ManifestReference;
-use Dealroadshow\K8S\Framework\Util\ManifestReferenceUtil;
+use Dealroadshow\K8S\Framework\Util\ManifestReferencesService;
 
 class IngressBackendConfigurator
 {
@@ -16,7 +16,7 @@ class IngressBackendConfigurator
 
     public function __construct(
         private AppInterface $app,
-        private ManifestReferenceUtil $manifestReferenceUtil,
+        private ManifestReferencesService $referencesService,
         IngressBackend $backend
     ) {
         $this->backend = $backend;
@@ -44,7 +44,7 @@ class IngressBackendConfigurator
 
     public function fromManifestReference(ManifestReference $manifestReference): void
     {
-        $resource = $this->manifestReferenceUtil->toTypedLocalObjectReference($manifestReference);
+        $resource = $this->referencesService->toTypedLocalObjectReference($manifestReference);
         $this->backend->setResource($resource);
     }
 }

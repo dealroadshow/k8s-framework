@@ -15,7 +15,7 @@ use Dealroadshow\K8S\Framework\Core\Pod\Volume\VolumesConfigurator;
 use Dealroadshow\K8S\Framework\Event\PodSpecGeneratedEvent;
 use Dealroadshow\K8S\Framework\Registry\AppRegistry;
 use Dealroadshow\K8S\Framework\Util\ClassName;
-use Dealroadshow\K8S\Framework\Util\ManifestReferenceUtil;
+use Dealroadshow\K8S\Framework\Util\ManifestReferencesService;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
 readonly class PodSpecProcessor
@@ -24,7 +24,7 @@ readonly class PodSpecProcessor
         private ContainerMakerInterface $containerMaker,
         private AppRegistry $appRegistry,
         private EventDispatcherInterface $dispatcher,
-        private ManifestReferenceUtil $manifestReferenceUtil
+        private ManifestReferencesService $referencesService
     ) {
     }
 
@@ -76,7 +76,7 @@ readonly class PodSpecProcessor
 
         $serviceAccountName = null;
         if ($serviceAccountReference = $builder->serviceAccount()) {
-            $serviceAccountName = $this->manifestReferenceUtil->toResourceName($serviceAccountReference);
+            $serviceAccountName = $this->referencesService->toResourceName($serviceAccountReference);
         }
         if (null !== $builder->serviceAccountName()) {
             $serviceAccountName = $builder->serviceAccountName();

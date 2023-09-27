@@ -7,12 +7,12 @@ namespace Dealroadshow\K8S\Framework\Core\ServiceAccount\Configurator;
 use Dealroadshow\K8S\Data\Collection\LocalObjectReferenceList;
 use Dealroadshow\K8S\Framework\Core\ManifestReference;
 use Dealroadshow\K8S\Framework\Core\Secret\SecretInterface;
-use Dealroadshow\K8S\Framework\Util\ManifestReferenceUtil;
+use Dealroadshow\K8S\Framework\Util\ManifestReferencesService;
 
 readonly class ImagePullSecretsConfigurator
 {
     public function __construct(
-        private ManifestReferenceUtil $manifestReferenceUtil,
+        private ManifestReferencesService $referencesService,
         private LocalObjectReferenceList $secrets
     ) {
     }
@@ -29,7 +29,7 @@ readonly class ImagePullSecretsConfigurator
             );
         }
 
-        $localObjectReference = $this->manifestReferenceUtil->toLocalObjectReference($secretReference);
+        $localObjectReference = $this->referencesService->toLocalObjectReference($secretReference);
         $this->secrets->add($localObjectReference);
 
         return $this;

@@ -11,7 +11,6 @@ use Dealroadshow\K8S\Framework\Monitoring\Prometheus\Configurator\NamespaceSelec
 
 interface MonitorInterface extends ManifestInterface
 {
-    public function apiVersion(): string;
     public function jobLabel(): string|null;
     public function namespaceSelector(NamespaceSelectorConfigurator $namespaceSelector): void;
     public function podTargetLabels(StringList $labels): void;
