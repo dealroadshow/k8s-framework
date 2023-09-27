@@ -20,10 +20,11 @@ use Dealroadshow\K8S\Framework\Core\Autoscaling\Metric\TargetType;
 use Dealroadshow\K8S\Framework\Core\Container\Resources\ContainerResource;
 use Dealroadshow\K8S\Framework\Core\LabelSelector\SelectorConfigurator;
 use Dealroadshow\K8S\Framework\Core\VersionedManifestReference;
+use Dealroadshow\K8S\Framework\Util\VersionedManifestReferencesService;
 
 final readonly class MetricsConfigurator
 {
-    public function __construct(private MetricSpecList $metrics)
+    public function __construct(private MetricSpecList $metrics, private VersionedManifestReferencesService $referencesService)
     {
     }
 
@@ -66,6 +67,9 @@ final readonly class MetricsConfigurator
     {
         $target = $this->dtoToMetricTarget($target);
         $identifier = $this->createMetricIdentifier($name, $selectorCallback);
+        if ($describedObject instanceof VersionedManifestReference) {
+            $describedObject = $this->referencesService->toCrossVersionObjectReference($describedObject);
+        }
 
         $source = new ObjectMetricSource(describedObject: $describedObject, metric: $identifier, target: $target);
         $spec = new MetricSpec(SourceType::Object->value);

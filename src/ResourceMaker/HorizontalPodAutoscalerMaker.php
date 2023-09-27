@@ -34,7 +34,7 @@ class HorizontalPodAutoscalerMaker extends AbstractResourceMaker
         $hpaSpec = new HorizontalPodAutoscalerSpec($manifest->maxReplicas(), $scaleTargetRef);
         $hpaSpec->setMinReplicas($manifest->minReplicas());
 
-        $metricsConfigurator = new MetricsConfigurator($hpaSpec->metrics());
+        $metricsConfigurator = new MetricsConfigurator($hpaSpec->metrics(), $this->referencesService);
         $manifest->metrics($metricsConfigurator);
 
         $behaviorConfigurator = new BehaviorConfigurator($hpaSpec->behavior());
