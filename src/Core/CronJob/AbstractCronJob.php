@@ -53,4 +53,9 @@ abstract class AbstractCronJob extends AbstractJob implements CronJobInterface
     {
         return CronJob::KIND;
     }
+
+    final public static function apiVersion(): string
+    {
+        return CronJob::API_VERSION;
+    }
 }

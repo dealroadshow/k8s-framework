@@ -8,7 +8,7 @@ use Dealroadshow\K8S\Framework\Core\AbstractManifest;
 
 abstract class AbstractPrometheusRule extends AbstractManifest implements PrometheusRuleInterface
 {
-    public function apiVersion(): string
+    public static function apiVersion(): string
     {
         return 'monitoring.coreos.com/v1';
     }

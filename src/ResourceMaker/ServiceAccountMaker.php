@@ -12,11 +12,11 @@ use Dealroadshow\K8S\Framework\Core\ServiceAccount\Configurator\ImagePullSecrets
 use Dealroadshow\K8S\Framework\Core\ServiceAccount\Configurator\SecretsConfigurator;
 use Dealroadshow\K8S\Framework\Core\ServiceAccount\ServiceAccountInterface;
 use Dealroadshow\K8S\Framework\Event\ServiceAccountGeneratedEvent;
-use Dealroadshow\K8S\Framework\Util\ManifestReferenceUtil;
+use Dealroadshow\K8S\Framework\Util\ManifestReferencesService;
 
 class ServiceAccountMaker extends AbstractResourceMaker
 {
-    public function __construct(private readonly ManifestReferenceUtil $manifestReferenceUtil)
+    public function __construct(private readonly ManifestReferencesService $referencesService)
     {
     }
 
@@ -30,8 +30,8 @@ class ServiceAccountMaker extends AbstractResourceMaker
         $serviceAccount = new ServiceAccount();
         $app->metadataHelper()->configureMeta($manifest, $serviceAccount);
 
-        $imagePullSecrets = new ImagePullSecretsConfigurator($this->manifestReferenceUtil, $serviceAccount->imagePullSecrets());
-        $secrets = new SecretsConfigurator($this->manifestReferenceUtil, $serviceAccount->secrets());
+        $imagePullSecrets = new ImagePullSecretsConfigurator($this->referencesService, $serviceAccount->imagePullSecrets());
+        $secrets = new SecretsConfigurator($this->referencesService, $serviceAccount->secrets());
 
         $manifest->imagePullSecrets($imagePullSecrets);
         $manifest->secrets($secrets);

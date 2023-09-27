@@ -93,4 +93,9 @@ abstract class AbstractDeployment extends AbstractManifest implements Deployment
     {
         return Deployment::KIND;
     }
+
+    final public static function apiVersion(): string
+    {
+        return Deployment::API_VERSION;
+    }
 }

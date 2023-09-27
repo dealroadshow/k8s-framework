@@ -31,4 +31,9 @@ abstract class AbstractConfigMap extends AbstractManifest implements ConfigMapIn
     {
         return ConfigMap::KIND;
     }
+
+    final public static function apiVersion(): string
+    {
+        return ConfigMap::API_VERSION;
+    }
 }

@@ -23,7 +23,7 @@ class PrometheusRuleMaker extends AbstractResourceMaker
     protected function makeResource(ManifestInterface|PrometheusRuleInterface $manifest, AppInterface $app): APIResourceInterface
     {
         $data = new \ArrayObject();
-        $data['apiVersion'] = $manifest->apiVersion();
+        $data['apiVersion'] = $manifest::apiVersion();
         $data['kind'] = $manifest::kind();
 
         $data['metadata'] = new ObjectMeta();

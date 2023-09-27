@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Persistence;
 
+use Dealroadshow\K8S\Framework\Core\Container\Resources\ContainerResource;
 use Dealroadshow\K8S\Framework\Core\Container\Resources\ContainerResourcesInterface;
 use Dealroadshow\K8S\Framework\Core\Container\Resources\CPU;
 use Dealroadshow\K8S\Framework\Core\Container\Resources\Memory;
@@ -33,12 +34,12 @@ class PvcResourcesConfigurator extends ResourcesConfigurator implements Containe
 
     public function requestStorage(Memory $memory): static
     {
-        return $this->setMemory(self::STORAGE, $memory, $this->resources->requests());
+        return $this->setMemory(ContainerResource::STORAGE, $memory, $this->resources->requests());
     }
 
     public function limitStorage(Memory $memory): static
     {
-        return $this->setMemory(self::STORAGE, $memory, $this->resources->limits());
+        return $this->setMemory(ContainerResource::STORAGE, $memory, $this->resources->limits());
     }
 
     private function createException(string $methodName): \BadMethodCallException

@@ -37,4 +37,9 @@ abstract class AbstractService extends AbstractManifest implements ServiceInterf
     {
         return Service::KIND;
     }
+
+    final public static function apiVersion(): string
+    {
+        return Service::API_VERSION;
+    }
 }

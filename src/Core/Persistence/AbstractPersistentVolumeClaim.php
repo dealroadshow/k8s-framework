@@ -44,4 +44,9 @@ abstract class AbstractPersistentVolumeClaim extends AbstractManifest implements
     {
         return PersistentVolume::KIND;
     }
+
+    public static function apiVersion(): string
+    {
+        return PersistentVolume::API_VERSION;
+    }
 }

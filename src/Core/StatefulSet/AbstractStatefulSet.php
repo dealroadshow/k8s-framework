@@ -24,6 +24,11 @@ abstract class AbstractStatefulSet extends AbstractManifest implements StatefulS
         return StatefulSet::KIND;
     }
 
+    public static function apiVersion(): string
+    {
+        return StatefulSet::API_VERSION;
+    }
+
     public function initContainers(): iterable
     {
         return [];

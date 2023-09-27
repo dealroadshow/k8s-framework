@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core;
 
-class ManifestReference
+final readonly class ManifestReference
 {
-    public function __construct(private string $appAlias, private string $className, private string|null $apiGroup = null)
+    public function __construct(public string $appAlias, public string $className, public string|null $apiGroup = null)
     {
     }
 
