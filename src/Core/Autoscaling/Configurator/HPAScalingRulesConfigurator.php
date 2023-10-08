@@ -18,9 +18,9 @@ final readonly class HPAScalingRulesConfigurator
     {
     }
 
-    public function addPolicy(int $periodSeconds, ScalingPolicy $scalingPolicy): self
+    public function addPolicy(ScalingPolicy $scalingPolicy): self
     {
-        $policy = new HPAScalingPolicy(periodSeconds: $periodSeconds, type: $scalingPolicy->type, value: $scalingPolicy->value);
+        $policy = new HPAScalingPolicy(periodSeconds: $scalingPolicy->periodSeconds, type: $scalingPolicy->type, value: $scalingPolicy->amountOfChange);
         $this->rules->policies()->add($policy);
 
         return $this;
