@@ -6,6 +6,7 @@ namespace Dealroadshow\K8S\Framework\Helper\Metadata;
 
 use Dealroadshow\K8S\APIResourceInterface;
 use Dealroadshow\K8S\Data\ObjectMeta;
+use Dealroadshow\K8S\Framework\Core\DynamicNameAwareInterface;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 use Dealroadshow\K8S\Framework\Core\MetadataAwareInterface;
 use Dealroadshow\K8S\Framework\Helper\HelperTrait;
@@ -22,7 +23,10 @@ class MetadataHelper implements MetadataHelperInterface
         $metadataAware->metadata($metaConfigurator);
 
         if ($metadataAware instanceof ManifestInterface) {
-            $name = $this->app->namesHelper()->fullName($metadataAware::shortName());
+            $shortName = $metadataAware instanceof DynamicNameAwareInterface
+                ? $metadataAware->name()
+                : $metadataAware::shortName();
+            $name = $this->app->namesHelper()->fullName($shortName);
             $meta->setName($name);
         }
 
