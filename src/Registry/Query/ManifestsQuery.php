@@ -6,6 +6,7 @@ namespace Dealroadshow\K8S\Framework\Registry\Query;
 
 use Closure;
 use Dealroadshow\K8S\Framework\Attribute\Scanner\TagsScanner;
+use Dealroadshow\K8S\Framework\Core\DynamicNameAwareInterface;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 
 class ManifestsQuery
@@ -52,7 +53,11 @@ class ManifestsQuery
     public function shortName(string $name): static
     {
         return $this->addClosure(
-            fn (ManifestInterface $manifest): bool => $manifest::shortName() === $name
+            function (ManifestInterface $manifest) use ($name): bool {
+                $shortName = $manifest instanceof DynamicNameAwareInterface ? $manifest->name() : $manifest::shortName();
+
+                return $shortName === $name;
+            }
         );
     }
 

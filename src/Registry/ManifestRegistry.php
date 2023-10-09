@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Registry;
 
+use Dealroadshow\K8S\Framework\Core\DynamicNameAwareInterface;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 use Dealroadshow\K8S\Framework\Proxy\ProxyFactory;
 use Dealroadshow\K8S\Framework\Registry\Query\ManifestsQuery;
@@ -30,7 +31,8 @@ class ManifestRegistry
     {
         $this->manifests[$appAlias] ??= [];
 
-        $key = sprintf('%s_%s', $manifest::shortName(), $manifest::kind());
+        $shortName = $manifest instanceof DynamicNameAwareInterface ? $manifest->name() : $manifest::shortName();
+        $key = sprintf('%s_%s', $shortName, $manifest::kind());
         if (array_key_exists($key, $this->manifests[$appAlias])) {
             $existingManifestClass = new \ReflectionClass($this->manifests[$appAlias][$key]);
             if ($existingManifestClass->implementsInterface(ProxyInterface::class)) {
@@ -38,7 +40,7 @@ class ManifestRegistry
             }
             throw new \LogicException(
                 sprintf(
-                    'Manifests classes "%s" and "%s" have the same kind and short name, but this is forbidden.',
+                    'Manifests instances of classes "%s" and "%s" have the same kind and short name, which is forbidden.',
                     $existingManifestClass->getName(),
                     $manifest::class
                 )
