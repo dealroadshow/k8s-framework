@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dealroadshow\K8S\Framework\Helper\Names;
 
 use Dealroadshow\K8S\Framework\Core\ConfigMap\ConfigMapInterface;
+use Dealroadshow\K8S\Framework\Core\DynamicNameAwareInterface;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 use Dealroadshow\K8S\Framework\Core\Secret\SecretInterface;
 use Dealroadshow\K8S\Framework\Core\Service\ServiceInterface;
@@ -41,6 +42,16 @@ class DefaultNamesHelper implements NamesHelperInterface
                     '$manifestClass must be a name of class that implements %s, given class "%s" does not',
                     ManifestInterface::class,
                     $manifestClass
+                )
+            );
+        }
+
+        if (is_subclass_of($manifestClass, DynamicNameAwareInterface::class, true)) {
+            throw new \LogicException(
+                sprintf(
+                    'Instances of class "%s" are named dynamically (see "%s"), therefore manifest name cannot be derived from class',
+                    $manifestClass,
+                    DynamicNameAwareInterface::class
                 )
             );
         }
