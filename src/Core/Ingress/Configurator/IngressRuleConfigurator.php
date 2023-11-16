@@ -9,15 +9,17 @@ use Dealroadshow\K8S\Data\HTTPIngressPath;
 use Dealroadshow\K8S\Data\IngressRule;
 use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\Ingress\Http\PathType;
+use Dealroadshow\K8S\Framework\Registry\AppRegistry;
 use Dealroadshow\K8S\Framework\Util\ManifestReferencesService;
 use Dealroadshow\K8S\K8SApi;
 
-class IngressRuleConfigurator
+readonly class IngressRuleConfigurator
 {
     public function __construct(
         private IngressRule $rule,
         private AppInterface $app,
-        private ManifestReferencesService $referencesService
+        private ManifestReferencesService $referencesService,
+        private AppRegistry $appRegistry,
     ) {
     }
 
@@ -48,7 +50,8 @@ class IngressRuleConfigurator
         return new HttpIngressPathConfigurator(
             path: $ingressPath,
             app: $this->app,
-            referencesService: $this->referencesService
+            referencesService: $this->referencesService,
+            appRegistry: $this->appRegistry
         );
     }
 

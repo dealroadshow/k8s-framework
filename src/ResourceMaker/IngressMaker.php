@@ -12,12 +12,15 @@ use Dealroadshow\K8S\Framework\Core\Ingress\Configurator\IngressRulesConfigurato
 use Dealroadshow\K8S\Framework\Core\Ingress\IngressInterface;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 use Dealroadshow\K8S\Framework\Event\IngressGeneratedEvent;
+use Dealroadshow\K8S\Framework\Registry\AppRegistry;
 use Dealroadshow\K8S\Framework\Util\ManifestReferencesService;
 
 class IngressMaker extends AbstractResourceMaker
 {
-    public function __construct(private ManifestReferencesService $referencesService)
-    {
+    public function __construct(
+        private readonly ManifestReferencesService $referencesService,
+        private readonly AppRegistry $appRegistry
+    ) {
     }
 
     protected function makeResource(ManifestInterface|IngressInterface $manifest, AppInterface $app): APIResourceInterface
@@ -27,6 +30,7 @@ class IngressMaker extends AbstractResourceMaker
 
         $backendConfigurator = new IngressBackendConfigurator(
             app: $app,
+            appRegistry: $this->appRegistry,
             referencesService: $this->referencesService,
             backend: $ingress->spec()->defaultBackend()
         );
@@ -35,7 +39,8 @@ class IngressMaker extends AbstractResourceMaker
         $rules = new IngressRulesConfigurator(
             rules: $ingress->spec()->rules(),
             app: $app,
-            referencesService: $this->referencesService
+            referencesService: $this->referencesService,
+            appRegistry: $this->appRegistry,
         );
         $manifest->rules($rules);
 

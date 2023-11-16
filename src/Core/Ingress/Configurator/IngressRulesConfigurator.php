@@ -7,6 +7,7 @@ namespace Dealroadshow\K8S\Framework\Core\Ingress\Configurator;
 use Dealroadshow\K8S\Data\Collection\IngressRuleList;
 use Dealroadshow\K8S\Data\IngressRule;
 use Dealroadshow\K8S\Framework\App\AppInterface;
+use Dealroadshow\K8S\Framework\Registry\AppRegistry;
 use Dealroadshow\K8S\Framework\Util\ManifestReferencesService;
 
 class IngressRulesConfigurator
@@ -19,9 +20,10 @@ class IngressRulesConfigurator
     private IngressRule|null $ruleWithoutHost = null;
 
     public function __construct(
-        private IngressRuleList $rules,
-        private AppInterface $app,
-        private ManifestReferencesService $referencesService
+        private readonly IngressRuleList $rules,
+        private readonly AppInterface $app,
+        private readonly ManifestReferencesService $referencesService,
+        private readonly AppRegistry $appRegistry,
     ) {
     }
 
@@ -32,7 +34,8 @@ class IngressRulesConfigurator
         return new IngressRuleConfigurator(
             rule: $rule,
             app: $this->app,
-            referencesService: $this->referencesService
+            referencesService: $this->referencesService,
+            appRegistry: $this->appRegistry
         );
     }
 
