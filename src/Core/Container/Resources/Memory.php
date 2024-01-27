@@ -6,7 +6,7 @@ namespace Dealroadshow\K8S\Framework\Core\Container\Resources;
 
 use LogicException;
 
-class Memory implements \JsonSerializable
+final readonly class Memory implements \JsonSerializable
 {
     private const SUFFIX_KIBIBYTES = 'Ki';
     private const SUFFIX_MEBIBYTES = 'Mi';
@@ -32,16 +32,20 @@ class Memory implements \JsonSerializable
         self::SUFFIX_EXBIBYTES => 1024 * 1024 * 1024 * 1024 * 1024 * 1024,
     ];
 
-    private string $value;
-
-    private function __construct(string $value)
+    private function __construct(private string $value)
     {
-        $this->value = $value;
     }
 
     public function toString(): string
     {
         return $this->value;
+    }
+
+    public function add(Memory $memory): Memory
+    {
+        $totalBytes = $this->bytesNumber() + $memory->bytesNumber();
+
+        return new self(self::format($totalBytes));
     }
 
     public static function bytes(int $bytes): self
@@ -141,6 +145,23 @@ class Memory implements \JsonSerializable
         }
 
         return new self($string);
+    }
+
+    protected static function format(int $bytesNumber): string
+    {
+        if ($bytesNumber <= 0) {
+            throw new \InvalidArgumentException('$bytesNumber must be greater than 0');
+        }
+
+        // From bigger multipliers to lesser
+        $multipliers = array_reverse(self::SUFFIX_MULTIPLIERS);
+        foreach ($multipliers as $suffix => $multiplier) {
+            if (0 === $bytesNumber % $multiplier) {
+                return strval($bytesNumber / $multiplier).$suffix;
+            }
+        }
+
+        return strval($bytesNumber);
     }
 
     public function jsonSerialize(): string
