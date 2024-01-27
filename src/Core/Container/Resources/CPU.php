@@ -6,15 +6,20 @@ namespace Dealroadshow\K8S\Framework\Core\Container\Resources;
 
 use LogicException;
 
-class CPU implements \JsonSerializable
+final readonly class CPU implements \JsonSerializable
 {
     private const MILLICORES_SUFFIX = 'm';
+    private const MILLICORES_NUMBER_IN_CORE = 1000;
 
-    private string $value;
-
-    private function __construct(string $value)
+    private function __construct(private string $value)
     {
-        $this->value = $value;
+    }
+
+    public function add(CPU $cpu): CPU
+    {
+        $totalMillicores = $this->millicoresNumber() + $cpu->millicoresNumber();
+
+        return new self(self::format($totalMillicores));
     }
 
     public function toString(): string
@@ -42,7 +47,7 @@ class CPU implements \JsonSerializable
         if (str_ends_with($this->value, self::MILLICORES_SUFFIX)) {
             return (int)rtrim($this->value, self::MILLICORES_SUFFIX);
         } elseif (is_numeric($this->value)) {
-            return (int)$this->value * 1000;
+            return (int)$this->value * self::MILLICORES_NUMBER_IN_CORE;
         }
 
         throw new LogicException(
@@ -84,6 +89,19 @@ class CPU implements \JsonSerializable
         }
 
         throw $exception;
+    }
+
+    private static function format(int $millicoresNumber): string
+    {
+        if ($millicoresNumber <= 0) {
+            throw new \InvalidArgumentException('$millicoresNumber must be greater than 0');
+        }
+
+        if (0 === $millicoresNumber % self::MILLICORES_NUMBER_IN_CORE) {
+            return strval($millicoresNumber / self::MILLICORES_NUMBER_IN_CORE);
+        }
+
+        return strval($millicoresNumber).self::MILLICORES_SUFFIX;
     }
 
     public function jsonSerialize(): string
