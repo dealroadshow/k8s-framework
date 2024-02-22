@@ -12,6 +12,7 @@ use Dealroadshow\K8S\Framework\Core\Pod\Affinity\AffinityConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\ImagePullSecrets\ImagePullSecretsConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\Policy\RestartPolicy;
 use Dealroadshow\K8S\Framework\Core\Pod\PriorityClass\PriorityClassConfigurator;
+use Dealroadshow\K8S\Framework\Core\Pod\Toleration\TolerationsConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\Volume\VolumesConfigurator;
 
 interface PodSpecInterface
@@ -29,6 +30,7 @@ interface PodSpecInterface
     public function affinity(AffinityConfigurator $affinity): void;
     public function imagePullSecrets(ImagePullSecretsConfigurator $secrets): void;
     public function nodeSelector(StringMap $nodeSelector): void;
+    public function tolerations(TolerationsConfigurator $tolerations): void;
     public function volumes(VolumesConfigurator $volumes): void;
     public function restartPolicy(): RestartPolicy|null;
     public function configurePodSpec(PodSpec $spec): void;
