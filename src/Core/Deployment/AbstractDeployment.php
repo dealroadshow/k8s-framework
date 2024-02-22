@@ -14,6 +14,7 @@ use Dealroadshow\K8S\Framework\Core\Pod\Affinity\AffinityConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\ImagePullSecrets\ImagePullSecretsConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\Policy\RestartPolicy;
 use Dealroadshow\K8S\Framework\Core\Pod\PriorityClass\PriorityClassConfigurator;
+use Dealroadshow\K8S\Framework\Core\Pod\Toleration\TolerationsConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\Volume\VolumesConfigurator;
 
 abstract class AbstractDeployment extends AbstractManifest implements DeploymentInterface
@@ -32,6 +33,10 @@ abstract class AbstractDeployment extends AbstractManifest implements Deployment
     }
 
     public function nodeSelector(StringMap $nodeSelector): void
+    {
+    }
+
+    public function tolerations(TolerationsConfigurator $tolerations): void
     {
     }
 
