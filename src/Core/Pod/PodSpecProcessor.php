@@ -11,6 +11,7 @@ use Dealroadshow\K8S\Framework\Core\Container\ContainerMakerInterface;
 use Dealroadshow\K8S\Framework\Core\Pod\Affinity\AffinityConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\ImagePullSecrets\ImagePullSecretsConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\PriorityClass\PriorityClassConfigurator;
+use Dealroadshow\K8S\Framework\Core\Pod\Toleration\TolerationsConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\Volume\VolumesConfigurator;
 use Dealroadshow\K8S\Framework\Event\PodSpecGeneratedEvent;
 use Dealroadshow\K8S\Framework\Registry\AppRegistry;
@@ -61,6 +62,9 @@ readonly class PodSpecProcessor
         $builder->imagePullSecrets($imagePullSecrets);
 
         $builder->nodeSelector($spec->nodeSelector());
+
+        $tolerations = new TolerationsConfigurator($spec->tolerations());
+        $builder->tolerations($tolerations);
 
         $restartPolicy = $builder->restartPolicy();
         if (null !== $restartPolicy) {
