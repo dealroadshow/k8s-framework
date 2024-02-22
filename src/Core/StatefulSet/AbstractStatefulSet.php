@@ -14,6 +14,7 @@ use Dealroadshow\K8S\Framework\Core\Pod\Affinity\AffinityConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\ImagePullSecrets\ImagePullSecretsConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\Policy\RestartPolicy;
 use Dealroadshow\K8S\Framework\Core\Pod\PriorityClass\PriorityClassConfigurator;
+use Dealroadshow\K8S\Framework\Core\Pod\Toleration\TolerationsConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\Volume\VolumesConfigurator;
 use Dealroadshow\K8S\Framework\Core\StatefulSet\UpdateStrategy\UpdateStrategyConfigurator;
 
@@ -43,6 +44,10 @@ abstract class AbstractStatefulSet extends AbstractManifest implements StatefulS
     }
 
     public function nodeSelector(StringMap $nodeSelector): void
+    {
+    }
+
+    public function tolerations(TolerationsConfigurator $tolerations): void
     {
     }
 
