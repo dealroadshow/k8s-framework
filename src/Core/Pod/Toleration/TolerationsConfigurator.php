@@ -42,7 +42,7 @@ class TolerationsConfigurator
             $toleration->setValue($value);
         }
         if ($effect) {
-            $toleration->setEffect($effect);
+            $toleration->setEffect($effect->value);
         }
         if ($tolerationSeconds) {
             $toleration->setTolerationSeconds($tolerationSeconds);
