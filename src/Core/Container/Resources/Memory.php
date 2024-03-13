@@ -127,6 +127,11 @@ final readonly class Memory implements \JsonSerializable
         return $number * self::SUFFIX_MULTIPLIERS[$suffix];
     }
 
+    public function prettify(): self
+    {
+        return new self(self::format($this->bytesNumber()));
+    }
+
     public static function fromString(string $string): self
     {
         if (is_numeric($string)) {
