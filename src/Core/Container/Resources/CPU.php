@@ -58,6 +58,11 @@ final readonly class CPU implements \JsonSerializable
         );
     }
 
+    public function prettify(): self
+    {
+        return new self(self::format($this->millicoresNumber()));
+    }
+
     public static function millicores(int $millicoresNumber): self
     {
         $value = strval($millicoresNumber).self::MILLICORES_SUFFIX;
