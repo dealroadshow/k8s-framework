@@ -15,6 +15,7 @@ use Dealroadshow\K8S\Framework\Core\Pod\ImagePullSecrets\ImagePullSecretsConfigu
 use Dealroadshow\K8S\Framework\Core\Pod\Policy\RestartPolicy;
 use Dealroadshow\K8S\Framework\Core\Pod\PriorityClass\PriorityClassConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\Toleration\TolerationsConfigurator;
+use Dealroadshow\K8S\Framework\Core\Pod\Topology\TopologySpreadConstraintsConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\Volume\VolumesConfigurator;
 
 abstract class AbstractJob extends AbstractManifest implements JobInterface
@@ -100,6 +101,10 @@ abstract class AbstractJob extends AbstractManifest implements JobInterface
     public function serviceAccount(): ManifestReference|null
     {
         return null;
+    }
+
+    public function topologySpreadConstraints(TopologySpreadConstraintsConfigurator $constraints): void
+    {
     }
 
     public function configurePodSpec(PodSpec $spec): void

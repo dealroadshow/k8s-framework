@@ -13,6 +13,7 @@ use Dealroadshow\K8S\Framework\Core\Pod\ImagePullSecrets\ImagePullSecretsConfigu
 use Dealroadshow\K8S\Framework\Core\Pod\Policy\RestartPolicy;
 use Dealroadshow\K8S\Framework\Core\Pod\PriorityClass\PriorityClassConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\Toleration\TolerationsConfigurator;
+use Dealroadshow\K8S\Framework\Core\Pod\Topology\TopologySpreadConstraintsConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\Volume\VolumesConfigurator;
 
 interface PodSpecInterface
@@ -37,4 +38,5 @@ interface PodSpecInterface
     public function priorityClass(PriorityClassConfigurator $priorityClass): void;
     public function serviceAccountName(): string|null;
     public function serviceAccount(): ManifestReference|null;
+    public function topologySpreadConstraints(TopologySpreadConstraintsConfigurator $constraints): void;
 }

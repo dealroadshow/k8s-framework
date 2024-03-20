@@ -12,6 +12,7 @@ use Dealroadshow\K8S\Framework\Core\Pod\Affinity\AffinityConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\ImagePullSecrets\ImagePullSecretsConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\PriorityClass\PriorityClassConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\Toleration\TolerationsConfigurator;
+use Dealroadshow\K8S\Framework\Core\Pod\Topology\TopologySpreadConstraintsConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\Volume\VolumesConfigurator;
 use Dealroadshow\K8S\Framework\Event\PodSpecGeneratedEvent;
 use Dealroadshow\K8S\Framework\Registry\AppRegistry;
@@ -88,6 +89,9 @@ readonly class PodSpecProcessor
         if (null !== $serviceAccountName) {
             $spec->setServiceAccountName($serviceAccountName);
         }
+
+        $constraints = new TopologySpreadConstraintsConfigurator($spec->topologySpreadConstraints());
+        $builder->topologySpreadConstraints($constraints);
 
         $builder->configurePodSpec($spec);
 
