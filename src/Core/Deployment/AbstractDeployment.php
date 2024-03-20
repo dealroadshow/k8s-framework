@@ -15,6 +15,7 @@ use Dealroadshow\K8S\Framework\Core\Pod\ImagePullSecrets\ImagePullSecretsConfigu
 use Dealroadshow\K8S\Framework\Core\Pod\Policy\RestartPolicy;
 use Dealroadshow\K8S\Framework\Core\Pod\PriorityClass\PriorityClassConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\Toleration\TolerationsConfigurator;
+use Dealroadshow\K8S\Framework\Core\Pod\Topology\TopologySpreadConstraintsConfigurator;
 use Dealroadshow\K8S\Framework\Core\Pod\Volume\VolumesConfigurator;
 
 abstract class AbstractDeployment extends AbstractManifest implements DeploymentInterface
@@ -88,6 +89,10 @@ abstract class AbstractDeployment extends AbstractManifest implements Deployment
     public function serviceAccount(): ManifestReference|null
     {
         return null;
+    }
+
+    public function topologySpreadConstraints(TopologySpreadConstraintsConfigurator $constraints): void
+    {
     }
 
     public function configureDeployment(Deployment $deployment): void
