@@ -49,6 +49,19 @@ class CronJobMaker extends AbstractResourceMaker
         if (null !== $successfulJobsHistoryLimit) {
             $spec->setSuccessfulJobsHistoryLimit($successfulJobsHistoryLimit);
         }
+
+        $timeZone = $manifest->timeZone();
+        if (null !== $timeZone) {
+            try {
+                new \DateTimeZone($timeZone);
+                $spec->setTimeZone($timeZone);
+            } catch(\Exception) {
+                throw new \InvalidArgumentException(
+                    sprintf('Invalid timezone "%s" in cron job "%s".', $timeZone, $cronJob->metadata()->getName())
+                );
+            }
+        }
+
         $manifest->configureCronJob($cronJob);
 
         if (null === $cronJob->getSpec()->jobTemplate()->spec()->template()->spec()->getRestartPolicy()) {
