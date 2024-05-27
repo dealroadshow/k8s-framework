@@ -4,52 +4,28 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Persistence;
 
+use Dealroadshow\K8S\Data\ResourceRequirements;
+use Dealroadshow\K8S\Data\VolumeResourceRequirements;
 use Dealroadshow\K8S\Framework\Core\Container\Resources\ContainerResource;
-use Dealroadshow\K8S\Framework\Core\Container\Resources\ContainerResourcesInterface;
-use Dealroadshow\K8S\Framework\Core\Container\Resources\CPU;
 use Dealroadshow\K8S\Framework\Core\Container\Resources\Memory;
-use Dealroadshow\K8S\Framework\Core\Container\Resources\ResourcesConfigurator;
 
-class PvcResourcesConfigurator extends ResourcesConfigurator implements ContainerResourcesInterface
+readonly class PvcResourcesConfigurator
 {
-    public function requestCPU(CPU $cpu): static
+    public function __construct(private VolumeResourceRequirements|ResourceRequirements $resources)
     {
-        throw $this->createException(__METHOD__);
-    }
-
-    public function requestMemory(Memory $memory): static
-    {
-        throw $this->createException(__METHOD__);
-    }
-
-    public function limitCPU(CPU $cpu): static
-    {
-        throw $this->createException(__METHOD__);
-    }
-
-    public function limitMemory(Memory $memory): static
-    {
-        throw $this->createException(__METHOD__);
     }
 
     public function requestStorage(Memory $memory): static
     {
-        return $this->setMemory(ContainerResource::STORAGE, $memory, $this->resources->requests());
+        $this->resources->requests()->add(ContainerResource::STORAGE->value, $memory->toString());
+
+        return $this;
     }
 
     public function limitStorage(Memory $memory): static
     {
-        return $this->setMemory(ContainerResource::STORAGE, $memory, $this->resources->limits());
-    }
+        $this->resources->limits()->add(ContainerResource::STORAGE->value, $memory->toString());
 
-    private function createException(string $methodName): \BadMethodCallException
-    {
-        return new \BadMethodCallException(
-            sprintf(
-                'Method "%s()" is not supported in %s',
-                $methodName,
-                __CLASS__
-            )
-        );
+        return $this;
     }
 }
