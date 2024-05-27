@@ -45,6 +45,11 @@ abstract class AbstractCronJob extends AbstractJob implements CronJobInterface
     {
     }
 
+    public function timeZone(): string|null
+    {
+        return null;
+    }
+
     public function configureCronJob(CronJob $cronJob): void
     {
     }
