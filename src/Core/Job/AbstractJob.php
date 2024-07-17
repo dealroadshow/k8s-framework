@@ -103,6 +103,11 @@ abstract class AbstractJob extends AbstractManifest implements JobInterface
         return null;
     }
 
+    public function terminationGracePeriodSeconds(): int|null
+    {
+        return null;
+    }
+
     public function topologySpreadConstraints(TopologySpreadConstraintsConfigurator $constraints): void
     {
     }

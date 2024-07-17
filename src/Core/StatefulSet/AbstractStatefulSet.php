@@ -107,6 +107,11 @@ abstract class AbstractStatefulSet extends AbstractManifest implements StatefulS
         return null;
     }
 
+    public function terminationGracePeriodSeconds(): int|null
+    {
+        return null;
+    }
+
     public function topologySpreadConstraints(TopologySpreadConstraintsConfigurator $constraints): void
     {
     }
