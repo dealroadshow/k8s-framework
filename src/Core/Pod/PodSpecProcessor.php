@@ -93,6 +93,11 @@ readonly class PodSpecProcessor
         $constraints = new TopologySpreadConstraintsConfigurator($spec->topologySpreadConstraints());
         $builder->topologySpreadConstraints($constraints);
 
+        $terminationGracePeriodSeconds = $builder->terminationGracePeriodSeconds();
+        if (null !== $terminationGracePeriodSeconds) {
+            $spec->setTerminationGracePeriodSeconds($terminationGracePeriodSeconds);
+        }
+
         $builder->configurePodSpec($spec);
 
         $this->dispatcher->dispatch(new PodSpecGeneratedEvent($spec, $builder), PodSpecGeneratedEvent::NAME);
