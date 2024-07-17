@@ -38,5 +38,6 @@ interface PodSpecInterface
     public function priorityClass(PriorityClassConfigurator $priorityClass): void;
     public function serviceAccountName(): string|null;
     public function serviceAccount(): ManifestReference|null;
+    public function terminationGracePeriodSeconds(): int|null;
     public function topologySpreadConstraints(TopologySpreadConstraintsConfigurator $constraints): void;
 }
