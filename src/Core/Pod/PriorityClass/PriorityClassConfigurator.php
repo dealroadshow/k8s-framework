@@ -59,6 +59,11 @@ class PriorityClassConfigurator
         $this->spec->setPriorityClassName($priorityClassName);
     }
 
+    public function name(): string|null
+    {
+        return $this->spec->getPriorityClassName();
+    }
+
     public function withExternalApp(string $appAlias): static
     {
         return new self($this->spec, $this->appRegistry->get($appAlias), $this->appRegistry);
