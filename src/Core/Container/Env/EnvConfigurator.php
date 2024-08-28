@@ -18,7 +18,7 @@ use Dealroadshow\K8S\Framework\Core\Pod\PodField;
 use Dealroadshow\K8S\Framework\Core\Secret\SecretInterface;
 use Dealroadshow\K8S\Framework\Registry\AppRegistry;
 
-class EnvConfigurator
+readonly class EnvConfigurator
 {
     public function __construct(
         private EnvVarList $vars,
