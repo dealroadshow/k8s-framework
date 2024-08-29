@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Pod\Volume;
 
-use Dealroadshow\K8S\Data\Collection\VolumeList;
-use Dealroadshow\K8S\Data\Volume;
+use Dealroadshow\K8S\Api\Core\V1\VolumeList;
 use Dealroadshow\K8S\Framework\App\AppInterface;
-use Dealroadshow\K8S\Framework\Core\ManifestReference;
 use Dealroadshow\K8S\Framework\Core\Pod\Volume\Builder\ConfigMapVolumeBuilder;
 use Dealroadshow\K8S\Framework\Core\Pod\Volume\Builder\DownwardAPIVolumeBuilder;
 use Dealroadshow\K8S\Framework\Core\Pod\Volume\Builder\EmptyDirVolumeBuilder;
@@ -16,10 +14,13 @@ use Dealroadshow\K8S\Framework\Core\Pod\Volume\Builder\SecretVolumeBuilder;
 use Dealroadshow\K8S\Framework\Core\Pod\Volume\Builder\VolumeBuilderInterface;
 use Dealroadshow\K8S\Framework\Registry\AppRegistry;
 
-class VolumesConfigurator
+readonly class VolumesConfigurator
 {
-    public function __construct(private VolumeList $volumes, private AppInterface $app, private AppRegistry $registry)
-    {
+    public function __construct(
+        private VolumeList $volumes,
+        private AppInterface $app,
+        private AppRegistry $registry
+    ) {
     }
 
     public function fromConfigMap(string $volumeName, string $configMapClass): ConfigMapVolumeBuilder

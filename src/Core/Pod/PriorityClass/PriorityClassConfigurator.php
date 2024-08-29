@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Pod\PriorityClass;
 
-use Dealroadshow\K8S\Data\PodSpec;
+use Dealroadshow\K8S\Api\Core\V1\PodSpec;
 use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\PriorityClass\PriorityClassInterface;
 use Dealroadshow\K8S\Framework\Registry\AppRegistry;
@@ -13,8 +13,11 @@ class PriorityClassConfigurator
 {
     private bool $locked = false;
 
-    public function __construct(private PodSpec $spec, private AppInterface $app, private AppRegistry $appRegistry)
-    {
+    public function __construct(
+        private readonly PodSpec $spec,
+        private readonly AppInterface $app,
+        private readonly AppRegistry $appRegistry
+    ) {
     }
 
     public function fromPHPClass(string $phpClassName): void

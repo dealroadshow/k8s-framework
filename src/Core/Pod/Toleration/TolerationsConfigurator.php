@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Pod\Toleration;
 
-use Dealroadshow\K8S\Data\Collection\TolerationList;
-use Dealroadshow\K8S\Data\Toleration;
+use Dealroadshow\K8S\Api\Core\V1\Toleration;
+use Dealroadshow\K8S\Api\Core\V1\TolerationList;
 
-class TolerationsConfigurator
+readonly class TolerationsConfigurator
 {
     public function __construct(private TolerationList $tolerations)
     {

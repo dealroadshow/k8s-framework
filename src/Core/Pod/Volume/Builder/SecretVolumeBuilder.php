@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Pod\Volume\Builder;
 
-use Dealroadshow\K8S\Data\KeyToPath;
-use Dealroadshow\K8S\Data\SecretVolumeSource;
-use Dealroadshow\K8S\Data\Volume;
+use Dealroadshow\K8S\Api\Core\V1\KeyToPath;
+use Dealroadshow\K8S\Api\Core\V1\SecretVolumeSource;
+use Dealroadshow\K8S\Api\Core\V1\Volume;
 
 class SecretVolumeBuilder extends AbstractVolumeBuilder
 {

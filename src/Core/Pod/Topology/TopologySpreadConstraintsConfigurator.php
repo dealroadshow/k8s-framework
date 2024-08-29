@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Pod\Topology;
 
-use Dealroadshow\K8S\Data\Collection\TopologySpreadConstraintList;
-use Dealroadshow\K8S\Data\TopologySpreadConstraint;
+use Dealroadshow\K8S\Api\Core\V1\TopologySpreadConstraint;
+use Dealroadshow\K8S\Api\Core\V1\TopologySpreadConstraintList;
 
 readonly class TopologySpreadConstraintsConfigurator
 {
