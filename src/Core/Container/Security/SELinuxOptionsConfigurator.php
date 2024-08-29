@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Container\Security;
 
-use Dealroadshow\K8S\Data\SELinuxOptions;
+use Dealroadshow\K8S\Api\Core\V1\SELinuxOptions;
 
 class SELinuxOptionsConfigurator
 {

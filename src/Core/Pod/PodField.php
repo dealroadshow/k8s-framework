@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Pod;
 
-use Dealroadshow\K8S\Data\ObjectFieldSelector;
+use Dealroadshow\K8S\Api\Core\V1\ObjectFieldSelector;
 
 class PodField
 {

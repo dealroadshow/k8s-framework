@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Pod\Affinity;
 
-use Dealroadshow\K8S\Data\NodeSelectorRequirement;
+use Dealroadshow\K8S\Api\Core\V1\NodeSelectorRequirement;
 use Dealroadshow\K8S\Framework\Core\LabelSelector\Operator;
 
 class NodeAffinityExpression extends PodAffinityExpression

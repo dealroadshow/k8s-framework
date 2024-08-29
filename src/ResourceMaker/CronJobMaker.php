@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\ResourceMaker;
 
-use Dealroadshow\K8S\API\Batch\CronJob;
-use Dealroadshow\K8S\Data\CronJobSpec;
-use Dealroadshow\K8S\Data\JobTemplateSpec;
+use Dealroadshow\K8S\Api\Batch\V1\CronJob;
+use Dealroadshow\K8S\Api\Batch\V1\CronJobSpec;
+use Dealroadshow\K8S\Api\Batch\V1\JobTemplateSpec;
 use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\CronJob\CronJobInterface;
 use Dealroadshow\K8S\Framework\Core\Job\JobInterface;
@@ -18,7 +18,7 @@ use Dealroadshow\K8S\Framework\Event\CronJobGeneratedEvent;
 
 class CronJobMaker extends AbstractResourceMaker
 {
-    private JobSpecProcessor $jobSpecProcessor;
+    private readonly JobSpecProcessor $jobSpecProcessor;
 
     public function __construct(JobSpecProcessor $jobSpecProcessor)
     {

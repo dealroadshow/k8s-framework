@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Dealroadshow\K8S\Framework\Core\Ingress\Configurator;
 
 use Composer\Semver\Comparator;
-use Dealroadshow\K8S\Data\HTTPIngressPath;
-use Dealroadshow\K8S\Data\IngressRule;
+use Dealroadshow\K8S\Api\Networking\V1\HTTPIngressPath;
+use Dealroadshow\K8S\Api\Networking\V1\IngressRule;
 use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\Ingress\Http\PathType;
 use Dealroadshow\K8S\Framework\Registry\AppRegistry;
@@ -61,8 +61,7 @@ readonly class IngressRuleConfigurator
             return new HTTPIngressPath($pathType->toString());
         }
 
-        $path = new HTTPIngressPath();
-        $path->setPathType($pathType->toString());
+        $path = new HTTPIngressPath($pathType->toString());
 
         return $path;
     }

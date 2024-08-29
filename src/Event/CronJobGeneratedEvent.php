@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Event;
 
-use Dealroadshow\K8S\API\Batch\CronJob;
+use Dealroadshow\K8S\Api\Batch\V1\CronJob;
 use Dealroadshow\K8S\APIResourceInterface;
 use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\CronJob\CronJobInterface;
 
-class CronJobGeneratedEvent implements ManifestGeneratedEventInterface
+readonly class CronJobGeneratedEvent implements ManifestGeneratedEventInterface
 {
     public const NAME = 'dealroadshow_k8s.manifest_generated.cronJob';
 

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\StatefulSet\UpdateStrategy;
 
-use Dealroadshow\K8S\Data\RollingUpdateStatefulSetStrategy;
+use Dealroadshow\K8S\Api\Apps\V1\RollingUpdateStatefulSetStrategy;
 
-class RollingUpdateStrategyConfigurator
+readonly class RollingUpdateStrategyConfigurator
 {
     public function __construct(private RollingUpdateStatefulSetStrategy $rollingUpdate)
     {

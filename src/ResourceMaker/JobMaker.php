@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\ResourceMaker;
 
-use Dealroadshow\K8S\API\Batch\Job;
+use Dealroadshow\K8S\Api\Batch\V1\Job;
 use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\CronJob\CronJobInterface;
 use Dealroadshow\K8S\Framework\Core\Job\JobInterface;

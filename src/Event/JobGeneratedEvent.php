@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Event;
 
-use Dealroadshow\K8S\API\Batch\Job;
+use Dealroadshow\K8S\Api\Batch\V1\Job;
 use Dealroadshow\K8S\APIResourceInterface;
 use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\Job\JobInterface;
 
-class JobGeneratedEvent implements ManifestGeneratedEventInterface
+readonly class JobGeneratedEvent implements ManifestGeneratedEventInterface
 {
     public const NAME = 'dealroadshow_k8s.manifest_generated.job';
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Persistence;
 
-use Dealroadshow\K8S\API\PersistentVolume;
+use Dealroadshow\K8S\Api\Core\V1\PersistentVolume;
 use Dealroadshow\K8S\Framework\Core\AbstractManifest;
 use Dealroadshow\K8S\Framework\Core\LabelSelector\SelectorConfigurator;
 use Dealroadshow\K8S\Framework\Core\ManifestReference;

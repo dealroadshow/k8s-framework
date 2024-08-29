@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\ResourceMaker;
 
-use Dealroadshow\K8S\API\Apps\Deployment;
-use Dealroadshow\K8S\Data\DeploymentStrategy;
+use Dealroadshow\K8S\Api\Apps\V1\Deployment;
+use Dealroadshow\K8S\Api\Apps\V1\DeploymentStrategy;
 use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\Deployment\DeploymentInterface;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
@@ -18,7 +18,7 @@ class DeploymentMaker extends AbstractResourceMaker
 {
     use ConfigureSelectorTrait;
 
-    public function __construct(private PodTemplateSpecProcessor $specProcessor)
+    public function __construct(private readonly PodTemplateSpecProcessor $specProcessor)
     {
     }
 

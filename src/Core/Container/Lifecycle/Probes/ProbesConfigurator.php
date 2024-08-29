@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Container\Lifecycle\Probes;
 
-use Dealroadshow\K8S\Data\Probe;
+use Dealroadshow\K8S\Api\Core\V1\Probe;
 
 class ProbesConfigurator
 {

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\StatefulSet;
 
-use Dealroadshow\K8S\API\Apps\StatefulSet;
-use Dealroadshow\K8S\Data\Collection\StringMap;
-use Dealroadshow\K8S\Data\PodSpec;
+use Dealroadshow\K8S\Api\Apps\V1\StatefulSet;
+use Dealroadshow\K8S\Api\Core\V1\PodSpec;
+use Dealroadshow\K8S\Collection\StringMap;
 use Dealroadshow\K8S\Framework\Core\AbstractManifest;
 use Dealroadshow\K8S\Framework\Core\LabelSelector\SelectorConfigurator;
 use Dealroadshow\K8S\Framework\Core\ManifestReference;

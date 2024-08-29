@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\CronJob;
 
-use Dealroadshow\K8S\API\Batch\CronJob;
+use Dealroadshow\K8S\Api\Batch\V1\CronJob;
 use Dealroadshow\K8S\Framework\Core\Job\AbstractJob;
 use Dealroadshow\K8S\Framework\Core\Job\JobInterface;
 use Dealroadshow\K8S\Framework\Core\Pod\PriorityClass\PriorityClassConfigurator;

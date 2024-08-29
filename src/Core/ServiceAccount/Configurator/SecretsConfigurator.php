@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\ServiceAccount\Configurator;
 
-use Dealroadshow\K8S\Data\Collection\ObjectReferenceList;
-use Dealroadshow\K8S\Data\ObjectReference;
+use Dealroadshow\K8S\Api\Core\V1\ObjectReference;
+use Dealroadshow\K8S\Api\Core\V1\ObjectReferenceList;
 use Dealroadshow\K8S\Framework\Core\ManifestReference;
 use Dealroadshow\K8S\Framework\Core\Secret\SecretInterface;
 use Dealroadshow\K8S\Framework\Util\ManifestReferencesService;

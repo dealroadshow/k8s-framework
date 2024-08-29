@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Rbac\Configurator\Binding;
 
-use Dealroadshow\K8S\API\Rbac\ClusterRole;
-use Dealroadshow\K8S\API\Rbac\Role;
-use Dealroadshow\K8S\Data\RoleRef;
+use Dealroadshow\K8S\Api\Rbac\V1\ClusterRole;
+use Dealroadshow\K8S\Api\Rbac\V1\Role;
+use Dealroadshow\K8S\Api\Rbac\V1\RoleRef;
 use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Registry\AppRegistry;
 

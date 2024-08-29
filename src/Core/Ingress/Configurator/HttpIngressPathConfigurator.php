@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Ingress\Configurator;
 
-use Dealroadshow\K8S\Data\HTTPIngressPath;
+use Dealroadshow\K8S\Api\Networking\V1\HTTPIngressPath;
 use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Registry\AppRegistry;
 use Dealroadshow\K8S\Framework\Util\ManifestReferencesService;

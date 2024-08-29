@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Pod;
 
-use Dealroadshow\K8S\Data\Collection\StringMap;
-use Dealroadshow\K8S\Data\PodSpec;
+use Dealroadshow\K8S\Api\Core\V1\PodSpec;
+use Dealroadshow\K8S\Collection\StringMap;
 use Dealroadshow\K8S\Framework\Core\Container\ContainerInterface;
 use Dealroadshow\K8S\Framework\Core\ManifestReference;
 use Dealroadshow\K8S\Framework\Core\Pod\Affinity\AffinityConfigurator;

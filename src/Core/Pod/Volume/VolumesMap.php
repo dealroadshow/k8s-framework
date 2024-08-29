@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Pod\Volume;
 
-use Dealroadshow\K8S\Data\Collection\VolumeList;
-use Dealroadshow\K8S\Data\Volume;
+use Dealroadshow\K8S\Api\Core\V1\Volume;
+use Dealroadshow\K8S\Api\Core\V1\VolumeList;
 
 class VolumesMap
 {

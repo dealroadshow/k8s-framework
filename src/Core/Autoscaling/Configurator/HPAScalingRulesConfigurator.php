@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Autoscaling\Configurator;
 
-use Dealroadshow\K8S\Data\HPAScalingPolicy;
-use Dealroadshow\K8S\Data\HPAScalingRules;
+use Dealroadshow\K8S\Api\Autoscaling\V2\HPAScalingPolicy;
+use Dealroadshow\K8S\Api\Autoscaling\V2\HPAScalingRules;
 use Dealroadshow\K8S\Framework\Core\Autoscaling\ScalingPolicy;
 use Dealroadshow\K8S\Framework\Core\Autoscaling\SelectPolicy;
 

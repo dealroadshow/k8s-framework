@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\ServiceAccount;
 
-use Dealroadshow\K8S\API\ServiceAccount;
+use Dealroadshow\K8S\Api\Core\V1\ServiceAccount;
 use Dealroadshow\K8S\Framework\Core\AbstractManifest;
 use Dealroadshow\K8S\Framework\Core\ServiceAccount\Configurator\ImagePullSecretsConfigurator;
 use Dealroadshow\K8S\Framework\Core\ServiceAccount\Configurator\SecretsConfigurator;

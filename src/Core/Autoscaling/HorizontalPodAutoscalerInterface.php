@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Autoscaling;
 
-use Dealroadshow\K8S\API\Autoscaling\HorizontalPodAutoscaler;
-use Dealroadshow\K8S\Data\CrossVersionObjectReference;
+use Dealroadshow\K8S\Api\Autoscaling\V2\CrossVersionObjectReference;
+use Dealroadshow\K8S\Api\Autoscaling\V2\HorizontalPodAutoscaler;
 use Dealroadshow\K8S\Framework\Core\Autoscaling\Configurator\BehaviorConfigurator;
 use Dealroadshow\K8S\Framework\Core\Autoscaling\Configurator\MetricsConfigurator;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\PriorityClass;
 
-use Dealroadshow\K8S\API\Scheduling\PriorityClass;
+use Dealroadshow\K8S\Api\Scheduling\V1\PriorityClass;
 use Dealroadshow\K8S\Framework\Core\AbstractManifest;
 
 abstract class AbstractPriorityClass extends AbstractManifest implements PriorityClassInterface

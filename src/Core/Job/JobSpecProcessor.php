@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Job;
 
-use Dealroadshow\K8S\Data\JobSpec;
+use Dealroadshow\K8S\Api\Batch\V1\JobSpec;
 use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\Pod\PodTemplateSpecProcessor;
 

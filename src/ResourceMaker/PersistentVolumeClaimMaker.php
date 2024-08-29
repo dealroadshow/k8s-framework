@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\ResourceMaker;
 
-use Dealroadshow\K8S\API\PersistentVolumeClaim;
+use Dealroadshow\K8S\Api\Core\V1\PersistentVolumeClaim;
 use Dealroadshow\K8S\APIResourceInterface;
 use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\LabelSelector\SelectorConfigurator;

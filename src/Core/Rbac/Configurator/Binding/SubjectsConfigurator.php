@@ -4,17 +4,16 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Rbac\Configurator\Binding;
 
-use Dealroadshow\K8S\Data\Collection\SubjectList;
-use Dealroadshow\K8S\Data\GroupSubject;
-use Dealroadshow\K8S\Data\ServiceAccountSubject;
-use Dealroadshow\K8S\Data\Subject;
-use Dealroadshow\K8S\Data\UserSubject;
+use Dealroadshow\K8S\Api\Rbac\V1\Subject;
+use Dealroadshow\K8S\Api\Rbac\V1\SubjectList;
 use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\Authentication\WellKnownUserOrGroup;
 use Dealroadshow\K8S\Framework\Registry\AppRegistry;
 
 readonly class SubjectsConfigurator
 {
+    private const API_GROUP_RBAC = 'rbac.authorization.k8s.io';
+
     public function __construct(
         private SubjectList $subjects,
         private AppInterface $app,
@@ -25,8 +24,8 @@ readonly class SubjectsConfigurator
     public function addGroup(WellKnownUserOrGroup|string $group): static
     {
         $groupName = $group instanceof WellKnownUserOrGroup ? $group->value : $group;
-        $subject = new Subject(SubjectKind::Group->name);
-        $subject->setGroup(new GroupSubject($groupName));
+        $subject = new Subject(SubjectKind::Group->name, $groupName);
+        $subject->setApiGroup(self::API_GROUP_RBAC);
         $this->subjects->add($subject);
 
         return $this;
@@ -34,8 +33,8 @@ readonly class SubjectsConfigurator
 
     public function addUser(string $name): static
     {
-        $subject = new Subject(SubjectKind::User->name);
-        $subject->setUser(new UserSubject($name));
+        $subject = new Subject(SubjectKind::User->name, $name);
+        $subject->setApiGroup(self::API_GROUP_RBAC);
         $this->subjects->add($subject);
 
         return $this;
@@ -43,8 +42,10 @@ readonly class SubjectsConfigurator
 
     public function addServiceAccount(string $name, string $namespace): static
     {
-        $subject = new Subject(SubjectKind::ServiceAccount->name);
-        $subject->setServiceAccount(new ServiceAccountSubject($name, $namespace));
+        $subject = new Subject(SubjectKind::ServiceAccount->name, $name);
+        $subject
+            ->setNamespace($namespace)
+            ->setApiGroup('');
         $this->subjects->add($subject);
 
         return $this;

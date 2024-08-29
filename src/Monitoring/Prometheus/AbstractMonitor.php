@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Monitoring\Prometheus;
 
-use Dealroadshow\K8S\Data\Collection\StringList;
+use Dealroadshow\K8S\Collection\StringList;
 use Dealroadshow\K8S\Framework\Core\AbstractManifest;
 use Dealroadshow\K8S\Framework\Monitoring\Prometheus\Configurator\NamespaceSelectorConfigurator;
 

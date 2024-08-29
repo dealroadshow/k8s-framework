@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Rbac;
 
-use Dealroadshow\K8S\API\Rbac\RoleBinding;
+use Dealroadshow\K8S\Api\Rbac\V1\RoleBinding;
 use Dealroadshow\K8S\Framework\Core\AbstractManifest;
 
 abstract class AbstractRoleBinding extends AbstractManifest implements RoleBindingInterface
