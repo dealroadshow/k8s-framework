@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Registry;
 
-use Dealroadshow\K8S\Framework\Core\DynamicNameAwareInterface;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 use Dealroadshow\K8S\Framework\Proxy\ProxyFactory;
 use Dealroadshow\K8S\Framework\Registry\Query\ManifestsQuery;
+use Dealroadshow\K8S\Framework\Util\ManifestShortName;
 use Dealroadshow\Proximity\ProxyInterface;
 
 class ManifestRegistry
@@ -31,7 +31,7 @@ class ManifestRegistry
     {
         $this->manifests[$appAlias] ??= [];
 
-        $shortName = $manifest instanceof DynamicNameAwareInterface ? $manifest->name() : $manifest::shortName();
+        $shortName = ManifestShortName::getFrom($manifest);
         $key = sprintf('%s_%s', $shortName, $manifest::kind());
         if (array_key_exists($key, $this->manifests[$appAlias])) {
             $existingManifestClass = new \ReflectionClass($this->manifests[$appAlias][$key]);
