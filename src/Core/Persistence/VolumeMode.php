@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Persistence;
 
-final class VolumeMode
+final readonly class VolumeMode
 {
     private const FILESYSTEM = 'Filesystem';
     private const BLOCK = 'Block';

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Job;
 
-use Dealroadshow\K8S\API\Batch\Job;
-use Dealroadshow\K8S\Data\Collection\StringMap;
-use Dealroadshow\K8S\Data\PodSpec;
+use Dealroadshow\K8S\Api\Batch\V1\Job;
+use Dealroadshow\K8S\Api\Core\V1\PodSpec;
+use Dealroadshow\K8S\Collection\StringMap;
 use Dealroadshow\K8S\Framework\Core\AbstractManifest;
 use Dealroadshow\K8S\Framework\Core\LabelSelector\SelectorConfigurator;
 use Dealroadshow\K8S\Framework\Core\ManifestReference;

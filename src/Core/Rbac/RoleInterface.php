@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Rbac;
 
-use Dealroadshow\K8S\API\Rbac\Role;
+use Dealroadshow\K8S\Api\Rbac\V1\Role;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 use Dealroadshow\K8S\Framework\Core\Rbac\Configurator\PolicyRulesConfigurator;
 

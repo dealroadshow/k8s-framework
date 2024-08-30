@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Util;
 
-use Dealroadshow\K8S\Data\Collection\StringMap;
+use Dealroadshow\K8S\Collection\StringMap;
 
 class StringMapProxy extends StringMap
 {

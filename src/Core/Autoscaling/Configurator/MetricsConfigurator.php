@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Autoscaling\Configurator;
 
-use Dealroadshow\K8S\Data\Collection\MetricSpecList;
-use Dealroadshow\K8S\Data\ContainerResourceMetricSource;
-use Dealroadshow\K8S\Data\CrossVersionObjectReference;
-use Dealroadshow\K8S\Data\ExternalMetricSource;
-use Dealroadshow\K8S\Data\MetricIdentifier;
-use Dealroadshow\K8S\Data\MetricSpec;
-use Dealroadshow\K8S\Data\MetricTarget;
-use Dealroadshow\K8S\Data\ObjectMetricSource;
-use Dealroadshow\K8S\Data\PodsMetricSource;
-use Dealroadshow\K8S\Data\ResourceMetricSource;
+use Dealroadshow\K8S\Api\Autoscaling\V2\ContainerResourceMetricSource;
+use Dealroadshow\K8S\Api\Autoscaling\V2\CrossVersionObjectReference;
+use Dealroadshow\K8S\Api\Autoscaling\V2\ExternalMetricSource;
+use Dealroadshow\K8S\Api\Autoscaling\V2\MetricIdentifier;
+use Dealroadshow\K8S\Api\Autoscaling\V2\MetricSpec;
+use Dealroadshow\K8S\Api\Autoscaling\V2\MetricSpecList;
+use Dealroadshow\K8S\Api\Autoscaling\V2\MetricTarget;
+use Dealroadshow\K8S\Api\Autoscaling\V2\ObjectMetricSource;
+use Dealroadshow\K8S\Api\Autoscaling\V2\PodsMetricSource;
+use Dealroadshow\K8S\Api\Autoscaling\V2\ResourceMetricSource;
 use Dealroadshow\K8S\Framework\Core\Autoscaling\Metric\SourceType;
 use Dealroadshow\K8S\Framework\Core\Autoscaling\Metric\TypedMetricTarget;
 use Dealroadshow\K8S\Framework\Core\Autoscaling\Metric\TargetType;

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Util;
 
-use Dealroadshow\K8S\Data\LocalObjectReference;
-use Dealroadshow\K8S\Data\ObjectReference;
-use Dealroadshow\K8S\Data\TypedLocalObjectReference;
+use Dealroadshow\K8S\Api\Core\V1\LocalObjectReference;
+use Dealroadshow\K8S\Api\Core\V1\ObjectReference;
+use Dealroadshow\K8S\Api\Core\V1\TypedLocalObjectReference;
 use Dealroadshow\K8S\Framework\Core\ManifestReference;
 use Dealroadshow\K8S\Framework\Registry\AppRegistry;
 

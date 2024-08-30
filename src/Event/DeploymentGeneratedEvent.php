@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Event;
 
-use Dealroadshow\K8S\API\Apps\Deployment;
+use Dealroadshow\K8S\Api\Apps\V1\Deployment;
 use Dealroadshow\K8S\APIResourceInterface;
 use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\Deployment\DeploymentInterface;

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Pod\Affinity\Pod;
 
-use Dealroadshow\K8S\Data\Collection\PodAffinityTermList;
-use Dealroadshow\K8S\Data\Collection\WeightedPodAffinityTermList;
-use Dealroadshow\K8S\Data\PodAffinityTerm;
-use Dealroadshow\K8S\Data\WeightedPodAffinityTerm;
+use Dealroadshow\K8S\Api\Core\V1\PodAffinityTerm;
+use Dealroadshow\K8S\Api\Core\V1\PodAffinityTermList;
+use Dealroadshow\K8S\Api\Core\V1\WeightedPodAffinityTerm;
+use Dealroadshow\K8S\Api\Core\V1\WeightedPodAffinityTermList;
 use Dealroadshow\K8S\Framework\Core\Pod\Affinity\PodAffinityExpression;
 
 class PodAffinityBuilder

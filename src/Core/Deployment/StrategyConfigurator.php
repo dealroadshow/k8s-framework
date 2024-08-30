@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Deployment;
 
-use Dealroadshow\K8S\Data\DeploymentStrategy;
+use Dealroadshow\K8S\Api\Apps\V1\DeploymentStrategy;
 use Dealroadshow\K8S\Framework\Core\Deployment\ValueObject\NumberOrPercents;
 
-class StrategyConfigurator
+readonly class StrategyConfigurator
 {
     private const TYPE_ROLLING_UPDATE = 'RollingUpdate';
     private const TYPE_RECREATE = 'Recreate';

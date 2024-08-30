@@ -10,7 +10,7 @@ use Dealroadshow\K8S\Framework\Registry\AppRegistry;
 use Dealroadshow\K8S\Framework\Registry\ManifestRegistry;
 use Dealroadshow\K8S\Framework\Registry\Query\ManifestsQuery;
 
-class AppProcessor
+readonly class AppProcessor
 {
     public function __construct(
         private AppRegistry $appRegistry,

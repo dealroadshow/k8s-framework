@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Ingress\Configurator;
 
-use Dealroadshow\K8S\Data\IngressBackend;
-use Dealroadshow\K8S\Data\IngressServiceBackend;
+use Dealroadshow\K8S\Api\Networking\V1\IngressBackend;
+use Dealroadshow\K8S\Api\Networking\V1\IngressServiceBackend;
 use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\ManifestReference;
 use Dealroadshow\K8S\Framework\Registry\AppRegistry;

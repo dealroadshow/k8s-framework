@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Persistence;
 
-use Dealroadshow\K8S\Data\ResourceRequirements;
-use Dealroadshow\K8S\Data\VolumeResourceRequirements;
+use Dealroadshow\K8S\Api\Core\V1\ResourceRequirements;
+use Dealroadshow\K8S\Api\Core\V1\VolumeResourceRequirements;
 use Dealroadshow\K8S\Framework\Core\Container\Resources\ContainerResource;
 use Dealroadshow\K8S\Framework\Core\Container\Resources\Memory;
 

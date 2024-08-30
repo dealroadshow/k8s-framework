@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Pod\ImagePullSecrets;
 
-use Dealroadshow\K8S\Data\Collection\LocalObjectReferenceList;
-use Dealroadshow\K8S\Data\LocalObjectReference;
+use Dealroadshow\K8S\Api\Core\V1\LocalObjectReference;
+use Dealroadshow\K8S\Api\Core\V1\LocalObjectReferenceList;
 use Dealroadshow\K8S\Framework\App\AppInterface;
 
 class ImagePullSecretsConfigurator

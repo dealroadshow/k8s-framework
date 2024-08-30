@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Service\Configurator;
 
-use Dealroadshow\K8S\Data\ServicePort;
+use Dealroadshow\K8S\Api\Core\V1\ServicePort;
 use Dealroadshow\K8S\Framework\Core\Service\IPProtocol;
 
 class ServicePortConfigurator

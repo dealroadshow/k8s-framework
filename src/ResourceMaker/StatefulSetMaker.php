@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\ResourceMaker;
 
-use Dealroadshow\K8S\API\Apps\StatefulSet;
+use Dealroadshow\K8S\Api\Apps\V1\StatefulSet;
+use Dealroadshow\K8S\Api\Apps\V1\StatefulSetSpec;
 use Dealroadshow\K8S\APIResourceInterface;
-use Dealroadshow\K8S\Data\StatefulSetSpec;
 use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 use Dealroadshow\K8S\Framework\Core\Pod\PodTemplateSpecProcessor;
@@ -22,10 +22,10 @@ class StatefulSetMaker extends AbstractResourceMaker
     use ConfigureSelectorTrait;
 
     public function __construct(
-        private AppRegistry $appRegistry,
-        private PersistentVolumeClaimMaker $pvcMaker,
-        private PodTemplateSpecProcessor $podSpecProcessor,
-        private ProxyFactory $proxyFactory
+        private readonly AppRegistry $appRegistry,
+        private readonly PersistentVolumeClaimMaker $pvcMaker,
+        private readonly PodTemplateSpecProcessor $podSpecProcessor,
+        private readonly ProxyFactory $proxyFactory
     ) {
     }
 

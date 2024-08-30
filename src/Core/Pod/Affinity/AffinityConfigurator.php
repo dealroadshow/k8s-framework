@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Pod\Affinity;
 
-use Dealroadshow\K8S\Data\Affinity;
+use Dealroadshow\K8S\Api\Core\V1\Affinity;
 use Dealroadshow\K8S\Framework\Core\Pod\Affinity\Node\NodeAffinityBuilder;
 use Dealroadshow\K8S\Framework\Core\Pod\Affinity\Pod\PodAffinityBuilder;
 

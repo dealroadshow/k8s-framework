@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Event;
 
-use Dealroadshow\K8S\Data\PodTemplateSpec;
+use Dealroadshow\K8S\Api\Core\V1\PodTemplateSpec;
 use Dealroadshow\K8S\Framework\Core\Pod\PodTemplateSpecInterface;
 
 class PodTemplateSpecGeneratedEvent

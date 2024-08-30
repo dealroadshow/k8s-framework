@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Pod\Volume\Builder;
 
-use Dealroadshow\K8S\Data\DownwardAPIVolumeFile;
-use Dealroadshow\K8S\Data\DownwardAPIVolumeSource;
-use Dealroadshow\K8S\Data\Volume;
+use Dealroadshow\K8S\Api\Core\V1\DownwardAPIVolumeFile;
+use Dealroadshow\K8S\Api\Core\V1\DownwardAPIVolumeSource;
+use Dealroadshow\K8S\Api\Core\V1\Volume;
 use Dealroadshow\K8S\Framework\Core\Container\Resources\ContainerResourcesField;
 use Dealroadshow\K8S\Framework\Core\Pod\PodField;
 

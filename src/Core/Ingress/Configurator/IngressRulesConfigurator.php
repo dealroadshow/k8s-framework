@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Ingress\Configurator;
 
-use Dealroadshow\K8S\Data\Collection\IngressRuleList;
-use Dealroadshow\K8S\Data\IngressRule;
+use Dealroadshow\K8S\Api\Networking\V1\IngressRule;
+use Dealroadshow\K8S\Api\Networking\V1\IngressRuleList;
 use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Registry\AppRegistry;
 use Dealroadshow\K8S\Framework\Util\ManifestReferencesService;

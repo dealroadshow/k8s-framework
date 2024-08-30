@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Container\VolumeMount;
 
-use Dealroadshow\K8S\Data\Collection\VolumeList;
-use Dealroadshow\K8S\Data\Collection\VolumeMountList;
-use Dealroadshow\K8S\Data\VolumeMount;
+use Dealroadshow\K8S\Api\Core\V1\VolumeList;
+use Dealroadshow\K8S\Api\Core\V1\VolumeMount;
+use Dealroadshow\K8S\Api\Core\V1\VolumeMountList;
 use Dealroadshow\K8S\Framework\Core\Pod\Volume\VolumesMap;
 
 class VolumeMountsConfigurator

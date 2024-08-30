@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Container;
 
-use Dealroadshow\K8S\Data\Collection\StringList;
-use Dealroadshow\K8S\Data\Container;
+use Dealroadshow\K8S\Api\Core\V1\Container;
+use Dealroadshow\K8S\Collection\StringList;
 use Dealroadshow\K8S\Framework\Core\Container\Env\EnvConfigurator;
 use Dealroadshow\K8S\Framework\Core\Container\Image\ImagePullPolicy;
 use Dealroadshow\K8S\Framework\Core\Container\Lifecycle\LifecycleConfigurator;

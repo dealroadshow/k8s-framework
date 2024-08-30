@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Monitoring\Prometheus\ServiceMonitor;
 
-use Dealroadshow\K8S\Data\Collection\StringList;
+use Dealroadshow\K8S\Collection\StringList;
 use Dealroadshow\K8S\Framework\Monitoring\Prometheus\AbstractMonitor;
 
 abstract class AbstractServiceMonitor extends AbstractMonitor implements ServiceMonitorInterface

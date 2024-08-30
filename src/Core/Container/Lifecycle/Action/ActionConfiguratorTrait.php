@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Container\Lifecycle\Action;
 
-use Dealroadshow\K8S\Data\HTTPGetAction;
-use Dealroadshow\K8S\Data\TCPSocketAction;
+use Dealroadshow\K8S\Api\Core\V1\HTTPGetAction;
+use Dealroadshow\K8S\Api\Core\V1\TCPSocketAction;
 
 trait ActionConfiguratorTrait
 {

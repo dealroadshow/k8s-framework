@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Container\VolumeMount;
 
-use Dealroadshow\K8S\Data\VolumeMount;
+use Dealroadshow\K8S\Api\Core\V1\VolumeMount;
 
 class VolumeMountBuilder
 {

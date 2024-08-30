@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Event;
 
-use Dealroadshow\K8S\API\Networking\Ingress;
+use Dealroadshow\K8S\Api\Networking\V1\Ingress;
 use Dealroadshow\K8S\APIResourceInterface;
 use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\Ingress\IngressInterface;
 
-class IngressGeneratedEvent implements ManifestGeneratedEventInterface
+readonly class IngressGeneratedEvent implements ManifestGeneratedEventInterface
 {
     public const NAME = 'dealroadshow_k8s.manifest_generated.ingress';
 

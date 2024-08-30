@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Container\Env;
 
-use Dealroadshow\K8S\Data\Collection\EnvFromSourceList;
-use Dealroadshow\K8S\Data\Collection\EnvVarList;
-use Dealroadshow\K8S\Data\ConfigMapEnvSource;
-use Dealroadshow\K8S\Data\ConfigMapKeySelector;
-use Dealroadshow\K8S\Data\EnvFromSource;
-use Dealroadshow\K8S\Data\EnvVar;
-use Dealroadshow\K8S\Data\SecretKeySelector;
+use Dealroadshow\K8S\Api\Core\V1\ConfigMapEnvSource;
+use Dealroadshow\K8S\Api\Core\V1\ConfigMapKeySelector;
+use Dealroadshow\K8S\Api\Core\V1\EnvFromSource;
+use Dealroadshow\K8S\Api\Core\V1\EnvFromSourceList;
+use Dealroadshow\K8S\Api\Core\V1\EnvVar;
+use Dealroadshow\K8S\Api\Core\V1\EnvVarList;
+use Dealroadshow\K8S\Api\Core\V1\SecretKeySelector;
 use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\ConfigMap\ConfigMapInterface;
 use Dealroadshow\K8S\Framework\Core\Container\Resources\ContainerResourcesField;

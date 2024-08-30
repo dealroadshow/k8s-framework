@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Autoscaling\Configurator;
 
-use Dealroadshow\K8S\Data\HorizontalPodAutoscalerBehavior;
+use Dealroadshow\K8S\Api\Autoscaling\V2\HorizontalPodAutoscalerBehavior;
 
 readonly class BehaviorConfigurator
 {

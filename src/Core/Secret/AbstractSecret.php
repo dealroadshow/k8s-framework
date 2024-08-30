@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Secret;
 
-use Dealroadshow\K8S\API\Secret;
-use Dealroadshow\K8S\Data\Collection\StringMap;
+use Dealroadshow\K8S\Api\Core\V1\Secret;
+use Dealroadshow\K8S\Collection\StringMap;
 use Dealroadshow\K8S\Framework\Core\AbstractManifest;
 
 abstract class AbstractSecret extends AbstractManifest implements SecretInterface

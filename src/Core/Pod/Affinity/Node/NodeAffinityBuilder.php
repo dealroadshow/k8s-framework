@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Pod\Affinity\Node;
 
-use Dealroadshow\K8S\Data\NodeAffinity;
-use Dealroadshow\K8S\Data\NodeSelectorTerm;
-use Dealroadshow\K8S\Data\PreferredSchedulingTerm;
+use Dealroadshow\K8S\Api\Core\V1\NodeAffinity;
+use Dealroadshow\K8S\Api\Core\V1\NodeSelectorTerm;
+use Dealroadshow\K8S\Api\Core\V1\PreferredSchedulingTerm;
 use Dealroadshow\K8S\Framework\Core\Pod\Affinity\NodeAffinityExpression;
 
 class NodeAffinityBuilder

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Container\Resources;
 
-use Dealroadshow\K8S\Data\Collection\StringOrFloatMap;
-use Dealroadshow\K8S\Data\ResourceRequirements;
+use Dealroadshow\K8S\Api\Core\V1\ResourceRequirements;
+use Dealroadshow\K8S\Collection\StringOrFloatMap;
 
 class ResourcesConfigurator implements ContainerResourcesInterface
 {

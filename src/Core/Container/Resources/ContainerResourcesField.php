@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Container\Resources;
 
-use Dealroadshow\K8S\Data\ResourceFieldSelector;
+use Dealroadshow\K8S\Api\Core\V1\ResourceFieldSelector;
 
 class ContainerResourcesField
 {

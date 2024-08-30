@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Rbac\Configurator;
 
-use Dealroadshow\K8S\Data\PolicyRule;
+use Dealroadshow\K8S\Api\Rbac\V1\PolicyRule;
 use Dealroadshow\K8S\Framework\Core\Rbac\Verb;
 
 readonly class PolicyRuleConfigurator

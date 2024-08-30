@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\ResourceMaker;
 
-use Dealroadshow\K8S\API\Secret;
+use Dealroadshow\K8S\Api\Core\V1\Secret;
 use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 use Dealroadshow\K8S\Framework\Core\Secret\SecretInterface;
 use Dealroadshow\K8S\Framework\Event\SecretGeneratedEvent;
 use Dealroadshow\K8S\Framework\ResourceMaker\Traits\PrefixMapKeysTrait;
-use Dealroadshow\K8S\Framework\Util\Str;
 use Dealroadshow\K8S\Framework\Util\StringMapProxy;
 
 class SecretMaker extends AbstractResourceMaker

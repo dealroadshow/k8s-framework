@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Container\Lifecycle;
 
-use Dealroadshow\K8S\Data\Lifecycle;
+use Dealroadshow\K8S\Api\Core\V1\Lifecycle;
 use Dealroadshow\K8S\Framework\Core\Container\Lifecycle\Action\LifecycleActionConfigurator;
 
 class LifecycleConfigurator

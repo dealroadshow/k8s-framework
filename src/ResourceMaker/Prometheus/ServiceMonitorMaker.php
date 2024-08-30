@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\ResourceMaker\Prometheus;
 
-use Dealroadshow\K8S\Data\Collection\StringList;
+use Dealroadshow\K8S\Collection\StringList;
 use Dealroadshow\K8S\Framework\Monitoring\Prometheus\Configurator\EndpointsConfigurator;
 use Dealroadshow\K8S\Framework\Monitoring\Prometheus\MonitorInterface;
 use Dealroadshow\K8S\Framework\Monitoring\Prometheus\ServiceMonitor\ServiceMonitorInterface;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\Core\Container\Ports;
 
-use Dealroadshow\K8S\Data\ContainerPort;
+use Dealroadshow\K8S\Api\Core\V1\ContainerPort;
 
 class ContainerPortBuilder
 {
