@@ -28,7 +28,7 @@ readonly class DefaultLabelsGenerator implements LabelsGeneratorInterface
 
         $manifest = $app->getManifest($manifestClass);
 
-        return self::labels($manifest, $app);
+        return $this->labels($manifest, $app);
     }
 
     public function byManifestInstance(ManifestInterface $manifest): array
@@ -36,10 +36,10 @@ readonly class DefaultLabelsGenerator implements LabelsGeneratorInterface
         /** @var AppInterface $app */
         $app = PropertyAccessor::get($manifest, 'app');
 
-        return self::labels($manifest, $app);
+        return $this->labels($manifest, $app);
     }
 
-    private static function labels(ManifestInterface $manifest, AppInterface $app): array
+    protected function labels(ManifestInterface $manifest, AppInterface $app): array
     {
         return [
             'app' => $app->alias(),
