@@ -10,7 +10,7 @@ use Dealroadshow\K8S\Framework\Util\ManifestAppFinder;
 use Dealroadshow\K8S\Framework\Util\ManifestShortName;
 use Dealroadshow\K8S\Framework\Util\PropertyAccessor;
 
-readonly class DefaultMetadataLabelsGenerator
+readonly class DefaultMetadataLabelsGenerator implements MetadataLabelsGeneratorInterface
 {
     public function __construct(private AppRegistry $appRegistry, private ManifestAppFinder $appFinder)
     {
