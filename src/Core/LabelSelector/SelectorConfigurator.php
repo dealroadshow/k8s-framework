@@ -28,4 +28,11 @@ class SelectorConfigurator
 
         return $this;
     }
+
+    public function addLabels(array $labels): self
+    {
+        $this->labelSelector->matchLabels()->addAll($labels);
+
+        return $this;
+    }
 }
