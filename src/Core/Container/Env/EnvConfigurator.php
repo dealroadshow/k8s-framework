@@ -76,16 +76,22 @@ readonly class EnvConfigurator
     {
         $this->ensureAppOwnsManifestClass($configMapClass);
         $cmName = $this->app->namesHelper()->byConfigMapClass($configMapClass);
+
+        return $this->addConfigMapByName($cmName, $mustExist, $varNamesPrefix);
+    }
+
+    public function addConfigMapByName(string $configMapName, bool $mustExist = true, string $varNamesPrefix = null): static
+    {
         $source = new ConfigMapEnvSource();
         $source
-            ->setName($cmName)
+            ->setName($configMapName)
             ->setOptional(!$mustExist);
         $envFromSource = new EnvFromSource();
         if (null !== $varNamesPrefix) {
             $envFromSource->setPrefix($varNamesPrefix);
         }
         $envFromSource->configMapRef()
-            ->setName($cmName)
+            ->setName($configMapName)
             ->setOptional(!$mustExist);
 
         $this->sources->add($envFromSource);
@@ -97,6 +103,12 @@ readonly class EnvConfigurator
     {
         $this->ensureAppOwnsManifestClass($secretClass);
         $secretName = $this->app->namesHelper()->bySecretClass($secretClass);
+
+        return $this->addSecretByName($secretName, $mustExist);
+    }
+
+    public function addSecretByName(string $secretName, bool $mustExist = true): static
+    {
         $envFromSource = new EnvFromSource();
         $envFromSource->secretRef()
             ->setName($secretName)
