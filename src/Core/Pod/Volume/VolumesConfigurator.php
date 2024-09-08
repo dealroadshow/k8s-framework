@@ -27,9 +27,13 @@ readonly class VolumesConfigurator
     public function fromConfigMap(string $volumeName, string $configMapClass): ConfigMapVolumeBuilder
     {
         $cmName = $this->app->namesHelper()->byConfigMapClass($configMapClass);
-        $builder = new ConfigMapVolumeBuilder($cmName);
 
-        return $this->initBuilder($builder, $volumeName);
+        return $this->fromConfigMapName($volumeName, $cmName);
+    }
+
+    public function fromConfigMapName(string $volumeName, string $configMapName): ConfigMapVolumeBuilder
+    {
+        return $this->initBuilder(new ConfigMapVolumeBuilder($configMapName), $volumeName);
     }
 
     public function fromEmptyDir(string $volumeName): EmptyDirVolumeBuilder
@@ -57,9 +61,13 @@ readonly class VolumesConfigurator
     public function fromSecret(string $volumeName, string $secretClass): SecretVolumeBuilder
     {
         $secretName = $this->app->namesHelper()->bySecretClass($secretClass);
-        $builder = new SecretVolumeBuilder($secretName);
 
-        return $this->initBuilder($builder, $volumeName);
+        return $this->fromSecretName($volumeName, $secretName);
+    }
+
+    public function fromSecretName(string $volumeName, string $secretName): SecretVolumeBuilder
+    {
+        return $this->initBuilder(new SecretVolumeBuilder($secretName), $volumeName);
     }
 
     public function withExternalApp(string $appAlias): VolumesConfigurator
