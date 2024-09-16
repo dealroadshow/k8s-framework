@@ -9,8 +9,8 @@ use Dealroadshow\K8S\Framework\Core\Container\Env\EnvConfigurator;
 final readonly class ExternalEnvSourcesTrackingContext
 {
     public function __construct(
-        private string $dependentAppAlias,
-        private string $dependencyAppAlias,
+        public string $dependentAppAlias,
+        public string $dependencyAppAlias,
         private ExternalEnvSourcesRegistry $registry
     ) {
     }
