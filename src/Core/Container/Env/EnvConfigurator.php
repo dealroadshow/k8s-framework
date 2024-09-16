@@ -127,8 +127,6 @@ readonly class EnvConfigurator
 
     public function var(string $name, string $value): static
     {
-        $this->externalEnvSourcesTrackingContext?->throwOnInvalidMethodCall(__METHOD__);
-
         $var = new EnvVar($name);
         $var->setValue($value);
 
@@ -177,8 +175,6 @@ readonly class EnvConfigurator
 
     public function varFromPod(string $varName, PodField $podField): static
     {
-        $this->externalEnvSourcesTrackingContext?->throwOnInvalidMethodCall(__METHOD__);
-
         $fieldSelector = $podField->selector();
 
         $var = new EnvVar($varName);
@@ -190,8 +186,6 @@ readonly class EnvConfigurator
 
     public function varFromContainerResources(string $varName, ContainerResourcesField $field): static
     {
-        $this->externalEnvSourcesTrackingContext?->throwOnInvalidMethodCall(__METHOD__);
-
         $fieldSelector = $field->selector();
 
         $var = new EnvVar($varName);
