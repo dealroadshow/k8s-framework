@@ -12,6 +12,8 @@ use Dealroadshow\K8S\Api\Core\V1\EnvVar;
 use Dealroadshow\K8S\Api\Core\V1\EnvVarList;
 use Dealroadshow\K8S\Api\Core\V1\SecretKeySelector;
 use Dealroadshow\K8S\Framework\App\AppInterface;
+use Dealroadshow\K8S\Framework\App\Integration\ExternalEnvSourcesRegistry;
+use Dealroadshow\K8S\Framework\App\Integration\ExternalEnvSourcesTrackingContext;
 use Dealroadshow\K8S\Framework\Core\ConfigMap\ConfigMapInterface;
 use Dealroadshow\K8S\Framework\Core\Container\Resources\ContainerResourcesField;
 use Dealroadshow\K8S\Framework\Core\Pod\PodField;
@@ -24,7 +26,9 @@ readonly class EnvConfigurator
         private EnvVarList $vars,
         private EnvFromSourceList $sources,
         private AppInterface $app,
-        private AppRegistry $appRegistry
+        private AppRegistry $appRegistry,
+        private ExternalEnvSourcesRegistry $externalEnvSourcesRegistry,
+        private ExternalEnvSourcesTrackingContext|null $externalEnvSourcesTrackingContext = null
     ) {
     }
 
@@ -76,6 +80,7 @@ readonly class EnvConfigurator
     {
         $this->ensureAppOwnsManifestClass($configMapClass);
         $cmName = $this->app->namesHelper()->byConfigMapClass($configMapClass);
+        $this->externalEnvSourcesTrackingContext?->trackDependency($configMapClass);
 
         return $this->addConfigMapByName($cmName, $mustExist, $varNamesPrefix);
     }
@@ -103,6 +108,7 @@ readonly class EnvConfigurator
     {
         $this->ensureAppOwnsManifestClass($secretClass);
         $secretName = $this->app->namesHelper()->bySecretClass($secretClass);
+        $this->externalEnvSourcesTrackingContext?->trackDependency($secretClass);
 
         return $this->addSecretByName($secretName, $mustExist);
     }
@@ -121,6 +127,8 @@ readonly class EnvConfigurator
 
     public function var(string $name, string $value): static
     {
+        $this->externalEnvSourcesTrackingContext?->throwOnInvalidMethodCall(__METHOD__);
+
         $var = new EnvVar($name);
         $var->setValue($value);
 
@@ -133,6 +141,9 @@ readonly class EnvConfigurator
     {
         $this->ensureAppOwnsManifestClass($configMapClass);
         $cmName = $this->app->namesHelper()->byConfigMapClass($configMapClass);
+
+        $this->externalEnvSourcesTrackingContext?->trackDependency($configMapClass);
+
         $keySelector = new ConfigMapKeySelector($configMapKey);
         $keySelector
             ->setName($cmName)
@@ -149,6 +160,9 @@ readonly class EnvConfigurator
     {
         $this->ensureAppOwnsManifestClass($secretClass);
         $secretName = $this->app->namesHelper()->bySecretClass($secretClass);
+
+        $this->externalEnvSourcesTrackingContext?->trackDependency($secretClass);
+
         $keySelector = new SecretKeySelector($secretKey);
         $keySelector
             ->setName($secretName)
@@ -163,6 +177,8 @@ readonly class EnvConfigurator
 
     public function varFromPod(string $varName, PodField $podField): static
     {
+        $this->externalEnvSourcesTrackingContext?->throwOnInvalidMethodCall(__METHOD__);
+
         $fieldSelector = $podField->selector();
 
         $var = new EnvVar($varName);
@@ -174,6 +190,8 @@ readonly class EnvConfigurator
 
     public function varFromContainerResources(string $varName, ContainerResourcesField $field): static
     {
+        $this->externalEnvSourcesTrackingContext?->throwOnInvalidMethodCall(__METHOD__);
+
         $fieldSelector = $field->selector();
 
         $var = new EnvVar($varName);
@@ -185,11 +203,15 @@ readonly class EnvConfigurator
 
     public function withExternalApp(string $appAlias): EnvConfigurator
     {
+        $this->externalEnvSourcesTrackingContext?->throwOnInvalidMethodCall(__METHOD__);
+
         return new EnvConfigurator(
             $this->vars,
             $this->sources,
             $this->appRegistry->get($appAlias),
-            $this->appRegistry
+            $this->appRegistry,
+            $this->externalEnvSourcesRegistry,
+            new ExternalEnvSourcesTrackingContext($this->app->alias(), $appAlias, $this->externalEnvSourcesRegistry)
         );
     }
 
