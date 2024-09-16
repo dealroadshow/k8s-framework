@@ -203,7 +203,19 @@ readonly class EnvConfigurator
 
     public function withExternalApp(string $appAlias): EnvConfigurator
     {
-        $this->externalEnvSourcesTrackingContext?->throwOnInvalidMethodCall(__METHOD__);
+        // EnvConfigurator is often used like
+        // $env
+        //     ->withExternalApp('someAppAlias')->addConfigMap(MyConfigMap::class)
+        //     ->withExternalApp('anotherAppAlias')->addConfigMap(MyOtherConfigMap::class);
+        // e.g. withExternalApp() is called multiple times in a row.
+        // In such case the true dependent app is the first one, not intermediate ones used in consecutive calls.
+        $dependentAppAlias = $this->externalEnvSourcesTrackingContext?->dependentAppAlias ?? $this->app->alias();
+
+        $externalSourcesTrackingContext = new ExternalEnvSourcesTrackingContext(
+            $dependentAppAlias,
+            $appAlias,
+            $this->externalEnvSourcesRegistry
+        );
 
         return new EnvConfigurator(
             $this->vars,
@@ -211,7 +223,7 @@ readonly class EnvConfigurator
             $this->appRegistry->get($appAlias),
             $this->appRegistry,
             $this->externalEnvSourcesRegistry,
-            new ExternalEnvSourcesTrackingContext($this->app->alias(), $appAlias, $this->externalEnvSourcesRegistry)
+            $externalSourcesTrackingContext
         );
     }
 
