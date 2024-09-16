@@ -10,7 +10,7 @@ class ExternalEnvSourcesRegistry
 
     public function trackDependency(string $dependentAppAlias, string $dependencyAppAlias, string $manifestClass): void
     {
-        $this->sources[$dependentAppAlias][$dependencyAppAlias][] = $manifestClass;
+        $this->sources[$dependentAppAlias][$dependencyAppAlias][$manifestClass] = null;
     }
 
     /**
@@ -28,7 +28,14 @@ class ExternalEnvSourcesRegistry
      */
     public function getForAllApps(): array
     {
-        return $this->sources;
+        $sources = [];
+        foreach ($this->sources as $dependentAppAlias => $dependencyApps) {
+            foreach ($dependencyApps as $dependencyAppAlias => $manifests) {
+                $sources[$dependentAppAlias][$dependencyAppAlias] = array_keys($manifests);
+            }
+        }
+
+        return $sources;
     }
 
     /**
@@ -44,6 +51,11 @@ class ExternalEnvSourcesRegistry
      */
     public function getForApp(string $appAlias): array
     {
-        return $this->sources[$appAlias] ?? [];
+        $sources = [];
+        foreach (($this->sources[$appAlias] ?? []) as $dependencyAppAlias => $manifests) {
+            $sources[$dependencyAppAlias] = array_keys($manifests);
+        }
+
+        return $sources;
     }
 }
