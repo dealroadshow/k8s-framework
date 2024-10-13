@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\App\Integration;
 
-class ExternalEnvSourcesRegistry
+class EnvSourcesRegistry
 {
     private array $sources = [];
 

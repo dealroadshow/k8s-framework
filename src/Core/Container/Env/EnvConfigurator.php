@@ -12,8 +12,8 @@ use Dealroadshow\K8S\Api\Core\V1\EnvVar;
 use Dealroadshow\K8S\Api\Core\V1\EnvVarList;
 use Dealroadshow\K8S\Api\Core\V1\SecretKeySelector;
 use Dealroadshow\K8S\Framework\App\AppInterface;
-use Dealroadshow\K8S\Framework\App\Integration\ExternalEnvSourcesRegistry;
-use Dealroadshow\K8S\Framework\App\Integration\ExternalEnvSourcesTrackingContext;
+use Dealroadshow\K8S\Framework\App\Integration\EnvSourcesRegistry;
+use Dealroadshow\K8S\Framework\App\Integration\EnvSourcesTrackingContext;
 use Dealroadshow\K8S\Framework\Core\ConfigMap\ConfigMapInterface;
 use Dealroadshow\K8S\Framework\Core\Container\Resources\ContainerResourcesField;
 use Dealroadshow\K8S\Framework\Core\Pod\PodField;
@@ -27,8 +27,8 @@ readonly class EnvConfigurator
         private EnvFromSourceList $sources,
         private AppInterface $app,
         private AppRegistry $appRegistry,
-        private ExternalEnvSourcesRegistry $externalEnvSourcesRegistry,
-        private ExternalEnvSourcesTrackingContext|null $externalEnvSourcesTrackingContext = null
+        private EnvSourcesRegistry $externalEnvSourcesRegistry,
+        private EnvSourcesTrackingContext|null $externalEnvSourcesTrackingContext = null
     ) {
     }
 
@@ -205,7 +205,7 @@ readonly class EnvConfigurator
         // In such case the true dependent app is the first one, not intermediate ones used in consecutive calls.
         $dependentAppAlias = $this->externalEnvSourcesTrackingContext?->dependentAppAlias ?? $this->app->alias();
 
-        $externalSourcesTrackingContext = new ExternalEnvSourcesTrackingContext(
+        $externalSourcesTrackingContext = new EnvSourcesTrackingContext(
             $dependentAppAlias,
             $appAlias,
             $this->externalEnvSourcesRegistry

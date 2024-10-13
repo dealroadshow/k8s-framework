@@ -17,7 +17,7 @@ namespace Dealroadshow\K8S\Framework\App\Integration\Localization;
  * dependent app needs from external ConfigMaps and Secrets. So every strategy defines its own means
  * of localization.
  *
- * Strategies will probably use @see \Dealroadshow\K8S\Framework\App\Integration\ExternalEnvSourcesRegistry
+ * Strategies will probably use @see \Dealroadshow\K8S\Framework\App\Integration\EnvSourcesRegistry
  * in order to get information about dependencies of the dependent apps.
  */
 interface LocalizationStrategyInterface
