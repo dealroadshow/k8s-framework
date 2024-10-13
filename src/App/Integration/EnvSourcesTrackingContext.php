@@ -15,6 +15,10 @@ final readonly class EnvSourcesTrackingContext
 
     public function trackDependency(string $manifestClass): void
     {
+        if ($this->dependentAppAlias === $this->dependencyAppAlias) {
+            return;
+        }
+
         $this->registry->trackDependency($this->dependentAppAlias, $this->dependencyAppAlias, $manifestClass);
     }
 }
