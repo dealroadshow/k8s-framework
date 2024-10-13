@@ -31,5 +31,5 @@ interface LocalizationStrategyInterface
      *     'app3' => [App3ManifestOne::class],
      * ]
      */
-    public function localize(string $dependentAppAlias, array $dependencies): mixed;
+    public function localize(string $dependentAppAlias, array $dependencies);
 }
