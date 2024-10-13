@@ -32,7 +32,7 @@ readonly class ContainerMaker implements ContainerMakerInterface
         private AppRegistry $appRegistry,
         private EventDispatcherInterface $dispatcher,
         private ProxyFactory $proxyFactory,
-        private EnvSourcesRegistry $externalEnvSourcesRegistry,
+        private EnvSourcesRegistry $envSourcesRegistry,
         private iterable $middlewares
     ) {
     }
@@ -53,7 +53,7 @@ readonly class ContainerMaker implements ContainerMakerInterface
             $container->envFrom(),
             $app,
             $this->appRegistry,
-            $this->externalEnvSourcesRegistry
+            $this->envSourcesRegistry
         );
         $builder->env($env);
 
