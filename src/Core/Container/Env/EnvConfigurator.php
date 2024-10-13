@@ -12,8 +12,8 @@ use Dealroadshow\K8S\Api\Core\V1\EnvVar;
 use Dealroadshow\K8S\Api\Core\V1\EnvVarList;
 use Dealroadshow\K8S\Api\Core\V1\SecretKeySelector;
 use Dealroadshow\K8S\Framework\App\AppInterface;
-use Dealroadshow\K8S\Framework\App\Integration\ExternalEnvSourcesRegistry;
-use Dealroadshow\K8S\Framework\App\Integration\ExternalEnvSourcesTrackingContext;
+use Dealroadshow\K8S\Framework\App\Integration\EnvSourcesRegistry;
+use Dealroadshow\K8S\Framework\App\Integration\EnvSourcesTrackingContext;
 use Dealroadshow\K8S\Framework\Core\ConfigMap\ConfigMapInterface;
 use Dealroadshow\K8S\Framework\Core\Container\Resources\ContainerResourcesField;
 use Dealroadshow\K8S\Framework\Core\Pod\PodField;
@@ -27,8 +27,8 @@ readonly class EnvConfigurator
         private EnvFromSourceList $sources,
         private AppInterface $app,
         private AppRegistry $appRegistry,
-        private ExternalEnvSourcesRegistry $externalEnvSourcesRegistry,
-        private ExternalEnvSourcesTrackingContext|null $externalEnvSourcesTrackingContext = null
+        private EnvSourcesRegistry $envSourcesRegistry,
+        private EnvSourcesTrackingContext|null $envSourcesTrackingContext = null
     ) {
     }
 
@@ -80,7 +80,7 @@ readonly class EnvConfigurator
     {
         $this->ensureAppOwnsManifestClass($configMapClass);
         $cmName = $this->app->namesHelper()->byConfigMapClass($configMapClass);
-        $this->externalEnvSourcesTrackingContext?->trackDependency($configMapClass);
+        $this->envSourcesTrackingContext?->trackDependency($configMapClass);
 
         return $this->addConfigMapByName($cmName, $mustExist, $varNamesPrefix);
     }
@@ -108,7 +108,7 @@ readonly class EnvConfigurator
     {
         $this->ensureAppOwnsManifestClass($secretClass);
         $secretName = $this->app->namesHelper()->bySecretClass($secretClass);
-        $this->externalEnvSourcesTrackingContext?->trackDependency($secretClass);
+        $this->envSourcesTrackingContext?->trackDependency($secretClass);
 
         return $this->addSecretByName($secretName, $mustExist);
     }
@@ -140,7 +140,7 @@ readonly class EnvConfigurator
         $this->ensureAppOwnsManifestClass($configMapClass);
         $cmName = $this->app->namesHelper()->byConfigMapClass($configMapClass);
 
-        $this->externalEnvSourcesTrackingContext?->trackDependency($configMapClass);
+        $this->envSourcesTrackingContext?->trackDependency($configMapClass);
 
         $keySelector = new ConfigMapKeySelector($configMapKey);
         $keySelector
@@ -159,7 +159,7 @@ readonly class EnvConfigurator
         $this->ensureAppOwnsManifestClass($secretClass);
         $secretName = $this->app->namesHelper()->bySecretClass($secretClass);
 
-        $this->externalEnvSourcesTrackingContext?->trackDependency($secretClass);
+        $this->envSourcesTrackingContext?->trackDependency($secretClass);
 
         $keySelector = new SecretKeySelector($secretKey);
         $keySelector
@@ -203,12 +203,12 @@ readonly class EnvConfigurator
         //     ->withExternalApp('anotherAppAlias')->addConfigMap(MyOtherConfigMap::class);
         // e.g. withExternalApp() is called multiple times in a row.
         // In such case the true dependent app is the first one, not intermediate ones used in consecutive calls.
-        $dependentAppAlias = $this->externalEnvSourcesTrackingContext?->dependentAppAlias ?? $this->app->alias();
+        $dependentAppAlias = $this->envSourcesTrackingContext?->dependentAppAlias ?? $this->app->alias();
 
-        $externalSourcesTrackingContext = new ExternalEnvSourcesTrackingContext(
+        $externalSourcesTrackingContext = new EnvSourcesTrackingContext(
             $dependentAppAlias,
             $appAlias,
-            $this->externalEnvSourcesRegistry
+            $this->envSourcesRegistry
         );
 
         return new EnvConfigurator(
@@ -216,7 +216,7 @@ readonly class EnvConfigurator
             $this->sources,
             $this->appRegistry->get($appAlias),
             $this->appRegistry,
-            $this->externalEnvSourcesRegistry,
+            $this->envSourcesRegistry,
             $externalSourcesTrackingContext
         );
     }
