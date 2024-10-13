@@ -18,6 +18,9 @@ class ExternalConfigurationLocalizer
 
     public function localizeDependencies(string $dependentAppAlias, array $dependencies): void
     {
+        // Env sources registry contains current app dependencies among other apps, so we need to remove them
+        unset($dependencies[$dependentAppAlias]);
+
         $this->strategy->localize($dependentAppAlias, $dependencies);
     }
 }
