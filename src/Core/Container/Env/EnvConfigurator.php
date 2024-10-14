@@ -18,7 +18,12 @@ use Dealroadshow\K8S\Framework\Core\ConfigMap\ConfigMapInterface;
 use Dealroadshow\K8S\Framework\Core\Container\Resources\ContainerResourcesField;
 use Dealroadshow\K8S\Framework\Core\Pod\PodField;
 use Dealroadshow\K8S\Framework\Core\Secret\SecretInterface;
+use Dealroadshow\K8S\Framework\Event\ConfigMapEnvSourceAddedEvent;
+use Dealroadshow\K8S\Framework\Event\ConfigMapEnvSourceEvent;
+use Dealroadshow\K8S\Framework\Event\SecretEnvSourceAddedEvent;
+use Dealroadshow\K8S\Framework\Event\SecretEnvSourceEvent;
 use Dealroadshow\K8S\Framework\Registry\AppRegistry;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
 readonly class EnvConfigurator
 {
@@ -28,6 +33,7 @@ readonly class EnvConfigurator
         private AppInterface $app,
         private AppRegistry $appRegistry,
         private EnvSourcesRegistry $envSourcesRegistry,
+        private EventDispatcherInterface $dispatcher,
         private EnvSourcesTrackingContext|null $envSourcesTrackingContext = null
     ) {
     }
@@ -78,11 +84,22 @@ readonly class EnvConfigurator
 
     public function addConfigMap(string $configMapClass, bool $mustExist = true, string $varNamesPrefix = null): static
     {
+        $event = new ConfigMapEnvSourceEvent($configMapClass, $this->app);
+        $this->dispatcher->dispatch($event, $event::NAME);
+        if ($event->isPropagationStopped()) {
+            return $this;
+        }
+
         $this->ensureAppOwnsManifestClass($configMapClass);
         $cmName = $this->app->namesHelper()->byConfigMapClass($configMapClass);
         $this->envSourcesTrackingContext?->trackDependency($configMapClass);
 
-        return $this->addConfigMapByName($cmName, $mustExist, $varNamesPrefix);
+        $this->addConfigMapByName($cmName, $mustExist, $varNamesPrefix);
+
+        $event = new ConfigMapEnvSourceAddedEvent($configMapClass, $this->app);
+        $this->dispatcher->dispatch($event, $event::NAME);
+
+        return $this;
     }
 
     public function addConfigMapByName(string $configMapName, bool $mustExist = true, string $varNamesPrefix = null): static
@@ -106,11 +123,22 @@ readonly class EnvConfigurator
 
     public function addSecret(string $secretClass, bool $mustExist = true): static
     {
+        $event = new SecretEnvSourceEvent($secretClass, $this->app);
+        $this->dispatcher->dispatch($event, $event::NAME);
+        if ($event->isPropagationStopped()) {
+            return $this;
+        }
+
         $this->ensureAppOwnsManifestClass($secretClass);
         $secretName = $this->app->namesHelper()->bySecretClass($secretClass);
         $this->envSourcesTrackingContext?->trackDependency($secretClass);
 
-        return $this->addSecretByName($secretName, $mustExist);
+        $this->addSecretByName($secretName, $mustExist);
+
+        $event = new SecretEnvSourceAddedEvent($secretClass, $this->app);
+        $this->dispatcher->dispatch($event, $event::NAME);
+
+        return $this;
     }
 
     public function addSecretByName(string $secretName, bool $mustExist = true): static
