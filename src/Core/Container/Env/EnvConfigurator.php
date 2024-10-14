@@ -84,7 +84,7 @@ readonly class EnvConfigurator
 
     public function addConfigMap(string $configMapClass, bool $mustExist = true, string $varNamesPrefix = null): static
     {
-        $event = new ConfigMapEnvSourceEvent($configMapClass, $this->app);
+        $event = new ConfigMapEnvSourceEvent($configMapClass, $this->app, $this);
         $this->dispatcher->dispatch($event, $event::NAME);
         if ($event->isPropagationStopped()) {
             return $this;
@@ -96,7 +96,7 @@ readonly class EnvConfigurator
 
         $this->addConfigMapByName($cmName, $mustExist, $varNamesPrefix);
 
-        $event = new ConfigMapEnvSourceAddedEvent($configMapClass, $this->app);
+        $event = new ConfigMapEnvSourceAddedEvent($configMapClass, $this->app, $this);
         $this->dispatcher->dispatch($event, $event::NAME);
 
         return $this;
@@ -123,7 +123,7 @@ readonly class EnvConfigurator
 
     public function addSecret(string $secretClass, bool $mustExist = true): static
     {
-        $event = new SecretEnvSourceEvent($secretClass, $this->app);
+        $event = new SecretEnvSourceEvent($secretClass, $this->app, $this);
         $this->dispatcher->dispatch($event, $event::NAME);
         if ($event->isPropagationStopped()) {
             return $this;
@@ -135,7 +135,7 @@ readonly class EnvConfigurator
 
         $this->addSecretByName($secretName, $mustExist);
 
-        $event = new SecretEnvSourceAddedEvent($secretClass, $this->app);
+        $event = new SecretEnvSourceAddedEvent($secretClass, $this->app, $this);
         $this->dispatcher->dispatch($event, $event::NAME);
 
         return $this;
