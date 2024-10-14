@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dealroadshow\K8S\Framework\Event;
 
 use Dealroadshow\K8S\Framework\App\AppInterface;
+use Dealroadshow\K8S\Framework\Core\Container\Env\EnvConfigurator;
 use Psr\EventDispatcher\StoppableEventInterface;
 
 class SecretEnvSourceEvent implements StoppableEventInterface
@@ -13,8 +14,11 @@ class SecretEnvSourceEvent implements StoppableEventInterface
 
     private bool $propagationStopped = false;
 
-    public function __construct(public readonly string $secretClass, public readonly AppInterface $app)
-    {
+    public function __construct(
+        public readonly string $secretClass,
+        public readonly AppInterface $app,
+        public readonly EnvConfigurator $env,
+    ) {
     }
 
     public function stopPropagation(): void
