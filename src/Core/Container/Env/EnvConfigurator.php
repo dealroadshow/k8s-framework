@@ -245,6 +245,7 @@ readonly class EnvConfigurator
             $this->appRegistry->get($appAlias),
             $this->appRegistry,
             $this->envSourcesRegistry,
+            $this->dispatcher,
             $externalSourcesTrackingContext
         );
     }
