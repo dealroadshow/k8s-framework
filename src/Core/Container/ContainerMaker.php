@@ -53,7 +53,8 @@ readonly class ContainerMaker implements ContainerMakerInterface
             $container->envFrom(),
             $app,
             $this->appRegistry,
-            $this->envSourcesRegistry
+            $this->envSourcesRegistry,
+            $this->dispatcher,
         );
         $builder->env($env);
 
