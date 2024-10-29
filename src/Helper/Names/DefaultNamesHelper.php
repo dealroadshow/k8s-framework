@@ -12,7 +12,7 @@ use Dealroadshow\K8S\Framework\Core\Service\ServiceInterface;
 
 class DefaultNamesHelper implements NamesHelperInterface
 {
-    private string $prefix;
+    private string $prefix = '';
 
     public function fullName(string $shortName): string
     {
