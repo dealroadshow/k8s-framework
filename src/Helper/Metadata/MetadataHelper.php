@@ -8,13 +8,13 @@ use Dealroadshow\K8S\Apimachinery\Pkg\Apis\Meta\V1\ObjectMeta;
 use Dealroadshow\K8S\APIResourceInterface;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 use Dealroadshow\K8S\Framework\Core\MetadataAwareInterface;
-use Dealroadshow\K8S\Framework\Helper\HelperTrait;
 use Dealroadshow\K8S\Framework\Core\MetadataConfigurator;
+use Dealroadshow\K8S\Framework\Helper\Names\NamesHelperInterface;
 use Dealroadshow\K8S\Framework\Util\ManifestShortName;
 
 class MetadataHelper implements MetadataHelperInterface
 {
-    use HelperTrait;
+    private NamesHelperInterface $namesHelper;
 
     public function configureMeta(MetadataAwareInterface $metadataAware, APIResourceInterface $apiObject): ObjectMeta
     {
@@ -23,10 +23,15 @@ class MetadataHelper implements MetadataHelperInterface
         $metadataAware->metadata($metaConfigurator);
 
         if ($metadataAware instanceof ManifestInterface) {
-            $name = $this->app->namesHelper()->fullName(ManifestShortName::getFrom($metadataAware));
+            $name = $this->namesHelper->fullName(ManifestShortName::getFrom($metadataAware));
             $meta->setName($name);
         }
 
         return $meta;
+    }
+
+    public function setNamesHelper(NamesHelperInterface $namesHelper): void
+    {
+        $this->namesHelper = $namesHelper;
     }
 }

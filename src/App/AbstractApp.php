@@ -68,14 +68,14 @@ abstract class AbstractApp implements AppInterface
 
     public function metadataHelper(): MetadataHelperInterface
     {
-        $this->metadataHelper->setApp($this);
+        $this->metadataHelper->setNamesHelper($this->namesHelper());
 
         return $this->metadataHelper;
     }
 
     public function namesHelper(): NamesHelperInterface
     {
-        $this->namesHelper->setApp($this);
+        $this->namesHelper->setPrefix($this->manifestNamePrefix());
 
         return $this->namesHelper;
     }
