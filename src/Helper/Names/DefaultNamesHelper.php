@@ -9,19 +9,17 @@ use Dealroadshow\K8S\Framework\Core\DynamicNameAwareInterface;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 use Dealroadshow\K8S\Framework\Core\Secret\SecretInterface;
 use Dealroadshow\K8S\Framework\Core\Service\ServiceInterface;
-use Dealroadshow\K8S\Framework\Helper\HelperTrait;
 
 class DefaultNamesHelper implements NamesHelperInterface
 {
-    use HelperTrait;
+    private string $prefix = '';
 
     public function fullName(string $shortName): string
     {
-        $name = '';
-        if ($prefix = $this->app->manifestNamePrefix()) {
-            $name = $prefix;
+        if ($prefix = $this->prefix) {
+            $prefix .= '-';
         }
-        $name .= '-'.$shortName;
+        $name = $prefix.$shortName;
 
         $this->ensureValidNameLength($name);
 
@@ -84,6 +82,11 @@ class DefaultNamesHelper implements NamesHelperInterface
             ServiceInterface::class,
             __METHOD__
         );
+    }
+
+    public function setPrefix(string $prefix): void
+    {
+        $this->prefix = $prefix;
     }
 
     protected function ensureValidNameLength(string $name): void
