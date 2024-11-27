@@ -25,7 +25,7 @@ trait ActionConfiguratorTrait
         return new HttpGetActionBuilder($action);
     }
 
-    public function tcpSocket(int|string $port, string $host = null): void
+    public function tcpSocket(int|string $port, string|null $host = null): void
     {
         $action = new TCPSocketAction($port);
         if (null !== $host) {

@@ -54,7 +54,7 @@ readonly class EnvConfigurator
      *
      * @return $this
      */
-    public function addFrom(string $className, bool $mustExist = true, string $varNamesPrefix = null): static
+    public function addFrom(string $className, bool $mustExist = true, string|null $varNamesPrefix = null): static
     {
         $class = new \ReflectionClass($className);
 
@@ -82,7 +82,7 @@ readonly class EnvConfigurator
         );
     }
 
-    public function addConfigMap(string $configMapClass, bool $mustExist = true, string $varNamesPrefix = null): static
+    public function addConfigMap(string $configMapClass, bool $mustExist = true, string|null $varNamesPrefix = null): static
     {
         $event = new ConfigMapEnvSourceEvent($configMapClass, $this->app, $this);
         $this->dispatcher->dispatch($event, $event::NAME);
@@ -102,7 +102,7 @@ readonly class EnvConfigurator
         return $this;
     }
 
-    public function addConfigMapByName(string $configMapName, bool $mustExist = true, string $varNamesPrefix = null): static
+    public function addConfigMapByName(string $configMapName, bool $mustExist = true, string|null $varNamesPrefix = null): static
     {
         $source = new ConfigMapEnvSource();
         $source

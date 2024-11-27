@@ -23,7 +23,7 @@ readonly class IngressRuleConfigurator
     ) {
     }
 
-    public function addPath(PathType $pathType, string $path = null): HttpIngressPathConfigurator
+    public function addPath(PathType $pathType, string|null $path = null): HttpIngressPathConfigurator
     {
         if (
             null === $path
