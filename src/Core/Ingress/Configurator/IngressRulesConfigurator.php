@@ -27,7 +27,7 @@ class IngressRulesConfigurator
     ) {
     }
 
-    public function addHttpRule(string $host = null): IngressRuleConfigurator
+    public function addHttpRule(string|null $host = null): IngressRuleConfigurator
     {
         $rule = null === $host ? $this->getRuleWithoutHost() : $this->getRuleForHost($host);
 
