@@ -33,7 +33,7 @@ class Str
         return static::withoutSuffix($className, $suffix).$suffix;
     }
 
-    public static function asDirName(string $str, string $suffix = null): string
+    public static function asDirName(string $str, string|null $suffix = null): string
     {
         $className = self::asClassName($str);
 
