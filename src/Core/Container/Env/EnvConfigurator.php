@@ -20,6 +20,7 @@ use Dealroadshow\K8S\Framework\Core\Pod\PodField;
 use Dealroadshow\K8S\Framework\Core\Secret\SecretInterface;
 use Dealroadshow\K8S\Framework\Event\ConfigMapEnvSourceAddedEvent;
 use Dealroadshow\K8S\Framework\Event\ConfigMapEnvSourceEvent;
+use Dealroadshow\K8S\Framework\Event\EnvConfiguratorWithExternalAppEvent;
 use Dealroadshow\K8S\Framework\Event\SecretEnvSourceAddedEvent;
 use Dealroadshow\K8S\Framework\Event\SecretEnvSourceEvent;
 use Dealroadshow\K8S\Framework\Registry\AppRegistry;
@@ -237,6 +238,11 @@ readonly class EnvConfigurator
             $dependentAppAlias,
             $appAlias,
             $this->envSourcesRegistry
+        );
+
+        $this->dispatcher->dispatch(
+            new EnvConfiguratorWithExternalAppEvent($dependentAppAlias, $appAlias),
+            EnvConfiguratorWithExternalAppEvent::NAME
         );
 
         return new EnvConfigurator(

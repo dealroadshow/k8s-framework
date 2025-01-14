@@ -55,7 +55,7 @@ class CronJobMaker extends AbstractResourceMaker
             try {
                 new \DateTimeZone($timeZone);
                 $spec->setTimeZone($timeZone);
-            } catch(\Exception) {
+            } catch (\Exception) {
                 throw new \InvalidArgumentException(
                     sprintf('Invalid timezone "%s" in cron job "%s".', $timeZone, $cronJob->metadata()->getName())
                 );
