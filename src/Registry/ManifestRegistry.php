@@ -7,6 +7,7 @@ namespace Dealroadshow\K8S\Framework\Registry;
 use Dealroadshow\K8S\Framework\Core\ManifestInterface;
 use Dealroadshow\K8S\Framework\Proxy\ProxyFactory;
 use Dealroadshow\K8S\Framework\Registry\Query\ManifestsQuery;
+use Dealroadshow\K8S\Framework\Runtime\ManifestRuntimeStatusResolverInterface;
 use Dealroadshow\K8S\Framework\Util\ManifestShortName;
 use Dealroadshow\Proximity\ProxyInterface;
 
@@ -17,8 +18,10 @@ class ManifestRegistry
      */
     private array $manifests = [];
 
-    public function __construct(private ProxyFactory $proxyFactory)
-    {
+    public function __construct(
+        private readonly ProxyFactory $proxyFactory,
+        private readonly ManifestRuntimeStatusResolverInterface $statusResolver
+    ) {
     }
 
     /**
@@ -45,6 +48,10 @@ class ManifestRegistry
                     $manifest::class
                 )
             );
+        }
+
+        if (!$this->statusResolver->isClassEnabled(new \ReflectionClass($manifest))) {
+            return;
         }
 
         $this->manifests[$appAlias][] = $this->proxyFactory->makeProxy($manifest);

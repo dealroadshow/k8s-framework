@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dealroadshow\K8S\Framework\Registry;
 
 use Dealroadshow\K8S\Framework\App\AppInterface;
+use Dealroadshow\K8S\Framework\Runtime\ManifestRuntimeStatusResolverInterface;
 
 class AppRegistry
 {
@@ -13,12 +14,20 @@ class AppRegistry
      */
     private array $apps = [];
 
+    public function __construct(private readonly ManifestRuntimeStatusResolverInterface $statusResolver)
+    {
+    }
+
     public function add(string $alias, AppInterface $app): void
     {
         if ($this->has($alias)) {
             throw new \InvalidArgumentException(
                 sprintf('App with alias "%s" already exists', $alias)
             );
+        }
+
+        if (!$this->statusResolver->isClassEnabled(new \ReflectionClass($app))) {
+            return;
         }
 
         $this->apps[$alias] = $app;
