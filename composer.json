@@ -19,7 +19,7 @@
         "php": ">=8.2",
         "ext-json": "*",
         "symfony/yaml": ">=6.0",
-        "dealroadshow/k8s-resources": "v1.30.x-dev",
+        "dealroadshow/k8s-resources": ">=1.30",
         "ext-mbstring": "*",
         "composer/semver": "^3.2",
         "psr/event-dispatcher": "^1.0",
