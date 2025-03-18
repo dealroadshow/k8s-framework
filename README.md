@@ -30,6 +30,7 @@ composer require dealroadshow/k8s-resources:^1.16
 As you see, [dealroadshow/k8s-resources](https://github.com/dealroadshow/k8s-resources)
 versioning mirrors versioning of Kubernetes itself.
 
+
 After that, you may install the latest version of K8S Framework:
 
 ```bash
