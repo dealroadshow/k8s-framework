@@ -23,7 +23,7 @@
         "ext-mbstring": "*",
         "composer/semver": "^3.2",
         "psr/event-dispatcher": "^1.0",
-        "dealroadshow/proximity": "dev-main"
+        "dealroadshow/proximity": "^1.0"
     },
     "autoload": {
         "psr-4": {
