@@ -23,6 +23,6 @@ abstract class AbstractSelfRenderingManifest extends AbstractManifest implements
             $data = json_decode($encoded, true);
         }
 
-        return new GenericApiResource(static::apiVersion(), static::kind(), $this->data());
+        return new GenericApiResource(static::apiVersion(), static::kind(), $data);
     }
 }
