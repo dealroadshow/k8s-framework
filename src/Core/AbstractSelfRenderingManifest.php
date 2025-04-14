@@ -8,21 +8,21 @@ use Dealroadshow\K8S\APIResourceInterface;
 
 abstract class AbstractSelfRenderingManifest extends AbstractManifest implements SelfRenderingManifestInterface
 {
-    abstract public function data(): array|\JsonSerializable;
+    abstract public function spec(): array|\JsonSerializable;
     abstract public static function apiVersion(): string;
     abstract public static function kind(): string;
 
     public function render(): ApiResourceInterface
     {
-        $data = $this->data();
-        if ($data instanceof \JsonSerializable) {
-            $encoded = json_encode($data);
+        $spec = $this->spec();
+        if ($spec instanceof \JsonSerializable) {
+            $encoded = json_encode($spec);
             if (false === $encoded) {
-                throw new \RuntimeException(sprintf('Failed to encode data to JSON: %s. Data: "%s"', json_last_error_msg(), var_export($data, true)));
+                throw new \RuntimeException(sprintf('Failed to encode spec to JSON: %s. Spec: "%s"', json_last_error_msg(), var_export($spec, true)));
             }
-            $data = json_decode($encoded, true);
+            $spec = json_decode($encoded, true);
         }
 
-        return new GenericApiResource(static::apiVersion(), static::kind(), $data);
+        return new GenericApiResource(static::apiVersion(), static::kind(), $spec);
     }
 }
