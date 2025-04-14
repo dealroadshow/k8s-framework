@@ -14,7 +14,7 @@ class GenericApiResource implements APIResourceInterface
     public function __construct(
         private readonly string $apiVersion,
         private readonly string $kind,
-        private readonly array $data = []
+        private readonly array $spec = []
     ) {
         $this->metadata = new ObjectMeta();
     }
@@ -26,12 +26,11 @@ class GenericApiResource implements APIResourceInterface
 
     public function jsonSerialize(): array|\JsonSerializable
     {
-        $commonData = [
+        return [
             'apiVersion' => $this->apiVersion,
             'kind' => $this->kind,
             'metadata' => $this->metadata,
+            'spec' => $this->spec,
         ];
-
-        return array_merge($commonData, $this->data);
     }
 }
