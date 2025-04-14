@@ -16,7 +16,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "ext-json": "*",
         "symfony/yaml": ">=6.0",
         "dealroadshow/k8s-resources": ">=1.30",
@@ -29,5 +29,8 @@
         "psr-4": {
             "Dealroadshow\\K8S\\Framework\\": "src/"
         }
+    },
+    "scripts": {
+        "cs": "PHP_CS_FIXER_IGNORE_ENV=true ./tools/php-cs-fixer/vendor/bin/php-cs-fixer fix"
     }
 }
