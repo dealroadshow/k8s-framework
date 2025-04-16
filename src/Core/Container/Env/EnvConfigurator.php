@@ -35,6 +35,7 @@ readonly class EnvConfigurator
         private AppRegistry $appRegistry,
         private EnvSourcesRegistry $envSourcesRegistry,
         private EventDispatcherInterface $dispatcher,
+        private ExternalConfigurationRegistry $externalConfigurations,
         private EnvSourcesTrackingContext|null $envSourcesTrackingContext = null
     ) {
     }
@@ -103,12 +104,8 @@ readonly class EnvConfigurator
         return $this;
     }
 
-    public function addConfigMapByName(string $configMapName, bool $mustExist = true, string|null $varNamesPrefix = null): static
+    public function addConfigMapByName(string $configMapName, bool $mustExist = true, string|null $varNamesPrefix = null, bool $external = false): static
     {
-        $source = new ConfigMapEnvSource();
-        $source
-            ->setName($configMapName)
-            ->setOptional(!$mustExist);
         $envFromSource = new EnvFromSource();
         if (null !== $varNamesPrefix) {
             $envFromSource->setPrefix($varNamesPrefix);
@@ -118,6 +115,10 @@ readonly class EnvConfigurator
             ->setOptional(!$mustExist);
 
         $this->sources->add($envFromSource);
+
+        if ($external) {
+            $this->externalConfigurations->addConfigMap($configMapName);
+        }
 
         return $this;
     }
@@ -142,7 +143,7 @@ readonly class EnvConfigurator
         return $this;
     }
 
-    public function addSecretByName(string $secretName, bool $mustExist = true): static
+    public function addSecretByName(string $secretName, bool $mustExist = true, bool $external = false): static
     {
         $envFromSource = new EnvFromSource();
         $envFromSource->secretRef()
@@ -150,6 +151,10 @@ readonly class EnvConfigurator
             ->setOptional(!$mustExist);
 
         $this->sources->add($envFromSource);
+
+        if ($external) {
+            $this->externalConfigurations->addSecret($secretName);
+        }
 
         return $this;
     }
@@ -252,6 +257,7 @@ readonly class EnvConfigurator
             $this->appRegistry,
             $this->envSourcesRegistry,
             $this->dispatcher,
+            $this->externalConfigurations,
             $externalSourcesTrackingContext
         );
     }

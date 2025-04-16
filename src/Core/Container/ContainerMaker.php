@@ -9,6 +9,7 @@ use Dealroadshow\K8S\Api\Core\V1\VolumeList;
 use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\App\Integration\EnvSourcesRegistry;
 use Dealroadshow\K8S\Framework\Core\Container\Env\EnvConfigurator;
+use Dealroadshow\K8S\Framework\Core\Container\Env\ExternalConfigurationRegistry;
 use Dealroadshow\K8S\Framework\Core\Container\Image\Image;
 use Dealroadshow\K8S\Framework\Core\Container\Lifecycle\LifecycleConfigurator;
 use Dealroadshow\K8S\Framework\Core\Container\Lifecycle\Probes\ProbesConfigurator;
@@ -33,6 +34,7 @@ readonly class ContainerMaker implements ContainerMakerInterface
         private EventDispatcherInterface $dispatcher,
         private ProxyFactory $proxyFactory,
         private EnvSourcesRegistry $envSourcesRegistry,
+        private ExternalConfigurationRegistry $externalConfigurations,
         private iterable $middlewares
     ) {
     }
@@ -55,6 +57,7 @@ readonly class ContainerMaker implements ContainerMakerInterface
             $this->appRegistry,
             $this->envSourcesRegistry,
             $this->dispatcher,
+            $this->externalConfigurations,
         );
         $builder->env($env);
 
