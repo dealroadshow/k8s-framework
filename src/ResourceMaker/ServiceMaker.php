@@ -33,6 +33,7 @@ class ServiceMaker extends AbstractResourceMaker
 
         $type = new ServiceTypeConfigurator($service);
         $manifest->type($type);
+        $service->spec()->trafficDistribution();
 
         $ports = new ServicePortsConfigurator($service->spec()->ports());
         $manifest->ports($ports);
