@@ -32,7 +32,9 @@ class ServiceMaker extends AbstractResourceMaker
         }
 
         $trafficDistribution = $manifest->trafficDistribution();
-        $service->spec()->setTrafficDistribution($trafficDistribution);
+        if (null !== $trafficDistribution) {
+            $service->spec()->setTrafficDistribution($trafficDistribution);
+        }
         $type = new ServiceTypeConfigurator($service);
         $manifest->type($type);
 
