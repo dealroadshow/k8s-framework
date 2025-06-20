@@ -31,9 +31,10 @@ class ServiceMaker extends AbstractResourceMaker
             $service->spec()->setClusterIP($clusterIp);
         }
 
+        $trafficDistribution = $manifest->trafficDistribution();
+        $service->spec()->setTrafficDistribution($trafficDistribution);
         $type = new ServiceTypeConfigurator($service);
         $manifest->type($type);
-        $service->spec()->trafficDistribution();
 
         $ports = new ServicePortsConfigurator($service->spec()->ports());
         $manifest->ports($ports);
