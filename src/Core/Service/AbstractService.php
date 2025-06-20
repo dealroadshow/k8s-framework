@@ -41,7 +41,7 @@ abstract class AbstractService extends AbstractManifest implements ServiceInterf
 
     public function trafficDistribution(): string|null
     {
-        return self::TRAFFIC_DISTRIBUTION_PREFER_CLOSE;
+        return 'PreferClose';
     }
 
     final public static function kind(): string
