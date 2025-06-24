@@ -43,7 +43,7 @@ readonly class DefaultLabelsGenerator implements LabelsGeneratorInterface
     {
         return [
             'app' => $app->alias(),
-            'component' => ManifestShortName::getFrom($manifest),
+            'component' => $manifest instanceof FullNameAwareInterface ? $manifest->fullName() : ManifestShortName::getFrom($manifest),
         ];
     }
 }
