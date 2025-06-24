@@ -17,7 +17,13 @@ abstract class AbstractManifest implements ManifestInterface
 
     public function fileNameWithoutExtension(): string
     {
-        return $this::shortName().'.'.Str::asDNSSubdomain(static::kind());
+        $name = match (true) {
+            $this instanceof FullNameAwareInterface => $this->fullName(),
+            $this instanceof DynamicNameAwareInterface => $this->name(),
+            default => $this::shortName(),
+        };
+
+        return $name.'.'.Str::asDNSSubdomain(static::kind());
     }
 
     public function metadata(MetadataConfigurator $meta): void
