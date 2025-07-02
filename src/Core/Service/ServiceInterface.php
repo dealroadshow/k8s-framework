@@ -17,4 +17,5 @@ interface ServiceInterface extends ManifestInterface
     public function selector(StringMap $selector): void;
     public function type(ServiceTypeConfigurator $type): void;
     public function configureService(Service $service): void;
+    public function trafficDistribution(): string|null;
 }
