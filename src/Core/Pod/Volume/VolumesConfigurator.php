@@ -73,8 +73,8 @@ readonly class VolumesConfigurator
 
     public function fromHostPath(string $volumeName, string $path): HostPathVolumeBuilder
     {
-        $builder = $this->initBuilder(new HostPathVolumeBuilder(), $volumeName);
-        $builder->setPath($path);
+        $builder = new HostPathVolumeBuilder($path);
+        $this->initBuilder($builder, $volumeName);
 
         return $builder;
     }
