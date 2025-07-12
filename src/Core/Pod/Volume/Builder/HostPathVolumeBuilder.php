@@ -12,16 +12,14 @@ class HostPathVolumeBuilder extends AbstractVolumeBuilder
 {
     private HostPathVolumeSource $source;
 
-    public function init(Volume $volume): void
+    public function __construct(string $path)
     {
-        $this->source = $volume->getHostPath();
+        $this->source = new HostPathVolumeSource($path);
     }
 
-    public function setPath(string $path): self
+    public function init(Volume $volume): void
     {
-        $this->source->setPath($path);
-
-        return $this;
+        $volume->setHostPath($this->source);
     }
 
     public function setType(HostPathVolumeType $type): self
