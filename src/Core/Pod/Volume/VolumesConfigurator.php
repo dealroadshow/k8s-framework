@@ -10,6 +10,7 @@ use Dealroadshow\K8S\Framework\App\AppInterface;
 use Dealroadshow\K8S\Framework\Core\Pod\Volume\Builder\ConfigMapVolumeBuilder;
 use Dealroadshow\K8S\Framework\Core\Pod\Volume\Builder\DownwardAPIVolumeBuilder;
 use Dealroadshow\K8S\Framework\Core\Pod\Volume\Builder\EmptyDirVolumeBuilder;
+use Dealroadshow\K8S\Framework\Core\Pod\Volume\Builder\HostPathVolumeBuilder;
 use Dealroadshow\K8S\Framework\Core\Pod\Volume\Builder\PVCVolumeBuilder;
 use Dealroadshow\K8S\Framework\Core\Pod\Volume\Builder\SecretVolumeBuilder;
 use Dealroadshow\K8S\Framework\Core\Pod\Volume\Builder\VolumeBuilderInterface;
@@ -70,6 +71,14 @@ readonly class VolumesConfigurator
         return $this->initBuilder(new SecretVolumeBuilder($secretName), $volumeName);
     }
 
+    public function fromHostPath(string $volumeName, string $path): HostPathVolumeBuilder
+    {
+        $builder = new HostPathVolumeBuilder();
+        $builder->setPath($path);
+
+        return $this->initBuilder($builder, $volumeName);
+    }
+
     public function withExternalApp(string $appAlias): VolumesConfigurator
     {
         return new static($this->volumes, $this->registry->get($appAlias), $this->registry);
@@ -84,10 +93,12 @@ readonly class VolumesConfigurator
     }
 
     /**
-     * @param VolumeBuilderInterface $builder
-     * @param string                 $volumeName
+     * @template T of VolumeBuilderInterface
      *
-     * @return ConfigMapVolumeBuilder|SecretVolumeBuilder|DownwardAPIVolumeBuilder|EmptyDirVolumeBuilder|PVCVolumeBuilder|VolumeBuilderInterface
+     * @param T $builder
+     * @param string $volumeName
+     *
+     * @return T
      */
     private function initBuilder(VolumeBuilderInterface $builder, string $volumeName): VolumeBuilderInterface
     {
