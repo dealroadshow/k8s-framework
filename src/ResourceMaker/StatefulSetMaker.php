@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Dealroadshow\K8S\Framework\ResourceMaker;
 
 use Composer\Semver\Comparator;
-use Composer\Semver\Semver;
 use Dealroadshow\K8S\Api\Apps\V1\StatefulSet;
 use Dealroadshow\K8S\Api\Apps\V1\StatefulSetSpec;
 use Dealroadshow\K8S\APIResourceInterface;
