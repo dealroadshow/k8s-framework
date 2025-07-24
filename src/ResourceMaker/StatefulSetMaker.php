@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Dealroadshow\K8S\Framework\ResourceMaker;
 
+use Composer\Semver\Comparator;
+use Composer\Semver\Semver;
 use Dealroadshow\K8S\Api\Apps\V1\StatefulSet;
 use Dealroadshow\K8S\Api\Apps\V1\StatefulSetSpec;
 use Dealroadshow\K8S\APIResourceInterface;
@@ -16,6 +18,7 @@ use Dealroadshow\K8S\Framework\Event\StatefulSetGeneratedEvent;
 use Dealroadshow\K8S\Framework\Proxy\ProxyFactory;
 use Dealroadshow\K8S\Framework\Registry\AppRegistry;
 use Dealroadshow\K8S\Framework\ResourceMaker\Traits\ConfigureSelectorTrait;
+use Dealroadshow\K8S\K8SApi;
 
 class StatefulSetMaker extends AbstractResourceMaker
 {
@@ -40,7 +43,13 @@ class StatefulSetMaker extends AbstractResourceMaker
         $app = $this->appRegistry->get($serviceReference->appAlias());
         $serviceName = $app->namesHelper()->byServiceClass($serviceReference->className());
 
-        $spec = new StatefulSetSpec($serviceName);
+        if (Comparator::greaterThanOrEqualTo(K8SApi::VERSION, 'v1.33.1')) {
+            $spec = new StatefulSetSpec();
+            $spec->setServiceName($serviceName);
+        } else {
+            $spec = new StatefulSetSpec($serviceName);
+        }
+
         $sts = new StatefulSet($spec);
 
         $this->configureSelector($manifest, $spec->selector());
