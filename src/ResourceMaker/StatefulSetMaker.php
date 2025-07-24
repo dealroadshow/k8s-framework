@@ -43,13 +43,13 @@ class StatefulSetMaker extends AbstractResourceMaker
         $serviceName = $app->namesHelper()->byServiceClass($serviceReference->className());
 
         if (Comparator::greaterThanOrEqualTo(K8SApi::VERSION, 'v1.33.1')) {
-            $spec = new StatefulSetSpec();
+            $sts = new StatefulSet();
+            $spec = $sts->spec();
             $spec->setServiceName($serviceName);
         } else {
             $spec = new StatefulSetSpec($serviceName);
+            $sts = new StatefulSet($spec);
         }
-
-        $sts = new StatefulSet($spec);
 
         $this->configureSelector($manifest, $spec->selector());
         $app->metadataHelper()->configureMeta($manifest, $sts);
