@@ -39,9 +39,11 @@ class DeploymentMaker extends AbstractResourceMaker
         }
 
         $replicas = $manifest->replicas();
+        $revisionHistoryLimit = $manifest->revisionHistoryLimit();
         $minReadySeconds = $manifest->minReadySeconds();
         $progressDeadlineSeconds = $manifest->progressDeadlineSeconds();
         $spec->setReplicas($replicas);
+        $spec->setRevisionHistoryLimit($revisionHistoryLimit);
         if (null !== $minReadySeconds) {
             $spec->setMinReadySeconds($minReadySeconds);
         }
