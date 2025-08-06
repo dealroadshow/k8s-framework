@@ -81,7 +81,7 @@ abstract class AbstractStatefulSet extends AbstractManifest implements StatefulS
 
     public function revisionHistoryLimit(): int
     {
-        return 10;
+        return 1;
     }
 
     public function selector(SelectorConfigurator $selector): void

@@ -59,6 +59,11 @@ abstract class AbstractDeployment extends AbstractManifest implements Deployment
         return 1;
     }
 
+    public function revisionHistoryLimit(): int
+    {
+        return 1;
+    }
+
     public function selector(SelectorConfigurator $selector): void
     {
     }

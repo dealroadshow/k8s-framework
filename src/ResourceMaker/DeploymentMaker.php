@@ -38,10 +38,11 @@ class DeploymentMaker extends AbstractResourceMaker
             $deployment->spec()->template()->metadata()->labels()->add($name, $value);
         }
 
-        $replicas = $manifest->replicas();
         $minReadySeconds = $manifest->minReadySeconds();
         $progressDeadlineSeconds = $manifest->progressDeadlineSeconds();
-        $spec->setReplicas($replicas);
+        $spec
+            ->setReplicas($manifest->replicas())
+            ->setRevisionHistoryLimit($manifest->revisionHistoryLimit());
         if (null !== $minReadySeconds) {
             $spec->setMinReadySeconds($minReadySeconds);
         }
